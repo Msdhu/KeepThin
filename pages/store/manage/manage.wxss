@@ -1,0 +1,250 @@
+.wraper {
+    height: 100%;
+    width: 100%;
+}
+
+.store {
+    position: relative;
+    width: 100%;
+}
+
+.logo {
+    height: 468rpx;
+    width: 100%;
+}
+
+.backImg {
+    right: -30rpx;
+    top: -10rpx;
+    width: 340rpx;
+    z-index: -1;
+}
+
+.backImg,.storeInfo {
+    height: 512rpx;
+    position: absolute;
+}
+
+.storeInfo {
+    background: #fffdf9;
+    border-radius: 8rpx;
+    box-shadow: 1rpx 8rpx 18rpx 0 hsla(0,0%,80%,.3);
+    box-sizing: border-box;
+    left: 50%;
+    margin-left: -46%;
+    padding: 30rpx;
+    top: 210rpx;
+    width: 92%;
+    z-index: 1;
+}
+
+.storeInfoItem {
+    align-items: center;
+    color: #fd9e39;
+    display: flex;
+    margin-bottom: 32rpx;
+}
+
+.storeInfoItem>image {
+    height: 36rpx;
+    margin-left: 24rpx;
+    width: 36rpx;
+}
+
+.storeInfoItem>view {
+    color: #fd9e39;
+    font-size: 36rpx;
+    margin-left: 24rpx;
+}
+
+.newGuest {
+    margin-top: 50rpx;
+    width: 100%;
+}
+
+.newGuest,.newGuest>view {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.newGuest>view {
+    color: #fd9e39;
+    flex-direction: column;
+    font-size: 36rpx;
+    width: 50%;
+}
+
+.line {
+    background: rgba(253,158,57,.25);
+    height: 70rpx;
+    width: 1rpx;
+}
+
+.newGuest>view>text:nth-child(2) {
+    color: #fd9e39;
+    font-size: 48rpx;
+    font-weight: 700;
+    margin-top: 16rpx;
+}
+
+.entry {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 10rpx 0;
+    width: 100%;
+}
+
+.wrap {
+    box-sizing: border-box;
+    margin-top: 270rpx;
+    padding: 0 28rpx;
+}
+
+.content {
+    width: 100%;
+}
+
+.module {
+    background: #fffdf9;
+    border-radius: 1rpx;
+    box-shadow: 1rpx 8rpx 18rpx 0 hsla(0,0%,80%,.3);
+    padding: 0 32rpx;
+}
+
+.module,.title {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.title {
+    border-bottom: 1rpx solid #e7e6e6;
+    color: #333;
+    font-size: 34rpx;
+    font-weight: 700;
+    justify-content: space-between;
+    padding: 20rpx 0;
+}
+
+.title,.titleCon {
+    align-items: center;
+    display: flex;
+}
+
+.titleImg {
+    height: 44rpx;
+    margin-right: 18rpx;
+    width: 40rpx;
+}
+
+.col {
+    margin-bottom: 30rpx;
+}
+
+.dateContent {
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 30rpx 0;
+}
+
+.col,.dateContent {
+    display: flex;
+}
+
+.col {
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 40rpx;
+    text-align: center;
+    width: 32%;
+}
+
+.colLine {
+    background: #e7e6e6;
+    display: inline-block;
+    height: 80rpx;
+    width: 1rpx;
+}
+
+.lineTop {
+    margin-top: -40rpx;
+}
+
+.monthcol {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 40rpx;
+    text-align: center;
+    width: 32%;
+}
+
+.tip {
+    color: #333;
+    font-size: 32rpx;
+    height: 42rpx;
+    line-height: 42rpx;
+    margin-bottom: 2rpx;
+}
+
+.numData {
+    color: #fe7810;
+    font-size: 34rpx;
+    font-weight: 700;
+}
+
+.numData>view:nth-child(1) {
+    height: 54rpx;
+    line-height: 54rpx;
+    margin-bottom: 3rpx;
+}
+
+.numData>view:nth-child(2) {
+    height: 40rpx;
+    line-height: 40rpx;
+}
+
+.numDatas {
+    color: #fdb03f;
+    font-size: 34rpx;
+    font-weight: 700;
+    height: 60rpx;
+    line-height: 60rpx;
+}
+
+.company {
+    color: #333;
+    font-size: 30rpx;
+    margin: 6rpx 0 0 10rpx;
+}
+
+.company,.personNum {
+    display: inline-block;
+}
+
+.personNum {
+    background: #fdb03f;
+    border-radius: 20rpx;
+    box-sizing: border-box;
+    color: #fff;
+    font-size: 34rpx;
+    height: 40rpx;
+    line-height: 40rpx;
+    min-width: 60rpx;
+    padding: 0 10rpx;
+}
+
+.monthData {
+    margin-top: 30rpx;
+    position: relative;
+}
+
+.date {
+    color: #999;
+    display: flex;
+    font-size: 32rpx;
+    justify-content: flex-end;
+    width: 180rpx;
+}

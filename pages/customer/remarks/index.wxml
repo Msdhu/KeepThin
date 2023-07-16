@@ -1,0 +1,29 @@
+<view class="wraper">
+    <view class="content">
+        <van-cell-group>
+            <view class="title">
+                <view></view>
+                <view>备注</view>
+            </view>
+            <van-field autosize border="{{false}}" label="" maxlength="300" value="{{remarks}}" placeholder="请输入备注留言" type="textarea"></van-field>
+        </van-cell-group>
+    </view>
+    <view class="slectDate">
+        <van-button round bindtap="handleSave" color="#FDB03F" customStyle="width:240rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">保存</van-button>
+        <van-button round bindtap="showHistoryRemarks" color="#5AC67B" customStyle="width:240rpx;height:80rpx;border-radius:8rpx !important;font-size:28rpx;margin-left:40rpx;">历史备注信息</van-button>
+    </view>
+</view>
+<van-popup closeable bind:close="hideHistoryRemarks" closeIcon="close" customStyle="height: 80%;" position="bottom" show="{{isShowHistoryRemarks}}">
+    <scroll-view  class="scroll" lowerThreshold="50" scrollY="true">
+        <view class="wrap">
+            <view class="remarkList" wx:for="{{remarkList}}" wx:key="index">
+                <view class="remarksDate">
+                    <view>备注信息日期：{{item.createTime}}</view>
+                    <van-icon bindtap="deleteHistoryRemark" data-index="{{index}}" name="delete-o"></van-icon>
+                </view>
+                <view class="remarksContent"> {{item.remark}} </view>
+            </view>
+        </view>
+    </scroll-view>
+</van-popup>
+<van-notify id="van-notify"></van-notify>

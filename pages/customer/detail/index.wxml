@@ -1,0 +1,190 @@
+<wxs module="fn">
+module.exports = ({
+    split: (function(str, sign) {
+        var weight = str ? str + '' : '';
+        return (weight.split(sign))
+    }),
+    hasDecimal: (function(str) {
+        var weight = str ? str + '' : '';
+        return (weight.indexOf('.') != -1)
+    }),
+    formatPhone: (function(phone, isShow) {
+        return isShow ? phone : (phone.slice(0,3) + '****' + phone.slice(7, 11))
+    })
+});
+</wxs>
+<page-meta pageStyle="overflow: {{isShowCurrentWeight?'hidden':'visible'}}"></page-meta>
+<navigation-bar color="{{navColor}}" showBack="{{true}}" title="顾客详情"></navigation-bar>
+<view style="width: 100%;margin-top:{{offsetTop}}rpx;position:absolute;z-index: 1;">
+    <van-notice-bar scrollable leftIcon="/assets/img/icon-voice.png" mode="closeable" text="{{warnData.notArrivateStore?'该顾客长时间未到店':''}} {{warnData.notProjectof3Days?'服务项目已经3天未做':''}} {{warnData.notProjectof7Days?'服务项目已经7天未做':''}}" wx:if="{{warnData.notArrivateStore||warnData.notProjectof3Days||warnData.notProjectof7Days}}"></van-notice-bar>
+</view>
+<view wx:if="{{ detailData }}" class="wraper">
+    <view class="header">
+        <image class="headerBack" src="/assets/img/detailBack.png"></image>
+        <view class="header_info" style="padding-top: {{offsetTop}}rpx;">
+            <view class="userInfoCon">
+                <image class="smallLogo" mode="aspectFit" src="/assets/img/samllLogo.png"></image>
+                <image class="headerImg" mode="aspectFill" src="{{detailData.gender=='1'?'/assets/img/man.png':'/assets/img/woman.png'}}"></image>
+                <view class="userInfo">
+                    <view>{{detailData.name}}</view>
+                    <view>
+                        <view catchtap="callPhone" data-phone="{{detailData.phone}}">
+                            {{fn.formatPhone(detailData.phone, isShowPhone)}}
+                        </view>
+                        <image wx:if="{{!isShowPhone}}" bindtap="chageShowPhone" src="/assets/img/eye.png"></image>
+                        <image wx:else bindtap="chageShowPhone" src="/assets/img/biyanjing.png"></image>
+                    </view>
+                </view>
+            </view>
+            <view bindtap="{{detailData.standarded==2&&!detailData.isConsolidationPeriod?'jumpUrl':''}}" class="periodTag" data-url="../standard/index">
+                {{detailData.standarded==1?'匀减期':detailData.standarded==2?'已达标':'速减期'}}
+            </view>
+        </view>
+        <view class="dailyWeight">
+            <image src="/assets/img/yuanquan.png"></image>
+            <view class="dailyWeightCon">
+                <view>今日体重</view>
+                <view class="dailyWeight_content">
+                    <view bindtap="showCurrentWeight">
+                        <text>{{fn.hasDecimal(detailData.currentWeight)?fn.split(detailData.currentWeight,'.')[0]:detailData.currentWeight||''}}</text>
+                        <text>{{fn.hasDecimal(detailData.currentWeight)?'.'+fn.split(detailData.currentWeight,'.')[1]:''}}</text>
+                    </view>
+                    <image bindtap="showCurrentWeight" src="/assets/img/editWeight.png"></image>
+                </view>
+                <view bindtap="showCalendar">
+                    {{currentDate}}
+                    <van-icon name="arrow-down"></van-icon>
+                </view>
+                <view class="dailyWeight_all">
+                    <text bindtap="jumpUrl" data-url="../history/index">查看全部</text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="dailyData">
+        <view class="bigDailyData">
+            <view>
+                <view class="bigDailyData_tit">今日减重</view>
+                <view class="bigDailyData_value">
+                    {{detailData.todayLossedWeight}}
+                    <text>斤</text>
+                </view>
+            </view>
+            <view>
+                <view class="bigDailyData_tit">实际减重</view>
+                <view class="bigDailyData_value">
+                    {{detailData.realLossedWeight}}
+                    <text>斤</text>
+                </view>
+            </view>
+            <view>
+                <view class="bigDailyData_tit">累计减重</view>
+                <view class="bigDailyData_value">
+                    {{detailData.totalLossedWeight}}
+                    <text>斤</text>
+                </view>
+            </view>
+            <view>
+                <view class="bigDailyData_tit">累积到店</view>
+                <view class="bigDailyData_value">
+                    {{detailData.regiseterCount}}
+                    <text>次</text>
+                </view>
+            </view>
+            <view>
+                <view class="bigDailyData_tit">未减斤数</view>
+                <view class="bigDailyData_value">
+                    {{detailData.unLossWeight}}
+                    <text>斤</text>
+                </view>
+            </view>
+            <view>
+                <view class="bigDailyData_tit">最低体重</view>
+                <view class="bigDailyData_value">
+                    {{detailData.lowestWeight}}
+                    <text>斤</text>
+                </view>
+            </view>
+        </view>
+        <view class="smallDailyData">
+            <view>
+                <view class="smallDailyData_tit">初始体重</view>
+                <view class="smallDailyData_value">
+                    {{detailData.originWeight}}
+                    <text>斤</text>
+                </view>
+            </view>
+            <view>
+                <view class="smallDailyData_tit">标准体重</view>
+                <view class="smallDailyData_value">
+                    {{detailData.standardWeight}}
+                    <text>斤</text>
+                </view>
+            </view>
+            <view>
+                <view class="smallDailyData_tit">应减斤数</view>
+                <view class="smallDailyData_value">
+                    {{detailData.loseWeight}}
+                    <text>斤</text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <van-collapse bind:change="onChangeCollapse" customClass="collapse" value="{{activeNames}}" wx:if="{{!isShowCurrentWeight&&!isShowCalendar}}">
+        <van-collapse-item name="1" title="历史体重">
+            <view class="canvasCon"  wx:if="{{activeNames.length>0}}" style="height: {{weightHistory.length? '550rpx;' : '100%'}}">
+                <view>历史体重</view>
+                <view style="text-align: center;" wx:if="{{!weightHistory.length}}">暂无历史体重</view>
+                <ec-canvas wx:else id="mychart-dom-line" class="canvas" canvas-id="mychart-line" ec="{{ chartBar }}"></ec-canvas>
+            </view>
+        </van-collapse-item>
+    </van-collapse>
+    <view class="dailyList">
+        <view bindtap="jumpUrl" data-url="../service/index">
+            <image src="/assets/img/fuwuxiangmu.png"></image>
+            <view style="color: #259953;">服务项目</view>
+        </view>
+        <view bindtap="jumpUrl" data-url="../size/index">
+            <image src="/assets/img/chicun.png"></image>
+            <view style="color: #A27954;">塑形尺寸</view>
+        </view>
+        <view bindtap="jumpUrl" data-url="../sales/index">
+            <image src="/assets/img/chanpinxiaoshou.png"></image>
+            <view style="color: #2CABF5;">产品销售</view>
+        </view>
+        <view bindtap="jumpUrl" data-url="../remarks/index">
+            <image src="/assets/img/beizhuxinxi.png"></image>
+            <view style="color: #DA7A7C;">备注信息</view>
+        </view>
+        <view bindtap="jumpUrl" data-url="/pages/customer/new/new?type=edit&consumerId={{detailData.id}}">
+            <image src="/assets/img/xiugaixinxi.png"></image>
+            <view style="color: #FCBF56;">修改信息</view>
+        </view>
+        <view bindtap="jumpUrl" data-url="../transfer/index?consumerId={{detailData.id}}">
+            <image src="/assets/img/gukezhuandian.png"></image>
+            <view style="color: #2CABF5;">顾客转店</view>
+        </view>
+        <view bindtap="jumpUrl" data-url="/pages/store/bindqrcode/index?consumerId={{detailData.id}}">
+            <image src="/assets/img/bangdingdianpu.png"></image>
+            <view style="color: #259953;">绑定店铺</view>
+        </view>
+        <view bindtap="handleDelUser">
+            <image src="/assets/img/shanchuguke.png"></image>
+            <view style="color: #A27954;">删除顾客</view>
+        </view>
+    </view>
+</view>
+<van-popup round bind:close="hideCurrentWeight" customStyle="height:50%;" position="bottom" show="{{isShowCurrentWeight}}">
+    <view class="currentWeightForm">
+        <van-cell-group>
+            <van-field label="今日体重" maxlength="5" value="{{currentWeight}}" placeholder="请输入今日体重" type="digit"></van-field>
+        </van-cell-group>
+        <view class="saveBtn">
+            <van-button round bind:click="saveCurrentWeight" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">
+                保存
+            </van-button>
+        </view>
+    </view>
+</van-popup>
+<calendar bindonCloseCalendar="hideCalendar" bindonConfirmCalendar="onConfirmCalendar" showCalendar="{{isShowCalendar}}" tabIndex="0"></calendar>
+<van-notify id="van-notify"></van-notify>

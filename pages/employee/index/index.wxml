@@ -1,0 +1,26 @@
+<view class="wrap">
+    <view bindtap="showCalendar" class="slectDate">
+        <image src="/assets/img/rectangle.png"></image>
+        <view>选择时间：</view>
+        <view class="dateSelect">
+            <view>{{startDate}}</view>
+            <van-icon class="dateIcon" name="exchange"></van-icon>
+            <view>{{endDate}}</view>
+        </view>
+    </view>
+    <view class="content">
+        <view class="personalPartsList" wx:for="{{listData}}" wx:key="index">
+            <view class="userName">{{item.userName}}</view>
+            <view class="parts">
+                <view class="partsItem" wx:for="{{item.serviceList}}" wx:for-index="sIndex" wx:for-item="sItem" wx:key="sIndex">
+                    <view>{{sItem.name}}:</view>
+                    <view>
+                        <text>{{sItem.count}}</text>
+                        次
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+<calendar bindonConfirmCalendar="handleCalendarChange" showCalendar="{{isShowCalendar}}" tabIndex="1"></calendar>

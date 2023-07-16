@@ -1,0 +1,8 @@
+<view class="wrap">
+    <view class="qrCodeImg">
+        <image bindtap="onPreviewImage" mode="widthFix" src="{{qrCodeImg}}"></image>
+    </view>
+    <view class="generateQrCode">
+        <van-button round bind:click="generate" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">生成二维码</van-button>
+    </view>
+</view>

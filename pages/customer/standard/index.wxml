@@ -1,0 +1,63 @@
+<navigation-bar color="#fff" showBack="{{true}}" title=""></navigation-bar>
+<view wx:if="{{ standardInfo }}" class="wraper">
+    <view class="wrap">
+        <image class="topImg" mode="widthFix" src="/assets/img/pai1.png"></image>
+        <view class="content">
+            <view class="shopName">{{standardInfo.store}}</view>
+            <view class="userInfo">
+                <view>{{standardInfo.name}}</view>
+                <view>{{fn.split(standardInfo.standardDate,' ')[0]}}</view>
+            </view>
+            <view class="standardWeight">
+                <image src="/assets/img/kuang.png"></image>
+                <view class="thisTimeWeight">
+                    <view>本次体重</view>
+                    <view>
+                        <text>{{standardInfo.currentWeight}}</text>
+                        <text>斤</text>
+                    </view>
+                </view>
+            </view>
+            <view class="tip">
+                <image mode="aspectFit" src="/assets/img/zhuhe.png"></image>
+            </view>
+            <view class="standarData">
+                <view class="line">
+                    <view class="tit">最初体重</view>
+                    <view class="itemStandarData">
+                        <text>{{standardInfo.originWeight}}</text>
+                        <text>斤</text>
+                    </view>
+                </view>
+                <view>
+                    <view class="tit">标准体重</view>
+                    <view class="itemStandarData">
+                        <text>{{standardInfo.standardWeight}}</text>
+                        <text>斤</text>
+                    </view>
+                </view>
+                <view class="line">
+                    <view class="tit">到店次数</view>
+                    <view class="itemStandarData">
+                        <text>{{standardInfo.regiseterCount}}</text>
+                        <text>次</text>
+                    </view>
+                </view>
+                <view>
+                    <view class="tit">实际减重</view>
+                    <view class="itemStandarData">
+                        <text>{{standardInfo.realLossedWeight}}</text>
+                        <text>斤</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+<wxs module="fn">
+module.exports = ({
+    split: (function(str, sign) {
+        return (str ? str.split(sign) : '')
+    }),
+});
+</wxs>

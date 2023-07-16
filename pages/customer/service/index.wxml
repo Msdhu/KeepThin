@@ -1,0 +1,104 @@
+<view class="wraper">
+    <view bindtap="showCalendar" class="date">
+        <image src="/assets/img/rectangle.png"></image>
+        <view>日期：</view>
+        <view>{{date}}</view>
+        <image src="/assets/img/bottom.png"></image>
+    </view>
+    <view class="content">
+        <view class="rowTitle">
+            <view style="width: 20%;">部位</view>
+            <view style="width: 30%;">项目</view>
+            <view style="width: 20%;">人员</view>
+            <view style="width: 20%;">操作</view>
+        </view>
+        <view class="rowContent" wx:for="{{serviceList}}" wx:key="index">
+            <view style="width: 20%;">{{item.name}}</view>
+            <view style="width: 30%;">
+                <view wx:for="{{item.products}}" wx:for-item="itemProduct" wx:key="index"> {{itemProduct.productName}} </view>
+            </view>
+            <view style="width: 20%;">{{item.userName}}</view>
+            <view bindtap="deleteItem" data-index="{{item}}" style="width: 20%;">
+                <van-icon name="delete-o" size="36rpx"></van-icon>
+            </view>
+        </view>
+        <view class="addModule">
+            <view bindtap="handleShowAddPop" class="add">
+                <van-icon name="add-o" size="36rpx" style="margin-right: 10rpx;"></van-icon>
+                <view>新建</view>
+            </view>
+            <view bindtap="checkRemain" class="mask" wx:if="{{partList.length<=0||starffList.length<=0||proList.length<=0}}"></view>
+        </view>
+    </view>
+    <view style="margin-top: 30rpx;">
+        <view class="serviceRemind">
+            <image src="/assets/img/rectangle.png"></image>
+            <view>服务提醒</view>
+        </view>
+        <view class="content" style="padding-top: 16rpx;">
+            <van-radio-group bind:change="handleChangeWanTime" direction="horizontal" value="{{warnTime}}">
+                <van-radio checkedColor="#FFB629" iconSize="40rpx" labelClass="radios" name="1">3天</van-radio>
+                <van-radio checkedColor="#FFB629" iconSize="40rpx" labelClass="radios" name="2">7天</van-radio>
+            </van-radio-group>
+            <view style="text-align: right;">
+                <van-button round bindtap="handleCacelWarn" color="#FDB03F" customClass="cancelBtn" customStyle="width:216rpx;height:50rpx;border-radius:30rpx !important;font-size:30rpx;" size="small">取消服务提醒</van-button>
+            </view>
+        </view>
+    </view>
+    <van-button round bindtap="showHistoryPop" color="#5AC67B" customStyle="width:100%;height:80rpx;border-radius:8rpx !important;font-size:30rpx;margin-top:30rpx;" icon="search" wx:if="{{historyList.length>0}}">历史服务项目</van-button>
+</view>
+<van-popup bind:close="handleHideAddPop" customStyle="height: 60%;" position="bottom" show="{{isShowAddPop}}">
+    <view class="popupView">
+        <van-steps active="{{active}}" activeColor="#FDAF45" bind:click-step="changeStep" steps="{{steps}}"></van-steps>
+        <view class="stepView" wx:if="{{active==0}}">
+            <van-radio-group bind:change="onChangeRadio" value="{{addStepsValMap[0]}}">
+                <van-cell-group>
+                    <van-cell clickable bind:click="onClickRadio" data-index="{{index}}" title="{{item.name}}" wx:for="{{partList}}" wx:key="index">
+                        <van-radio checkedColor="#FDAF45" name="{{index}}" slot="right-icon"></van-radio>
+                    </van-cell>
+                </van-cell-group>
+            </van-radio-group>
+        </view>
+        <view class="stepView" wx:if="{{active==1}}">
+            <van-radio-group bind:change="onChangeRadio" value="{{addStepsValMap[1]}}">
+                <van-cell-group>
+                    <van-cell clickable bind:click="onClickRadio" data-index="{{index}}" title="{{item.name}}" wx:for="{{starffList}}" wx:key="index">
+                        <van-radio checkedColor="#FDAF45" name="{{index}}" slot="right-icon"></van-radio>
+                    </van-cell>
+                </van-cell-group>
+            </van-radio-group>
+        </view>
+        <view class="stepView" wx:if="{{active==2}}">
+            <van-checkbox-group bind:change="onChangeRadio" value="{{addStepsValMap[2]}}">
+                <van-cell-group>
+                    <van-cell clickable data-index="{{index}}" title="{{item.name}}" valueClass="value-class" wx:for="{{proList}}" wx:key="index">
+                        <van-checkbox catch:tap="noop" checkedColor="#FDAF45" class="checkboxes-{{index}}" name="{{index}}"></van-checkbox>
+                    </van-cell>
+                </van-cell-group>
+            </van-checkbox-group>
+        </view>
+    </view>
+    <view style="display: flex;justify-content: center;">
+        <van-button bindtap="handleSaveAdd" color="#FDAF45" customClass="saveBtn" size="small" wx:if="{{active==2}}">保存</van-button>
+    </view>
+</van-popup>
+<van-popup bind:close="closeHistoryPop" customStyle="height: 70vh;" position="bottom" show="{{isShowHistoryPop}}">
+    <scroll-view  lowerThreshold="20" scrollY="{{true}}" style="height: 70vh;">
+        <view class="wrap">
+            <view class="record" wx:for="{{historyList}}" wx:key="index">
+                <view class="record_title">
+                    <image src="/assets/img/rectangle.png"></image>
+                    <view>{{item.time}}</view>
+                </view>
+                <view class="record_content">
+                    <view class="record_content_position">{{item.name}}</view>
+                    <view class="record_content_product">
+                        <view wx:for="{{item.products}}" wx:key="index">{{item.productName}}</view>
+                    </view>
+                    <view class="record_content_product">{{item.userName}}</view>
+                </view>
+            </view>
+        </view>
+    </scroll-view>
+</van-popup>
+<calendar bindonConfirmCalendar="handleDateChange" showCalendar="{{isShowCalendar}}" tabIndex="0"></calendar>

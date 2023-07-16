@@ -1,0 +1,1 @@
+<van-calendar allowSameDay="{{true}}" bind:close="onCloseCalendar" bind:confirm="onConfirmCalendar" color="#FDB03F" defaultDate="{{defaultDate}}" maxDate="{{maxDate}}" minDate="{{minDate}}" rowHeight="50" show="{{showCalendar}}" type="{{tabIndex==0?'single':'range'}}"></van-calendar>

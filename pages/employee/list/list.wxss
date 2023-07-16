@@ -1,0 +1,88 @@
+.wraper {
+	box-sizing: border-box;
+	height: 100%;
+	padding: 28rpx;
+	width: 100%;
+}
+
+.header {
+	border-bottom: 1rpx solid #f3f3f3;
+	position: relative;
+	width: 100%;
+}
+
+.header,
+.store {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}
+
+.store {
+	flex-direction: column;
+	margin: 20rpx 0;
+}
+
+.store > view:nth-child(1) {
+	font-size: 32rpx;
+	font-weight: 700;
+}
+
+.store > view:nth-child(2) {
+	color: #fdb040;
+	font-size: 28rpx;
+	margin-top: 10rpx;
+}
+
+.icon {
+	position: absolute;
+	right: 0;
+}
+
+.itemStaff {
+	background: #fff;
+	border-radius: 8rpx;
+	box-shadow: 1rpx 1rpx 18rpx 0 rgba(0, 0, 0, 0.04);
+	box-sizing: border-box;
+	color: #4a4a4a;
+	font-size: 32rpx;
+	margin-bottom: 20rpx;
+	padding: 10rpx 30rpx;
+}
+
+.options {
+	align-content: center;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.options > image {
+	height: 32rpx;
+	margin: 14rpx 34rpx 18rpx 0;
+	width: 32rpx;
+}
+
+.addStaffForm {
+	background: #fff;
+	border-radius: 8rpx;
+	box-shadow: 1rpx 1rpx 18rpx 0 rgba(0, 0, 0, 0.04);
+	font-size: 32rpx;
+	margin: 10rpx 12rpx;
+}
+
+.addStaffFormTitle {
+	font-size: 34rpx;
+	font-weight: 700;
+	margin: 20rpx 0;
+	text-align: center;
+}
+
+.saveBtn {
+	display: flex;
+	justify-content: center;
+	margin: 20rpx;
+}
+
+.cell {
+	height: 80rpx;
+}

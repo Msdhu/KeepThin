@@ -1,0 +1,39 @@
+<view  wx:if="{{historyList.length }}" class="wraper">
+    <view class="content" wx:for="{{historyList}}" wx:key="index">
+        <view class="circle"></view>
+        <van-row customClass="rowTitle">
+            <van-col span="10">日期</van-col>
+            <van-col span="8">体重</van-col>
+            <van-col span="6">操作</van-col>
+        </van-row>
+        <van-row customClass="rowContent">
+            <van-col span="10" style="font-size: 28rpx;">{{fn.slice(item.createTime,0,16)}}</van-col>
+            <van-col span="8">{{item.currentWeight}} 斤 </van-col>
+            <van-col span="3">
+                <van-icon bindtap="showEditPop" data-id="{{item.id}}" name="edit" size="36rpx"></van-icon>
+            </van-col>
+            <van-col span="3">
+                <van-icon bindtap="handleDelItem" data-id="{{item.id}}" name="delete-o" size="36rpx"></van-icon>
+            </van-col>
+        </van-row>
+    </view>
+</view>
+<view wx:else style="text-align: center;margin-top: 100rpx;" > 暂无历史体重信息
+</view>
+<van-popup round bind:close="hideEditPop" customStyle="height:25%;" position="bottom" show="{{isShowEditPop}}">
+    <view class="updateWeightForm">
+        <van-cell-group>
+            <van-field label="体重" maxlength="6" value="{{weight}}" placeholder="请输入体重"></van-field>
+        </van-cell-group>
+        <view class="saveBtn">
+            <van-button round bind:click="handleSaveEdit" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">确认</van-button>
+        </view>
+    </view>
+</van-popup>
+<wxs module="fn">
+module.exports = ({
+    slice: (function(str, start, end) {
+        return (str ? str.slice(start, end) : '')
+    }),
+});
+</wxs>

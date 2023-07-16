@@ -1,0 +1,152 @@
+.wraper {
+    box-sizing: border-box;
+    padding: 28rpx 28rpx 80rpx;
+    width: 100%;
+}
+
+.noneRecord {
+    display: flex;
+    font-size: 34rpx;
+    justify-content: center;
+    margin-top: 100rpx;
+    width: 100%;
+}
+
+.wrap {
+    box-sizing: border-box;
+    padding: 100rpx 28rpx 28rpx;
+}
+
+.ProductsList,.wrap {
+    width: 100%;
+}
+
+.rowTitle {
+    box-shadow: 0 1rpx 10rpx 0 hsla(0,0%,80%,.2);
+    font-size: 32rpx;
+    font-weight: 700;
+    height: 80rpx;
+    line-height: 80rpx;
+    padding: 10rpx;
+}
+
+.rowContent,.rowTitle {
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.rowContent {
+    border-bottom: 1rpx solid #f2f2f2;
+    font-size: 30rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    margin: 10rpx;
+}
+
+.usageTimes {
+    align-items: center;
+    display: flex;
+    font-size: 34rpx;
+    font-weight: 700;
+    margin-top: 40rpx;
+}
+
+.saveBtn {
+    margin-top: 50rpx;
+}
+
+.historyProduct {
+    margin: 10rpx 10rpx 20rpx;
+}
+
+.productDate {
+    align-items: center;
+    display: flex;
+    font-size: 32rpx;
+    margin-bottom: 28rpx;
+}
+
+.productDate>image {
+    height: 32rpx;
+    margin: 4rpx 16rpx 0 0;
+    width: 7rpx;
+}
+
+.OperationItem {
+    align-items: center;
+    color: #333;
+    display: flex;
+    font-size: 30rpx;
+    width: 100%;
+}
+
+.revoke {
+    background: #fdb03f;
+    border-radius: 8rpx;
+    box-sizing: border-box;
+    color: #fff;
+    margin: 32rpx 0 0 32rpx;
+    padding: 4rpx 10rpx;
+}
+
+.frequency {
+    flex: 1;
+    margin: 32rpx 32rpx 0 0;
+    text-align: right;
+}
+
+.content {
+    border-radius: 6rpx;
+    box-shadow: 0 1rpx 18rpx 0 hsla(0,0%,80%,.3);
+    margin: 0 auto 20rpx;
+    padding-bottom: 30rpx;
+    width: 100%;
+}
+
+.content,.historyProductRowTitle {
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.historyProductRowTitle {
+    border-radius: 8rpx 8rpx 0 0;
+    box-shadow: 0 1rpx 10rpx 0 hsla(0,0%,80%,.2);
+    font-size: 32rpx;
+    font-weight: 700;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+}
+
+.historyProductRowContent {
+    border-bottom: 1rpx solid #f0f0f0;
+    box-sizing: border-box;
+    font-size: 30rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    text-align: center;
+}
+
+.addProduct {
+    bottom: 38rpx;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    width: 100%;
+}
+
+.addNumForm {
+    box-sizing: border-box;
+    padding: 28rpx;
+}
+
+.saveBtn {
+    display: flex;
+    justify-content: center;
+    margin-top: 20rpx;
+}
+
+.scroll {
+    height: 100%;
+}

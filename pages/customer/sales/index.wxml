@@ -1,0 +1,71 @@
+<page-meta pageStyle="overflow: {{isShowAddPop?'hidden':'visible'}}"></page-meta>
+<view class="wraper">
+    <view class="addProduct">
+        <van-button round bindtap="showAddPop" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">新增</van-button>
+    </view>
+    <block wx:if="{{historyList.length}}">
+        <view class="historyProduct" wx:for="{{historyList}}" wx:key="index">
+            <view class="productDate">
+                <image src="/assets/rectangle.png"></image>
+                <view>产品购买日期：</view>
+                <view style="font-size: 30rpx;color:#FDAF40;margin: 6rpx 0 0 16rpx;">{{fn.split(item.createTime,' ')[0]}}</view>
+            </view>
+            <view class="content">
+                <van-row customClass="historyProductRowTitle">
+                    <view style="padding:0 20rpx;box-sizing: border-box;">
+                        <van-col span="8">产品</van-col>
+                        <van-col span="8">价格</van-col>
+                        <van-col span="8">购买数量</van-col>
+                    </view>
+                </van-row>
+                <view style="padding:0 20rpx;box-sizing: border-box;">
+                    <van-row customClass="historyProductRowContent" wx:for="{{item.proList}}" wx:for-index="ind" wx:for-item="itemName" wx:key="ind">
+                        <van-col span="8">{{itemName.name}}</van-col>
+                        <van-col span="8">{{itemName.price}} ￥</van-col>
+                        <van-col span="8">{{itemName.num}}</van-col>
+                    </van-row>
+                </view>
+                <view class="OperationItem">
+                    <view bindtap="handleRevokeHistory" class="revoke" data-id="{{item.id}}">撤销购买记录</view>
+                    <view class="frequency">使用次数：{{item.totalUseNum?item.totalUseNum:0}}次</view>
+                </view>
+            </view>
+        </view>
+    </block>
+    <view wx:else class="noneRecord" >暂无产品购买记录</view>
+</view>
+<van-popup closeable bind:close="hideAddPop" closeIcon="close" customStyle="height: 70%;" position="bottom" show="{{isShowAddPop}}">
+    <view class="wrap">
+        <block wx:if="{{selectProList.length}}">
+            <view class="ProductsList content">
+                <van-row customClass="rowTitle">
+                    <van-col span="8">产品</van-col>
+                    <van-col span="8">数量</van-col>
+                    <van-col span="8">操作</van-col>
+                </van-row>
+                <van-row customClass="rowContent" wx:for="{{selectProList}}" wx:key="index">
+                    <van-col span="8">{{item.name}}</van-col>
+                    <van-col span="8">
+                        <van-stepper integer bind:change="handleChangeProNum" buttonSize="18px" data-index="{{index}}" longPress="{{false}}" min="0" step="1" value="{{item.num}}"></van-stepper>
+                    </van-col>
+                    <van-col bindtap="handleDelSelect" data-index="{{index}}" span="8">
+                        <van-icon name="delete-o"></van-icon>
+                    </van-col>
+                </van-row>
+            </view>
+            <view class="saveBtn">
+                <van-button round bindtap="handleSaveAdd" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;margin-top:28rpx;" icon="edit">保存</van-button>
+            </view>
+        </block>
+        <picker bindchange="handleSelectPro" class="addProduct" mode="selector" range="{{productArray}}" rangeKey="name" value="{{productIndex}}">
+            <van-button round color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">添加产品</van-button>
+        </picker>
+    </view>
+</van-popup>
+<wxs module="fn">
+module.exports = ({
+    split: (function(str, sign) {
+        return (str ? str.split(sign) : '')
+    }),
+});
+</wxs>

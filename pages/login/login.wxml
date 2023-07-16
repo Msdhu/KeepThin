@@ -1,0 +1,20 @@
+<view class="page">
+  <view class="logo-box flex justify-center w-full">
+    <image class="logo-img" mode="widthFix" src="/assets/img/logo.png"></image>
+  </view>
+  <form class="login-form" catchsubmit="formSubmit">
+    <view class="form-item">
+      <view class="form-label">账号：</view>
+      <input class="input" value="{{account}}" data-type="account" type="text" maxlength="30" placeholder="请输入您的账号" bindinput="bindInput" />
+    </view>
+    <view class="form-item">
+      <view class="form-label">密码：</view>
+      <input class="input" value="{{password}}" data-type="password" type="text" maxlength="30" placeholder="请输入您的密码" bindinput="bindInput" />
+    </view>
+    <view class="form-item form-tip text-center">注：此小程序只为XXX提供使用，管理店内数据信息</view>
+    <view class="flex justify-center">
+      <button class="bg-default login-btn" formType="submit" bindtap="login">登录</button>
+    </view>
+  </form>
+  <van-notify id="van-notify"></van-notify>
+</view>

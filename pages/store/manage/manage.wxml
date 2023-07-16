@@ -1,0 +1,189 @@
+<navigation-bar color="{{navColor}}" showBack="{{true}}" title="店铺数据"></navigation-bar>
+<view class="wraper">
+  <view class="store">
+    <image class="logo" mode="scaleToFill" src="/assets/img/backGround.png"></image>
+    <view class="storeInfo">
+      <image class="backImg" mode="scaleToFill" src="/assets/img/chaxun.png"></image>
+      <view class="storeInfoItem">
+        <image src="/assets/img/dizhi.png"></image>
+        <view>{{storeInfo.name}}</view>
+      </view>
+      <view class="storeInfoItem">
+        <image src="/assets/img/user.png"></image>
+        <view>{{userInfo.name}}</view>
+      </view>
+      <view class="storeInfoItem">
+        <image src="/assets/img/phone.png"></image>
+        <view style="margin-right: 16rpx;">{{ showPhone }}</view>
+        <van-icon wx:if="{{ !isShowPhone}}" name="eye-o" size="34rpx" bindtap="handleChangePhoneShow"></van-icon>
+        <van-icon wx:else name="closed-eye" size="34rpx" bindtap="handleChangePhoneShow"></van-icon>
+      </view>
+      <view class="newGuest">
+        <view bindtap="jumpQuerySearch" data-type="today">
+          <text>今日新客</text>
+          <text>{{todayData.newCustomerCount}}</text>
+        </view>
+        <text class="line"></text>
+        <view bindtap="jumpQuerySearch" data-type="month">
+          <text>本月新客</text>
+          <text>{{curMonthData.newCustomerCount}}</text>
+        </view>
+      </view>
+      <view class="entry">
+        <van-button round bind:click="jumpUrl" color="#FDB03F" customStyle="width: 180rpx;height: 56rpx;line-height: 56rpx;font-size：34rpx;border-radius: 25rpx !important;" data-url="/pages/customer/list/index">
+          查 询
+        </van-button>
+      </view>
+    </view>
+  </view>
+  <view class="wrap">
+    <view class="content">
+      <view class="dayData module">
+        <view class="title">
+          <view class="titleCon">
+            <image class="titleImg" src="/assets/img/day.png"></image>
+            <view>今日数据</view>
+          </view>
+        </view>
+        <view class="dateContent">
+          <view bindtap="jumpUrl" class="col" data-url="/pages/store/ranking/index?type=1">
+            <view class="tip">今日掉称</view>
+            <view class="numData">
+              <view>
+                <view class="personNum">{{todayData.lossWeightPersonCount}}</view>
+                <text class="company">人</text>
+              </view>
+              <view>
+                <text style="color: #FF3001;font-size:28rpx;">{{todayData.lossWeightTotal}}</text>
+                <text class="company">斤</text>
+              </view>
+            </view>
+          </view>
+          <view class="colLine"></view>
+          <view bindtap="jumpQuerySearch" class="col" data-type="arriveStore">
+            <view class="tip">今日到店</view>
+            <view class="numData">
+              <view>
+                <view class="personNum" style="background: none;color: #FDB03F;">
+                  {{todayData.registerCount}}
+                </view>
+                <text class="company">人</text>
+              </view>
+              <view>
+                <text class="company" style="margin:6rpx 0 0 0;">应到</text>
+                <text style="color: #333333;font-size:28rpx;">{{todayData.realRegisterCount}}</text>
+              </view>
+            </view>
+          </view>
+          <view class="colLine"></view>
+          <view bindtap="jumpUrl" class="col" data-url="/pages/store/ranking/index?type=2">
+            <view class="tip">今日涨称</view>
+            <view class="numData">
+              <view>
+                <view class="personNum">{{todayData.addWeightPersonCount}}</view>
+                <text class="company">人</text>
+              </view>
+              <view>
+                <text style="color: #01B376;font-size:28rpx;">{{todayData.addWeightTotal}}</text>
+                <text class="company">斤</text>
+              </view>
+            </view>
+          </view>
+          <view class="col">
+            <view class="tip">精护人数</view>
+            <view class="numDatas">
+              <text>{{todayData.essensCarePersonCount}}</text>
+              <text class="company">次</text>
+            </view>
+          </view>
+          <view class="colLine" style="margin-top: -36rpx;"></view>
+          <view class="col">
+            <view class="tip">实际减重</view>
+            <view class="numDatas">
+              <text style="color: #FF3001;">{{todayData.realLossWeightTotal}}</text>
+              <text class="company">斤</text>
+            </view>
+          </view>
+          <view class="colLine" style="margin-top: -36rpx;"></view>
+          <view class="col">
+            <view class="tip">平均减重</view>
+            <view class="numDatas">
+              <text style="color: #FF3001;">{{todayData.avgLossWeight}}</text>
+              <text class="company">斤</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="monthData module">
+        <view class="title">
+          <view class="titleCon">
+            <image class="titleImg" src="/assets/img/month.png"></image>
+            <view>本月数据</view>
+          </view>
+          <picker bindchange="onSelectDate" end="{{currentDate}}" fields="month" mode="date" value="{{dateMonth}}">
+            <view class="date">
+              <view style="margin-right: 10rpx;">{{dateMonth}}</view>
+              <van-icon name="arrow-down"></van-icon>
+            </view>
+          </picker>
+        </view>
+        <view class="dateContent">
+          <view class="monthcol">
+            <view class="tip">实际减重</view>
+            <view class="numDatas">
+              <text style="color: #FF3001;">{{monthData.realLossWeightTotal}}</text>
+              <text class="company">斤</text>
+            </view>
+          </view>
+          <view class="colLine lineTop"></view>
+          <view class="monthcol">
+            <view class="tip">精护人数</view>
+            <view class="numDatas">
+              <text>{{monthData.essensCarePersonCount}}</text>
+              <text class="company">次</text>
+            </view>
+          </view>
+          <view class="colLine lineTop"></view>
+          <view class="monthcol">
+            <view class="tip">到店次数</view>
+            <view class="numDatas">
+              <text>{{monthData.registerCount}}</text>
+              <text class="company">次</text>
+            </view>
+          </view>
+          <view class="monthcol">
+            <view class="tip">平均减重</view>
+            <view class="numDatas">
+              <text style="color: #FF3001;">{{monthData.avgLossWeight}}</text>
+              <text class="company">斤</text>
+            </view>
+          </view>
+          <view class="colLine lineTop"></view>
+          <view class="monthcol">
+            <view class="tip">精护占比</view>
+            <view class="numDatas">
+              <text>{{monthData.essensCareWeightRate}}</text>
+              <text class="company">%</text>
+            </view>
+          </view>
+          <view class="colLine lineTop"></view>
+          <view class="monthcol">
+            <view class="tip">掉称占比</view>
+            <view class="numDatas">
+              <text>{{monthData.lossWeightRate}}</text>
+              <text class="company">%</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <van-button round bindtap="handleInputHistory" color="#FDB03F" customStyle="width:100%;height:80rpx;margin-top:36rpx;margin-bottom:30rpx;border-radius:8rpx !important;font-size:30rpx;" data-type="export" icon="label-o">
+      历史体重导入
+    </van-button>
+    <picker bindchange="handleExportData" end="{{currentDate}}" fields="month" mode="date" value="{{dateMonth}}">
+      <van-button round color="#FDB03F" customStyle="width:100%;height:80rpx;margin-bottom:60rpx;border-radius:8rpx !important;font-size:30rpx;" data-type="export" icon="label-o">
+        详情数据导出
+      </van-button>
+    </picker>
+  </view>
+</view>

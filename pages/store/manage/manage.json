@@ -1,0 +1,7 @@
+{
+    "usingComponents": {
+        "navigation-bar": "/components/navigationBar/navigationBar"
+    },
+    "navigationBarTitleText": "店铺数据",
+    "navigationStyle": "custom"
+}

@@ -1,0 +1,9 @@
+<view class="wraper" wx:if="{{logList.length>0}}">
+    <view class="content" wx:for="{{logList}}" wx:key="index">
+        <view class="circle"></view>
+        <view class="storeLogItem">{{item.content}}</view>
+    </view>
+</view>
+<view style="text-align: center;margin-top: 100rpx;" wx:if="{{logList.length<=0}}">
+    暂无店铺日志信息
+</view>

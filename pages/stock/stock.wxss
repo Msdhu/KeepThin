@@ -1,0 +1,274 @@
+.wrap {
+  height: 100vh;
+  overflow: hidden;
+  width: 100%;
+}
+
+.content {
+  box-sizing: border-box;
+  padding: 0 30rpx;
+}
+
+.addStock {
+  bottom: 30rpx;
+  position: fixed;
+  right: 20rpx;
+  z-index: 2;
+}
+
+.addStock>image {
+  height: 100rpx;
+  width: 100rpx;
+}
+
+.addStock>view {
+  color: #fff;
+  font-size: 40rpx;
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%,-60%);
+  z-index: 9;
+}
+
+.options {
+  align-items: center;
+  bottom: 48rpx;
+  display: flex;
+  justify-content: center;
+  margin-left: -30rpx;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+.scrollView {
+  height: 70vh;
+  width: 100%;
+}
+
+.stockList {
+  height: 100%;
+  width: 100%;
+}
+
+.stockItem {
+  border-bottom: 1rpx solid #f2f2f2;
+  box-sizing: border-box;
+  height: 80rpx;
+  justify-content: space-between;
+  line-height: 80rpx;
+  padding: 10rpx 30rpx;
+  width: 100%;
+}
+
+.stockData,.stockItem {
+  align-items: center;
+  display: flex;
+}
+
+.stockData {
+  color: #333;
+  font-size: 30rpx;
+  text-align: center;
+  width: 70%;
+}
+
+.stockData>view:nth-child(1) {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 34%;
+}
+
+.stockData>view:nth-child(2) {
+  width: 36%;
+}
+
+.stockData>view:nth-child(3) {
+  width: 30%;
+}
+
+.addstockForm {
+  box-sizing: border-box;
+  padding: 28rpx;
+}
+
+.saveBtn {
+  display: flex;
+  justify-content: center;
+  margin-top: 20rpx;
+}
+
+.treatmentFee {
+  background: #fff;
+  border-radius: 8rpx;
+  box-shadow: 1rpx 1rpx 18rpx 0 hsla(0,0%,95%,.75);
+  height: 100%;
+  margin-bottom: 30rpx;
+  width: 100%;
+}
+
+.treatmentFeeRow {
+  align-items: center;
+  display: flex;
+  height: 70rpx;
+  justify-content: space-around;
+  line-height: 70rpx;
+}
+
+.treatmentFeeRow>view {
+  color: #333;
+  font-size: 32rpx;
+  font-weight: 700;
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+  width: 50%;
+}
+
+.treatmentFeeCol {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.treatmentFeeCol>view {
+  border-bottom: 1rpx solid #f2f2f2;
+  color: #333;
+  font-size: 30rpx;
+  height: 58rpx;
+  line-height: 58rpx;
+  text-align: center;
+  width: 50%;
+}
+
+.allStockData {
+  background: #fff;
+  border-radius: 8rpx;
+  box-shadow: 1rpx 1rpx 18rpx 0 hsla(0,0%,95%,.75);
+  height: 100%;
+  width: 100%;
+}
+
+.row {
+  align-items: center;
+  display: flex;
+  height: 90rpx;
+  justify-content: space-between;
+  line-height: 90rpx;
+}
+
+.row>view {
+  color: #333;
+  font-size: 32rpx;
+  font-weight: 700;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  width: 25%;
+}
+
+.col {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.col>view {
+  border-bottom: 1rpx solid #f2f2f2;
+  color: #333;
+  font-size: 30rpx;
+  height: 68rpx;
+  line-height: 68rpx;
+  text-align: center;
+  width: 25%;
+}
+
+.col>view:nth-child(1) {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 25%;
+}
+
+.tabs {
+  align-items: center;
+  background: #fff;
+  display: flex;
+  height: 88rpx;
+  line-height: 88rpx;
+  width: 100%;
+}
+
+.tab {
+  font-size: 30rpx;
+  text-align: center;
+  width: 50%;
+}
+
+.active {
+  color: #ffb629;
+  position: relative;
+}
+
+.active::after {
+  background: #ffb629;
+  border-radius: 20rpx;
+  bottom: 0;
+  content: " ";
+  height: 8rpx;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50rpx);
+  width: 100rpx;
+}
+
+.productCon {
+  background: #fff;
+  border-radius: 8rpx;
+  box-shadow: 1rpx 1rpx 18rpx 0 hsla(0,0%,95%,.75);
+  margin: 30rpx auto 0;
+  width: 100%;
+}
+
+.slectDate {
+  align-items: center;
+  color: #333;
+  display: flex;
+  font-size: 32rpx;
+  height: 40rpx;
+  justify-content: center;
+  margin: 30rpx auto;
+  width: 100%;
+}
+
+.slectDate>image {
+  height: 34rpx;
+  margin-right: 8rpx;
+  margin-top: 4rpx;
+  width: 8rpx;
+}
+
+.dateSelect {
+  align-items: center;
+  background: #fff;
+  border-radius: 30rpx;
+  border-radius: 30px;
+  color: #fdaf40;
+  display: flex;
+  font-size: 30rpx;
+  height: 60rpx;
+  justify-content: center;
+  line-height: 60rpx;
+  width: 480rpx;
+}
+
+.dateIcon {
+  margin: 0 28rpx;
+}

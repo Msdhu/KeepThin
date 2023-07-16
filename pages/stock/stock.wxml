@@ -1,0 +1,93 @@
+<view class="wrap">
+  <Tabs bindtabChange="tabChangeListener" tabsList="{{tabsList}}"></Tabs>
+  <view class="content">
+    <view class="productCon" wx:if="{{tabIndex==0}}">
+      <view class="addStock">
+        <image src="/assets/img/circular.png"></image>
+        <view bindtap="addData">新</view>
+      </view>
+      <view class="row">
+        <view style="width: 30%;">商品名称</view>
+        <view style="width: 20%;">商品价格</view>
+        <view style="width: 20%;">现有库存</view>
+        <view style="width: 30%;">操作库存</view>
+      </view>
+      <scroll-view class="scrollView" lowerThreshold="20" scrollY="{{true}}">
+        <view class="stockList">
+          <van-swipe-cell rightWidth="{{46}}" wx:for="{{stockList}}" wx:key="index">
+            <view class="stockItem">
+              <view class="stockData">
+                <view>{{item.goodsName}}</view>
+                <view>￥{{item.price}}</view>
+                <view>{{item.stock || 0}}</view>
+              </view>
+              <van-stepper value="{{item.count}}"  buttonSize="18px" data-index="{{index}}" min="0" bind:change="handleChangeStock"></van-stepper>
+            </view>
+          </van-swipe-cell>
+        </view>
+      </scroll-view>
+      <view class="options">
+        <van-button round bind:click="handleSave" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;" data-type="">
+          保存
+        </van-button>
+      </view>
+    </view>
+    <view wx:if="{{tabIndex==1}}">
+      <view bindtap="handleShowCalendar" class="slectDate">
+        <image src="/assets/img/rectangle.png"></image>
+        <view>选择时间：</view>
+        <view class="dateSelect">
+          <view>{{startDate}}</view>
+          <van-icon class="dateIcon" name="exchange"></van-icon>
+          <view>{{endDate}}</view>
+        </view>
+      </view>
+      <view class="treatmentFee">
+        <view class="treatmentFeeRow">
+          <view>总顾客人数</view>
+          <view>疗程款总数</view>
+        </view>
+        <view class="treatmentFeeCol">
+          <view>{{saleData.customerCount}} 位</view>
+          <view>{{saleData.totalIncome}} ￥</view>
+        </view>
+      </view>
+      <view class="allStockData">
+        <view class="row">
+          <view>商品名称</view>
+          <view>入库数量</view>
+          <view>出库数量</view>
+          <view>总计</view>
+        </view>
+        <scroll-view lowerThreshold="20" scrollY="{{true}}" style="height: 50vh;">
+          <view class="col" wx:for="{{stockLogList}}" wx:key="index">
+            <view>{{ item.goodsName }}</view>
+            <view>{{ item.inputStockCount || 0 }} 个</view>
+            <view>{{ item.outStockCount || 0 }} 个</view>
+            <view>{{ item.totalPrice || 0 }} ￥</view>
+          </view>
+        </scroll-view>
+      </view>
+      <view class="options">
+        <van-button round color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;" data-type="export" bind:click="handleExport">
+          导出数据
+        </van-button>
+      </view>
+    </view>
+  </view>
+  <van-popup round bind:close="handleCloseAddPop" customStyle="height:30%;" position="bottom" show="{{isShowAddPop}}">
+    <view class="addstockForm">
+      <van-cell-group>
+        <van-field label="商品名称" maxlength="8" value="{{addFormData.goodsName}}" placeholder="请输入商品名称"></van-field>
+        <van-field label="商品价格" maxlength="4" value="{{addFormData.price}}" placeholder="请输入商品价格" type="number"></van-field>
+      </van-cell-group>
+      <view class="saveBtn">
+        <van-button round bind:click="handleAddSave" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">
+          保存
+        </van-button>
+      </view>
+    </view>
+  </van-popup>
+  <van-notify id="van-notify"></van-notify>
+  <calendar bindonConfirmCalendar="handleCalendarChange" showCalendar="{{isShowCalendar}}" tabIndex="{{2}}"></calendar>
+</view>

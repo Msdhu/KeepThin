@@ -1,0 +1,94 @@
+.wrap {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 30rpx;
+    width: 100%;
+}
+
+.slectDate {
+    align-items: center;
+    color: #333;
+    display: flex;
+    font-size: 32rpx;
+    height: 40rpx;
+    justify-content: center;
+    margin: 0 auto 24rpx;
+    width: 100%;
+}
+
+.slectDate>image {
+    height: 34rpx;
+    margin-right: 8rpx;
+    margin-top: 4rpx;
+    width: 8rpx;
+}
+
+.dateSelect {
+    align-items: center;
+    background: #fff;
+    border-radius: 30rpx;
+    border-radius: 30px;
+    color: #fdaf40;
+    display: flex;
+    font-size: 30rpx;
+    height: 60rpx;
+    justify-content: center;
+    line-height: 60rpx;
+    width: 480rpx;
+}
+
+.dateIcon {
+    margin: 0 28rpx;
+}
+
+.content {
+    width: 100%;
+}
+
+.personalPartsList {
+    background: #fff;
+    border-radius: 8rpx 8rpx 0 0;
+    box-shadow: 0 1rpx 10rpx 0 hsla(0,0%,80%,.2);
+    margin-bottom: 30rpx;
+}
+
+.userName {
+    border-bottom: 1rpx solid #f2f2f2;
+    box-sizing: border-box;
+    color: #333;
+    font-size: 32rpx;
+    font-weight: 700;
+    height: 89rpx;
+    line-height: 89rpx;
+    padding: 0 56rpx;
+}
+
+.parts {
+    flex-wrap: wrap;
+    padding: 0 28rpx;
+}
+
+.parts,.partsItem {
+    box-sizing: border-box;
+    display: flex;
+}
+
+.partsItem {
+    background: hsla(0,0%,83%,.1);
+    border-radius: 20rpx;
+    font-size: 30rpx;
+    height: 70rpx;
+    justify-content: space-between;
+    line-height: 70rpx;
+    margin: 10rpx 0 10rpx 2%;
+    padding: 0 4rpx;
+    width: 48%;
+}
+
+.partsItem>view:nth-child(1) {
+    margin-left: 10rpx;
+}
+
+.partsItem>view:nth-child(2)>text {
+    color: #fdb042;
+}

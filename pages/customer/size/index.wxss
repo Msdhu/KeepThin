@@ -1,0 +1,111 @@
+.wraper {
+    height: 100%;
+    overflow: hidden;
+    padding: 0 28rpx;
+}
+
+.content,.wraper {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.content {
+    background: #fff;
+    border-radius: 6rpx;
+    box-shadow: 0 1rpx 18rpx 0 hsla(0,0%,80%,.3);
+    margin: 20rpx auto 0;
+    padding: 0 24rpx 24rpx;
+}
+
+.rowTitle {
+    border-bottom: 1rpx solid hsla(0,0%,80%,.2);
+    color: #333;
+    font-size: 32rpx;
+    font-weight: 700;
+    height: 90rpx;
+    line-height: 90rpx;
+}
+
+.rowContent,.rowTitle {
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.rowContent {
+    font-size: 30rpx;
+    height: 72rpx;
+    line-height: 72rpx;
+}
+
+.borderBottom {
+    background: #f2f2f2;
+    height: 1rpx;
+    position: relative;
+    top: -20rpx;
+    width: 100%;
+}
+
+.marginTop {
+    margin-top: 40rpx;
+}
+
+.marginBottom {
+    margin-bottom: 32rpx;
+}
+
+.btns {
+    margin-top: 70rpx;
+}
+
+.btns,.thisTime {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.wrap {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 80rpx 28rpx 28rpx;
+    width: 100%;
+}
+
+.historySizeList {
+    border-radius: 38rpx;
+    box-shadow: 0 1rpx 18rpx 0 hsla(0,0%,69%,.3);
+    box-sizing: border-box;
+    margin: 10rpx;
+    padding: 28rpx;
+}
+
+.sizeDate {
+    align-items: center;
+    border-bottom: 1rpx solid hsla(0,0%,69%,.3);
+    display: flex;
+    font-size: 28rpx;
+    font-weight: 700;
+    justify-content: space-between;
+    line-height: 60rpx;
+    margin: 0 28rpx;
+}
+
+.historySizeRowTitle {
+    font-size: 28rpx;
+    font-weight: 700;
+    margin-top: 10rpx;
+}
+
+.historySizeRowContent,.historySizeRowTitle {
+    box-sizing: border-box;
+    height: 50rpx;
+    line-height: 50rpx;
+    text-align: center;
+}
+
+.historySizeRowContent {
+    font-size: 24rpx;
+}
+
+.scroll {
+    height: 100%;
+}

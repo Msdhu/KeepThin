@@ -1,0 +1,58 @@
+.wraper {
+    box-sizing: border-box;
+    height: 100%;
+    overflow: hidden;
+    padding: 30rpx;
+    width: 100%;
+}
+
+.header {
+    align-items: center;
+    color: #333;
+    display: flex;
+    font-size: 32rpx;
+    font-weight: 700;
+    height: 60rpx;
+    justify-content: flex-start;
+}
+
+.header>image {
+    height: 32rpx;
+    margin: 4rpx 10rpx 0 0;
+    width: 7rpx;
+}
+
+.header>view {
+    color: #333;
+    font-size: 32rpx;
+    margin: 4rpx 10rpx 0;
+}
+
+.content {
+    background: #fff;
+    border-radius: 8rpx;
+    box-shadow: 1rpx 1rpx 18rpx 0 hsla(0,0%,95%,.75);
+    box-sizing: border-box;
+    margin: 30rpx auto;
+    padding: 30rpx 0 0;
+    width: 100%;
+}
+
+.storeCon {
+    display: flex;
+    justify-content: center;
+}
+
+.storeItem {
+    font-size: 32rpx;
+    margin-bottom: 30rpx;
+}
+
+.saveBtn {
+    display: flex;
+    justify-content: center;
+}
+
+.active {
+    color: #fdb03f!important;
+}

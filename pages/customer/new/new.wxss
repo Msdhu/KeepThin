@@ -1,0 +1,105 @@
+.page {
+  height: 100%;
+}
+.wrap {
+	box-sizing: border-box;
+	height: 100%;
+  overflow: hidden;
+	padding: 28rpx;
+	width: 100%;
+  padding-bottom: 260rpx;
+}
+
+.form {
+	border-radius: 8rpx;
+	box-shadow: 1rpx 1rpx 18rpx 0 rgba(0, 0, 0, 0.04);
+}
+
+.form-bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: 20rpx;
+}
+.form,
+.sizeModule {
+	background: #fff;
+	width: 100%;
+}
+
+.sizeModule {
+	box-sizing: border-box;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+	padding: 0 28rpx;
+}
+
+.formItem {
+	text-align: center;
+}
+
+.formItem,
+.itemForm {
+	display: flex;
+}
+
+.itemForm {
+	align-items: center;
+}
+
+.itemForm text {
+	color: #333;
+	font-size: 28rpx;
+	margin: 5rpx 0;
+}
+
+.itemForm > text:nth-child(1) {
+	flex-shrink: 0;
+	width: 120rpx;
+}
+
+.itemForm > text:nth-child(2) {
+	width: 80rpx;
+}
+
+.line {
+	background: hsla(0, 0%, 94%, 0.5);
+	height: 1rpx;
+	margin: 10rpx 0;
+	width: 100%;
+}
+
+.sizeCon {
+	background: #fff;
+	border-radius: 8rpx;
+	box-shadow: 1rpx 1rpx 18rpx 0 hsla(0, 0%, 95%, 0.75);
+	box-sizing: border-box;
+	margin: 28rpx;
+}
+
+.saveBtn {
+	margin-bottom: 20rpx;
+	display: flex;
+	justify-content: center;
+}
+
+
+.agreement {
+  display: inline-block;
+  margin: 0 auto 40rpx;
+	color: #999;
+	font-size: 24rpx;
+}
+
+.agreementContent {
+	font-size: 28rpx;
+}
+
+.agreementContent > view {
+	margin-bottom: 10rpx;
+}
+
+.success {
+	display: flex;
+	justify-content: center;
+}

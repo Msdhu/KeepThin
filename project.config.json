@@ -43,10 +43,10 @@
   "compileType": "miniprogram",
   "libVersion": "2.19.4",
   "appid": "wx4002844a7d44adf6",
-  "projectname": "miniprogram-92",
-  "condition": {},
+  "projectname": "KeepThin",
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
-  }
+  },
+  "condition": {}
 }

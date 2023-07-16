@@ -1,0 +1,8 @@
+{
+    "usingComponents": {
+        "calendar": "/components/calendar/calendar",
+        "navigation-bar": "/components/navigationBar/navigationBar"
+    },
+    "navigationStyle": "custom",
+    "navigationBarTitleText": "排行榜"
+}

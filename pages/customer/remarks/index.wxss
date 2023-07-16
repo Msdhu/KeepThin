@@ -1,0 +1,80 @@
+.wraper {
+    box-sizing: border-box;
+    height: 100%;
+    overflow: hidden;
+    padding: 30rpx;
+    width: 100%;
+}
+
+.content {
+    background: #fff;
+    border-radius: 6rpx;
+    box-shadow: 0 1rpx 18rpx 0 hsla(0,0%,80%,.3);
+    padding-bottom: 30rpx;
+    width: 100%;
+}
+
+.title {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    padding: 22rpx 0;
+}
+
+.title>view:nth-child(1) {
+    background: #fdaf40;
+    border-radius: 50%;
+    height: 10rpx;
+    margin-left: 32rpx;
+    width: 10rpx;
+}
+
+.title>view:nth-child(2) {
+    font-size: 30rpx;
+    margin-left: 14rpx;
+}
+
+.slectDate {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 100rpx;
+}
+
+.wrap {
+    box-sizing: border-box;
+    padding: 80rpx 28rpx 28rpx;
+    width: 100%;
+}
+
+.scroll,.wrap {
+    height: 100%;
+}
+
+.remarkList {
+    border-radius: 38rpx;
+    box-shadow: 0 1rpx 18rpx 0 hsla(0,0%,69%,.3);
+    box-sizing: border-box;
+    margin: 10rpx;
+    padding: 28rpx;
+}
+
+.remarksDate {
+    align-items: center;
+    border-bottom: 1rpx solid hsla(0,0%,69%,.3);
+    display: flex;
+    font-size: 28rpx;
+    font-weight: 700;
+    justify-content: space-between;
+    line-height: 60rpx;
+    margin: 0 28rpx;
+}
+
+.remarksContent {
+    word-wrap: break-word;
+    box-sizing: border-box;
+    font-size: 28rpx;
+    margin-top: 20rpx;
+    padding: 10rpx 28rpx;
+    word-break: normal;
+}

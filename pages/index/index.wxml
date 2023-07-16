@@ -1,23 +1,86 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <block wx:if="{{canIUseOpenData}}">
-      <view class="userinfo-avatar" bindtap="bindViewTap">
-        <open-data type="userAvatarUrl"></open-data>
+<navigation-bar color="{{navigationColor}}" showBack="{{false}}" title="紫姗瘦吧"></navigation-bar>
+<view class="wraper">
+  <view class="store">
+    <image class="logo" mode="scaleToFill" src="/assets/img/backGround.png"></image>
+    <view class="store-info">
+      <image class="store-info-back" src="/assets/img/shoushen.png"></image>
+      <view class="store-info-content">
+        <view class="store-info-title">
+          <image class="icon" mode="scaleToFill" src="/assets/img/dizhi.png"></image>
+          <text>店铺地址:</text>
+        </view>
+        <view class="store-info-con">
+          <text wx:if="{{ storeInfo }}">{{storeInfo.name}}</text>
+          <text class="select-btn" bindtap="switchStore">选择店铺</text>
+        </view>
+        <view class="store-info-title" style="margin-top: 30rpx;">
+          <image class="icon" mode="scaleToFill" src="/assets/img/phone.png"></image>
+          <text>{{userInfo.name}}</text>
+        </view>
+        <view class="store-info-con">
+          <text style="margin-right: 16rpx;">{{ showPhone }}</text>
+          <van-icon wx:if="{{ !isShowPhone}}" name="eye-o" size="34rpx" bindtap="handleChangePhoneShow"></van-icon>
+          <van-icon wx:else name="closed-eye" size="34rpx" bindtap="handleChangePhoneShow"></van-icon>
+        </view>
       </view>
-      <open-data type="userNickName"></open-data>
-    </block>
-    <block wx:elif="{{!hasUserInfo}}">
-      <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-      <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-      <view wx:else> 请使用1.4.4及以上版本基础库 </view>
-    </block>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+    </view>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+  <view class="wrap">
+    <view class="content">
+      <view wx:for="{{showMenuList}}" class="module-card" wx:key="index" data-index="{{index}}" bindtap="handleGoto">
+        <view style="color:{{item.color}};">{{item.title}}</view>
+        <image class="module-card_back" src="{{item.img}}"></image>
+      </view>
+    </view>
   </view>
 </view>
+<van-popup round bind:close="closeStorePop" customStyle="height: 50vh;overflow: hidden;" position="top" show="{{isStorePopShow}}">
+  <view style="margin-top: {{offsetTop+4}}rpx; height: calc(50vh - {{offsetTop}}rpx); overflow: hidden;">
+    <view style="margin:10rpx 0 10rpx 28rpx;">
+      <view  wx:if="{{isAdmin}}" class="currentCity">
+          <text wx:if="{{cityInfo}}">{{cityInfo.name}}</text>
+          <text catchtap="showCityPop" class="selectCity">选择城市</text>
+      </view>
+      <view wx:else class="current-city">{{cityInfo.name}}</view>
+    </view>
+    <scroll-view lowerThreshold="50" scrollY="true" style="height: 33vh;">
+      <view class="store-list">
+        <view wx:for="{{storeList}}" wx:key="index" class="store-item {{activeStoreIndex == index? 'check':''}}" data-index="{{index}}" bindtap="checkStore">
+          {{item.name}}
+          <view style="width: 10rpx;height: 10rpx;background-color: red;border-radius: 50%;flex: 1;margin-left: 6rpx;" wx:if="{{ item.isRead }}"></view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</van-popup>
+<van-popup round bind:close="hideCityPop" customStyle="height: 60vh;" position="bottom" show="{{isShowCityPop}}">
+  <view class="confirm">
+    <van-button round bind:click="handleSaveSelectCity" color="#FDB03F" customStyle="width:160rpx;height:70rpx;margin:20rpx 0;border-radius:40rpx !important;font-size:30rpx;" disabled="{{!selectCity.regid}}">
+      确 认
+    </van-button>
+  </view>
+  <view class="select-city-con">
+    <view>
+      <scroll-view lowerThreshold="20" scrollY="{{true}}" style="height: 50vh;">
+        <van-radio-group value="{{selectProvince.regid}}">
+          <van-cell-group>
+            <van-cell clickable bind:click="onClickProvince" data-id="{{item.regid}}" data-item="{{item}}" title="{{item.regname}}" wx:for="{{provinceList}}" wx:key="index">
+              <van-radio checkedColor="#FDAF45" name="{{item.regid}}" slot="right-icon"></van-radio>
+            </van-cell>
+          </van-cell-group>
+        </van-radio-group>
+      </scroll-view>
+    </view>
+    <view>
+      <scroll-view lowerThreshold="20" scrollY="{{true}}" style="height: 50vh;">
+        <van-radio-group value="{{selectCity.regid}}">
+          <van-cell-group>
+            <van-cell clickable bind:click="onClickCity" data-id="{{item.regid}}" data-item="{{item}}" title="{{item.regname}}" wx:for="{{cityList}}" wx:key="index">
+              <van-radio checkedColor="#FDAF45" name="{{item.regid}}" slot="right-icon"></van-radio>
+            </van-cell>
+          </van-cell-group>
+        </van-radio-group>
+      </scroll-view>
+    </view>
+  </view>
+</van-popup>

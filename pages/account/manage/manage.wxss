@@ -1,0 +1,110 @@
+.wrap {
+	height: 100%;
+	width: 100%;
+}
+
+.addAccountBtn {
+	bottom: 100rpx;
+	left: 50%;
+	margin-left: -118rpx;
+	position: fixed;
+	z-index: 9;
+}
+
+.addAccountForm {
+	background: #fff;
+	border-radius: 8rpx;
+	box-shadow: 1rpx 1rpx 18rpx 0 rgba(0, 0, 0, 0.04);
+	box-sizing: border-box;
+	font-size: 32rpx;
+	margin: 80rpx 32rpx 0;
+	padding: 0 28rpx;
+}
+
+.stores {
+	margin: 28rpx 0;
+}
+
+.stores > view:nth-child(1) {
+	color: #666;
+	font-size: 32rpx;
+	margin-bottom: 28rpx;
+	margin-left: 38rpx;
+}
+
+.van-checkbox-group {
+	margin-left: 32rpx;
+}
+
+.van-checkbox {
+	margin-bottom: 10rpx;
+}
+
+.saveBtn {
+	display: flex;
+	justify-content: center;
+	margin-top: 80rpx;
+	width: 100%;
+}
+
+.accountList {
+	margin-top: 22rpx;
+	padding: 0 28rpx 160rpx;
+	width: 100%;
+}
+
+.accountList,
+.card {
+	box-sizing: border-box;
+}
+
+.card {
+	background: #fff;
+	border-radius: 8rpx;
+	box-shadow: 1rpx 1rpx 18rpx 0 rgba(0, 0, 0, 0.04);
+	color: #4a4a4a;
+	font-size: 32rpx;
+	margin-bottom: 20rpx;
+	padding: 10rpx 30rpx;
+}
+
+.label {
+	height: 92rpx;
+	width: 160rpx;
+}
+
+.van-cell__value {
+	color: #333 !important;
+}
+
+.options {
+	align-content: center;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.options > image {
+	height: 32rpx;
+	margin: 14rpx 34rpx 18rpx 0;
+	width: 32rpx;
+}
+
+.marketTags {
+	display: flex;
+}
+
+.marketTags > text {
+	flex-shrink: 1;
+}
+
+.marketTags > view {
+	flex: 1;
+}
+
+.accountChildTitle {
+	box-sizing: border-box;
+	color: #4a4a4a;
+	font-size: 32rpx;
+	font-weight: 700;
+	padding: 30rpx;
+}

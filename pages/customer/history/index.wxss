@@ -1,0 +1,68 @@
+.wraper {
+    padding: 28rpx;
+}
+
+.content,.wraper {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.content {
+    background: #fff;
+    border-radius: 6rpx;
+    box-shadow: 0 1rpx 18rpx 0 hsla(0,0%,80%,.3);
+    margin: 0 auto 20rpx;
+    padding: 16rpx;
+    position: relative;
+}
+
+.circle {
+    background: #fdaf40;
+    border-radius: 50%;
+    height: 10rpx;
+    left: 20rpx;
+    position: absolute;
+    top: 34rpx;
+    width: 10rpx;
+}
+
+.rowTitle {
+    color: #333;
+    font-size: 30rpx;
+    font-weight: 700;
+}
+
+.rowContent,.rowTitle {
+    box-sizing: border-box;
+    height: 50rpx;
+    line-height: 50rpx;
+    padding: 0 20rpx 0 30rpx;
+}
+
+.rowContent {
+    color: #666;
+    font-size: 28rpx;
+    margin-top: 10rpx;
+}
+
+.slectDate {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 28rpx;
+}
+
+.canvas {
+    height: 50%;
+    width: 100%;
+}
+
+.updateWeightForm {
+    box-sizing: border-box;
+    padding: 28rpx;
+}
+
+.saveBtn {
+    display: flex;
+    justify-content: center;
+    margin-top: 20rpx;
+}

@@ -1,0 +1,20 @@
+.wrap {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-x: hidden;
+    padding: 28rpx;
+    width: 100%;
+}
+
+.form {
+    background: #fff;
+    border-radius: 8rpx;
+    box-shadow: 1rpx 1rpx 18rpx 0 rgba(0,0,0,.04);
+    width: 100%;
+}
+
+.saveBtn {
+    display: flex;
+    justify-content: center;
+    margin-top: 20rpx;
+}

@@ -1,0 +1,50 @@
+.page {
+	box-sizing: border-box;
+	height: 100%;
+	padding: 0 48rpx;
+	width: 100%;
+}
+
+.logo-img {
+	margin-top: 50rpx;
+	width: 300rpx;
+	height: 300rpx;
+}
+
+.login-form {
+	margin-top: 48rpx;
+}
+
+.form-item {
+	margin-top: 36rpx;
+}
+
+.form-label {
+	color: #333;
+	font-size: 34rpx;
+	font-weight: bold;
+}
+
+.input {
+	margin: 20rpx auto 30rpx;
+	width: 80vw;
+	height: 80rpx;
+	font-size: 32rpx;
+	border-bottom: 1rpx solid #ccc;
+}
+.form-tip {
+	color: #bfc9d4;
+	margin: 20rpx auto 0;
+	width: 500rpx;
+	font-size: 26rpx;
+}
+
+.login-btn {
+	margin-top: 60rpx;
+	width: 50vw;
+	height: 88rpx;
+	color: #fff;
+	font-size: 36rpx;
+	line-height: 88rpx;
+	border-radius: 8rpx;
+}

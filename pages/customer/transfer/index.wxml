@@ -1,0 +1,24 @@
+<view class="wraper">
+    <view class="header">
+        <image src="/assets/img/rectangle.png"></image>
+        <view>转店列表</view>
+    </view>
+    <view class="content">
+        <scroll-view lowerThreshold="20" scrollY="{{true}}" style="height: 60vh;">
+            <view class="storeCon">
+                <van-radio-group bind:change="onSelectStore">
+                    <view class="storeList" wx:for="{{storeList}}" wx:key="index">
+                        <van-radio checkedColor="#FDB03F" customClass="storeItem" disabled="{{item.id==storeInfo.id}}" iconSize="16px" labelClass="{{item.id==transferShop?'active':''}}" name="{{item.id}}">
+                            {{item.name}}
+                        </van-radio>
+                    </view>
+                </van-radio-group>
+            </view>
+        </scroll-view>
+    </view>
+    <view class="saveBtn">
+        <van-button round bind:click="save" color="#FDB03F" customStyle="width:200rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;margin-top:30rpx;">
+            转店
+        </van-button>
+    </view>
+</view>

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "calendar": "/components/calendar/calendar",
+    "Tabs": "/components/tabs/tabs"
+  },
+  "navigationBarTitleText": "库存管理"
+}

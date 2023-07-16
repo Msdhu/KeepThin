@@ -1,0 +1,33 @@
+.wraper {
+    padding: 28rpx;
+}
+
+.content,.wraper {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.content {
+    background: #fff;
+    border-radius: 6rpx;
+    box-shadow: 0 1rpx 18rpx 0 hsla(0,0%,80%,.3);
+    margin: 0 auto 20rpx;
+    padding: 16rpx;
+    position: relative;
+}
+
+.circle {
+    background: #fdaf40;
+    border-radius: 50%;
+    height: 20rpx;
+    left: 20rpx;
+    position: absolute;
+    top: 22rpx;
+    width: 20rpx;
+}
+
+.storeLogItem {
+    font-size: 30rpx;
+    margin-left: 60rpx;
+    white-space: pre-wrap;
+}

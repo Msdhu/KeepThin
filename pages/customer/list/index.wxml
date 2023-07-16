@@ -1,0 +1,128 @@
+<view class="wraper">
+    <view class="topView">
+        <view class="inputCon">
+            <image src="/assets/img/sousuo.png"></image>
+            <input wx:if="{{searchType=='name'}}" bindinput="inputNameOrPhone" class="search" confirmType="search" maxlength="20" placeholder="请输入姓名/电话" placeholderClass="input-placeholder" type="text"></input>
+            <view wx:if="{{searchType=='date'}}" bindtap="showCalendar" class="date" data-type="">
+                <block wx:if="{{ formData.delStartDate }}">
+                    <view style="margin-top: 4rpx;">{{formData.dealStartDate}}</view>
+                    <view style="margin: 0 8rpx;">至</view>
+                    <view style="margin-top: 4rpx;">{{formData.dealEndDate}}</view>
+                </block>
+                <view wx:else style="color: #a9a9a9;font-size: 32rpx;">成交时间</view>
+                <view catchtap="clearDate" class="clearDate" wx:if="{{dealStartDate}}">X</view>
+            </view>
+            <image bindtap="handleChangeSearchType"  src="/assets/img/change.png"></image>
+        </view>
+        <van-button round bind:click="handleSearch" color="#FDB03F" customStyle="width:140rpx;height:68rpx;font-size:32rpx;color:#fff;border-radius:34rpx !important;margin-left:20rpx;">搜索</van-button>
+    </view>
+    <view class="totalNum">
+        <image src="/assets/img/rectangle.png"></image>
+        <view style="margin-right: 16rpx;">共{{total}}条顾客信息</view>
+        <van-icon wx:if="{{ isShowPhone }}" bindtap="chageShowPhone" color="#FD9E39" name="closed-eye" size="34rpx"></van-icon>
+        <van-icon wx:else bindtap="chageShowPhone" color="#FD9E39" name="eye-o" size="34rpx"></van-icon>
+    </view>
+    <scroll-view bindscrolltolower="handleGetMore" class="scroll" lowerThreshold="50" scrollTop="{{topNum}}" scrollY="true">
+        <view class="wrap">
+            <view bindtap="goDetail" class="listData" wx:for="{{listData}}" wx:key="index" data-index="{{ index }}">
+                <view class="transfer" wx:if="{{item.transfer}}">已转店</view>
+                <view class="customerInfo">
+                    <view class="expired" wx:if="{{item.expired}}">已到期</view>
+                    <image src="{{item.gender==1?'/assets/img/man.png':'/assets/img/woman.png'}}"></image>
+                    <text class="value">{{item.name}}</text>
+                    <view catchtap="callPhone" class="customerPhone" data-phone="{{item.phone}}">
+                        <van-icon name="phone" style="margin-top: 4rpx;"></van-icon>
+                        <text class="value">{{fn.formatPhone(item.phone, isShowPhone)}}</text>
+                    </view>
+                </view>
+                <view class="info">
+                    <view>
+                        <text class="label">成交日期：</text>
+                        <text class="value">{{fn.split(item.dealDate,' ')[0]}}</text>
+                    </view>
+                    <view>
+                        <text class="label">到店日期：</text>
+                        <text class="value">{{item.arriveStoreDate?fn.split(item.arriveStoreDate,' ')[0]:''}}</text>
+                    </view>
+                    <view>
+                        <text class="label">初始体重：</text>
+                        <text class="value">{{item.originWeight}} 斤</text>
+                    </view>
+                    <view>
+                        <text class="label">目前体重：</text>
+                        <text class="value">{{item.currentWeight}} 斤</text>
+                    </view>
+                    <view>
+                        <text class="label">已减斤数：</text>
+                        <text class="value">{{item.lossedWeight}} 斤</text>
+                    </view>
+                    <view>
+                        <text class="label">未减斤数：</text>
+                        <text class="value">{{item.unLossWeight}} 斤</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view style="height: 100rpx;"></view>
+    </scroll-view>
+    
+    <image bindtap="showScreen" class="selectBtn" src="/assets/img/shaixuan.png"></image>
+</view>
+<view class="downLoad">
+    <van-button round bind:click="handleExportData" customStyle="width:280rpx; height:68rpx; line-height:68rpx; font-size:34rpx; border-radius: 66rpx !important; background-image: linear-gradient(180deg, #FDAA41 0%, #F87F33 99%); color: #fff;" icon="orders-o">导出信息</van-button>
+</view>
+<van-popup  show="{{isShowScreenPop}}" bind:close="hideScreen" customStyle="height: 86%;width:100%;" position="top">
+    <view class="popupContent">
+        <view class="popupCon">
+            <view class="title">到店日期：</view>
+            <view bindtap="showCalendar" class="screenInfo" data-type="arriveStore">
+                <view wx:if="{{formData.arriveStartStoreDate}}" class="screenInfoCon">{{formData.arriveStartStoreDate}} 至 {{formData.arriveEndStoreDate}}</view>
+                <view wx:else class="screenInfoCon" data-type="arriveStore">选择到店时间</view>
+            </view>
+            <view class="title">减重期：</view>
+            <view bindtap="handleChangeFormData" class="screenInfo">
+                <view class="{{formData.standarded==3?'active':'noActive'}} screenInfoItem" data-val="3" data-type="standarded">速减期</view>
+                <view class="{{formData.standarded==1?'active':'noActive'}} screenInfoItem" data-val="1" data-type="standarded">匀减期</view>
+                <view class="{{formData.standarded==2?'active':'noActive'}} screenInfoItem" data-val="2" data-type="standarded">巩固期</view>
+            </view>
+            <view class="title">今日到店：</view>
+            <view bindtap="handleChangeFormData" class="screenInfo">
+                <view class="{{formData.arriveStore==3?'active':'noActive'}} screenInfoItem" data-val="3" data-type="arriveStore">应到店</view>
+                <view class="{{formData.arriveStore==2?'active':'noActive'}} screenInfoItem" data-val="2" data-type="arriveStore">已到店</view>
+                <view class="{{formData.arriveStore==1?'active':'noActive'}} screenInfoItem" data-val="1" data-type="arriveStore">未到店</view>
+            </view>
+            <view class="title">未到店顾客：</view>
+            <view class="toStoreTime">
+                <view>(</view>
+                <input bindinput="handleInptuFormData" data-type="unArriveDay" maxlength="3" type="text" value="{{formData.unArriveDay}}"></input>
+                <view>)</view>
+                <text>天以上未到店</text>
+            </view>
+            <view class="title">产品情况：</view>
+            <view bindtap="handleChangeFormData" class="screenInfo">
+                <view class="{{formData.haveProduct==1?'active':'noActive'}} screenInfoItem" data-val="1" data-type="haveProduct">有产品</view>
+                <view class="{{formData.haveProduct==2?'active':'noActive'}} screenInfoItem" data-val="2" data-type="haveProduct">无产品</view>
+            </view>
+            <view class="title">其他：</view>
+            <view class="screenInfo">
+                <view bindtap="handleChangeFormData" class="{{formData.remain10Weight==1?'active':'noActive'}} screenInfoItem" data-val="1" data-type="remain10Weight" style="width: 45%;">剩余10斤以内顾客</view>
+                <view bindtap="handleChangeFormData" class="{{formData.soonExpired==1?'active':'noActive'}} screenInfoItem" data-val="1" data-type="soonExpired" style="width: 45%;">快到期顾客（6个月）</view>
+            </view>
+        </view>
+        <view class="screenOptions">
+            <view bindtap="handleReset" class="determine" style="background: #ccc;">重置</view>
+            <view bindtap="handleScreenConfirm" class="determine" style="background: #FEAD48;">确定</view>
+        </view>
+    </view>
+</van-popup>
+<calendar bindonConfirmCalendar="handleConfirmCalendar" showCalendar="{{isShowCalendar}}" tabIndex="1"></calendar>
+<wxs module="fn">
+module.exports = ({
+    split: (function(str, sign) {
+        return (str ? str.split(sign) : '')
+    }),
+    formatPhone: (function(phone, isShow) {
+        return isShow ? phone : (phone.slice(0,3) + '****' + phone.slice(7, 11))
+    })
+});
+</wxs>
