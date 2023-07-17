@@ -15,6 +15,7 @@
       "pages/customer/sales/index",
       "pages/customer/standard/index",
       "pages/account/manage/manage",
+      "pages/account/citys/citys",
       "pages/employee/index/index",
       "pages/employee/list/list",
       "pages/store/manage/manage",
