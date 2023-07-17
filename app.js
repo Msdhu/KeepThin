@@ -2,6 +2,7 @@
 import { ROLES } from "/utils/constant";
 const utils = require("/utils/util");
 const cityData = require("/utils/cityData");
+
 App({
 	onLaunch() {
 		const globalData = this.globalData;

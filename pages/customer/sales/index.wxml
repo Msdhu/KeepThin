@@ -6,7 +6,7 @@
     <block wx:if="{{historyList.length}}">
         <view class="historyProduct" wx:for="{{historyList}}" wx:key="index">
             <view class="productDate">
-                <image src="/assets/rectangle.png"></image>
+                <image src="/assets/img/rectangle.png"></image>
                 <view>产品购买日期：</view>
                 <view style="font-size: 30rpx;color:#FDAF40;margin: 6rpx 0 0 16rpx;">{{fn.split(item.createTime,' ')[0]}}</view>
             </view>
