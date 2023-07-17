@@ -1,4 +1,5 @@
 import Notify from "@vant/weapp/notify/notify";
+
 Page({
 	data: {
 		account: "",

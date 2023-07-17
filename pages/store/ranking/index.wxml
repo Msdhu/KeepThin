@@ -1,7 +1,7 @@
 <navigation-bar color="{{navColor}}" showBack="{{true}}" title="排行榜"></navigation-bar>
 <view class="wraper">
     <view class="header">
-        <image class="smallLogo" mode="aspectFit" src="/assets/img/samllLogo.png"></image>
+        <image class="smallLogo" mode="aspectFit" src="/assets/img/logo.png"></image>
         <image class="backImg" src="/assets/img/guanjunbei.png" style="top:{{offsetTop}}rpx;"></image>
         <view class="title">
             <view>{{isLoseWeight?'减重明星榜':'富婆排行榜'}}</view>
