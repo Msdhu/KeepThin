@@ -156,7 +156,7 @@ module.exports = ({
             <image src="/assets/img/beizhuxinxi.png"></image>
             <view style="color: #DA7A7C;">备注信息</view>
         </view>
-        <view bindtap="jumpUrl" data-url="/pages/customer/new/new?type=edit&consumerId={{detailData.id}}">
+        <view bindtap="jumpUrl" data-url="/subPackage/pages/customer/new/new?type=edit&consumerId={{detailData.id}}">
             <image src="/assets/img/xiugaixinxi.png"></image>
             <view style="color: #FCBF56;">修改信息</view>
         </view>
@@ -164,7 +164,7 @@ module.exports = ({
             <image src="/assets/img/gukezhuandian.png"></image>
             <view style="color: #2CABF5;">顾客转店</view>
         </view>
-        <view bindtap="jumpUrl" data-url="/pages/store/bindqrcode/index?consumerId={{detailData.id}}">
+        <view bindtap="jumpUrl" data-url="/subPackage/pages/store/bindqrcode/index?consumerId={{detailData.id}}">
             <image src="/assets/img/bangdingdianpu.png"></image>
             <view style="color: #259953;">绑定店铺</view>
         </view>

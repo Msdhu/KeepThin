@@ -68,8 +68,8 @@ Page({
 	// 查看用户信息
 	viewCustomerInfo(e) {
 		const customerId = e.currentTarget.dataset.id;
-		wx.navgateTo({
-			url: `/pages/customer/detail/?id=${customerId}`,
+		wx.navigateTo({
+			url: `/subPackage/pages/customer/detail/index?id=${customerId}`,
 		});
 	},
 	// 展示时间选择

@@ -26,7 +26,7 @@ Page({
 			return;
 		}
 		wx.redirectTo({
-			url: "../index/index",
+			url: "/pages/index/index",
 		});
 	},
 });

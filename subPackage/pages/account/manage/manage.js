@@ -208,7 +208,7 @@ Page({
 		var index = e.currentTarget.dataset.index;
 		const accountInfo = this.data.accountList[index];
 		wx.navigateTo({
-			url: `/pages/employee/list/list?${utils.obj2query({
+			url: `/subPackage/pages/employee/list/list?${utils.obj2query({
 				storeId: accountInfo.storeId,
 				storeName: accountInfo.storeName,
 				name: accountInfo.realName,

@@ -236,7 +236,7 @@ Page({
 	goDetail(e) {
 		const index = e.currentTarget.dataset.index;
 		wx.navigateTo({
-			url: `/pages/customer/detail/index?id=${this.data.listData[index].id}`,
+			url: `/subPackage/pages/customer/detail/index?id=${this.data.listData[index].id}`,
 		});
 	},
 	callPhone(e) {

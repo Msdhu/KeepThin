@@ -2,34 +2,41 @@
   "pages": [
       "pages/trans/trans",
       "pages/index/index",
-      "pages/login/login",
-      "pages/stock/stock",
-      "pages/customer/new/new",
-      "pages/customer/list/index",
-      "pages/customer/detail/index",
-      "pages/customer/transfer/index",
-      "pages/customer/service/index",
-      "pages/customer/size/index",
-      "pages/customer/remarks/index",
-      "pages/customer/history/index",
-      "pages/customer/sales/index",
-      "pages/customer/standard/index",
-      "pages/account/manage/manage",
-      "pages/account/citys/citys",
-      "pages/employee/index/index",
-      "pages/employee/list/list",
-      "pages/store/manage/manage",
-      "pages/store/setting/setting",
-      "pages/store/qrcode/index",
-      "pages/store/bindqrcode/index",
-      "pages/store/ranking/index",
-      "pages/store/logs/index",
-      "pages/store/macconnect/macconnect"
+      "pages/login/login"
+  ],
+  "subpackages": [
+    {
+      "root": "subPackage",
+      "pages": [
+        "pages/stock/stock",
+        "pages/customer/new/new",
+        "pages/customer/list/index",
+        "pages/customer/detail/index",
+        "pages/customer/transfer/index",
+        "pages/customer/service/index",
+        "pages/customer/size/index",
+        "pages/customer/remarks/index",
+        "pages/customer/history/index",
+        "pages/customer/sales/index",
+        "pages/customer/standard/index",
+        "pages/account/manage/manage",
+        "pages/account/citys/citys",
+        "pages/employee/index/index",
+        "pages/employee/list/list",
+        "pages/store/manage/manage",
+        "pages/store/setting/setting",
+        "pages/store/qrcode/index",
+        "pages/store/bindqrcode/index",
+        "pages/store/ranking/index",
+        "pages/store/logs/index",
+        "pages/store/macconnect/macconnect"
+      ]
+    }
   ],
   "window": {
       "backgroundTextStyle": "light",
       "navigationBarBackgroundColor": "#FDB040",
-      "navigationBarTitleText": "瘦 吧",
+      "navigationBarTitleText": "养 瘦",
       "navigationBarTextStyle": "white"
   },
   "usingComponents": {

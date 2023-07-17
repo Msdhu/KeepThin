@@ -1,4 +1,4 @@
-<navigation-bar color="{{navigationColor}}" showBack="{{false}}" title="瘦吧"></navigation-bar>
+<navigation-bar color="{{navigationColor}}" showBack="{{false}}" title="养瘦"></navigation-bar>
 <view class="wraper">
   <view class="store">
     <image class="logo" mode="scaleToFill" src="/assets/img/backGround.png"></image>

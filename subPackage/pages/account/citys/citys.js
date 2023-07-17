@@ -46,7 +46,7 @@ Page({
 	bindMultiPickerColumnChange: function (t) {},
 	jumpAccountManagement: function (t) {
 		wx.navigateTo({
-			url: `/pages/account/manage/manage?cityId=${this.data.defaultCity.provinceId}&provinceId=${t.currentTarget.dataset.params.cityId}`,
+			url: `/subPackage/pages/account/manage/manage?cityId=${this.data.defaultCity.provinceId}&provinceId=${t.currentTarget.dataset.params.cityId}`,
 		});
 	},
 	onHide: function () {},

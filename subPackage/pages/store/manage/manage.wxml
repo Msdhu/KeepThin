@@ -30,7 +30,7 @@
         </view>
       </view>
       <view class="entry">
-        <van-button round bind:click="jumpUrl" color="#FDB03F" customStyle="width: 180rpx;height: 56rpx;line-height: 56rpx;font-size：34rpx;border-radius: 25rpx !important;" data-url="/pages/customer/list/index">
+        <van-button round bind:click="jumpUrl" color="#FDB03F" customStyle="width: 180rpx;height: 56rpx;line-height: 56rpx;font-size：34rpx;border-radius: 25rpx !important;" data-url="/subPackage/pages/customer/list/index">
           查 询
         </van-button>
       </view>
@@ -46,7 +46,7 @@
           </view>
         </view>
         <view class="dateContent">
-          <view bindtap="jumpUrl" class="col" data-url="/pages/store/ranking/index?type=1">
+          <view bindtap="jumpUrl" class="col" data-url="/subPackage/pages/store/ranking/index?type=1">
             <view class="tip">今日掉称</view>
             <view class="numData">
               <view>
@@ -76,7 +76,7 @@
             </view>
           </view>
           <view class="colLine"></view>
-          <view bindtap="jumpUrl" class="col" data-url="/pages/store/ranking/index?type=2">
+          <view bindtap="jumpUrl" class="col" data-url="/subPackage/pages/store/ranking/index?type=2">
             <view class="tip">今日涨称</view>
             <view class="numData">
               <view>

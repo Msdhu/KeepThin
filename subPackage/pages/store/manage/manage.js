@@ -99,11 +99,11 @@ Page({
 			const startDate =
 				type === "today" ? endDate : endDate.slice(0, 7) + "-01";
 			wx.navigateTo({
-				url: `/pages/customer/list/index?dealStartDate=${startDate}&dealEndDate=${endDate}`,
+				url: `/subPackage/pages/customer/list/index?dealStartDate=${startDate}&dealEndDate=${endDate}`,
 			});
 		} else
 			wx.navigateTo({
-				url: "/pages/customer/list/index?arriveStore=2",
+				url: "/subPackage/pages/customer/list/index?arriveStore=2",
 			});
 	},
 	onSelectDate(t) {
