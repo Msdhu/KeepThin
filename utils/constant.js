@@ -1,6 +1,10 @@
-export const ROLES = {
+const ROLES = {
 	admin: 10, // 总账号
-	marketing: 1, // 市场部
-	manager: 2, // 店长
-	employee: 3, // 店员
+	marketing: 8, // 市场部
+	manager: 5, // 店长
+	employee: 1, // 店员
 };
+
+export {
+	ROLES,
+}

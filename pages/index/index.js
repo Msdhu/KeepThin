@@ -1,6 +1,5 @@
 const app = getApp();
-const { utils, globalData, ROLES } = app;
-
+const { globalData, ROLES, utils } = app;
 const menuList = [
 	{
 		color: "#2C9C58",
@@ -54,112 +53,139 @@ const menuList = [
 
 Page({
 	data: {
-		ROLES,
-		showMenuList: menuList, // 显示的菜单
-		isStorePopShow: false,
+		offsetTop: 0,
 		isAdmin: false,
-		storeList: [],
+		isMarketing: false,
+		showMenuList: menuList,
+		// 展示的手机号码
+		showPhone: "",
+		// 是否显示全部手机号码
+		isShowPhone: true,
+		// 导航文字颜色
+		navigationColor: "#fff",
+		// 选中的店铺index
 		activeStoreIndex: -1,
+		// 登陆用户信息
+		userInfo: globalData.userInfo,
+		// 店铺信息
 		storeInfo: null,
-		provinceList: [],
-		cityList: [],
+		storeList: [],
+		isStorePopShow: false,
+		// 城市信息
 		cityInfo: null,
-		selectProvince: {
-			provinceId: 2,
-		},
-		selectCity: {
-			cityId: 0,
-		},
-		showPhone: "", // 展示的手机
-		isShowPhone: true, // 是否显示全手机
-		navigationColor: "#fff", // 导航文字颜色
+		cityList: [],
+		provinceList: [],
+		// 选中的省份和城市信息
+		selectProvince: {},
+		selectCity: {},
 		isShowCityPop: false,
 	},
 	onLoad() {
-		const userInfo = globalData.userInfo;
-		const roleType = userInfo.roleType;
+		const { roleType } = globalData.userInfo;
 		this.setData({
-			userInfo,
-			checkIndex: "false",
-			showPhone: userInfo.phone,
-			storeInfo: globalData.storeInfo,
-			cityInfo: globalData.cityInfo,
 			offsetTop: globalData.marginTop,
 			isAdmin: roleType === ROLES.admin,
-			showMenuList: menuList.filter((item) => item.roles.includes(roleType)),
+			isMarketing: roleType === ROLES.marketing,
+			showMenuList: menuList.filter(item => item.roles.includes(roleType)),
 		});
-		this.getStoreList();
-		this.getProvinceList();
-		this.getCityList();
+		this.getIndexData();
 	},
-	getProvinceList() {
+	getIndexData() {
+		utils.request(
+			{
+				url: `com/info`,
+				method: "GET",
+				success: res => {
+					const { data: realRes } = res;
+					const { data: indexData, code } = realRes;
+					if (code === 100) {
+						this.getUserInfo(indexData);
+						this.data.isAdmin ? this.getProvinceList(indexData) : this.getCityAndShopInfo(indexData);
+					} else {
+						wx.showToast({
+							title: "网络请求失败，请稍后重试",
+							icon: "none",
+						});
+					}
+				},
+			},
+			true
+		);
+	},
+	getUserInfo(data = {}) {
+		const userInfo = {
+			...globalData.userInfo,
+			phone: data.phone,
+			name: data.nickname,
+		};
+		// 更新 globalData 信息
+		app.globalData.userInfo = userInfo;
+
 		this.setData({
-			provinceList: app.cityData.provinceArray,
+			showPhone: data.phone,
+			userInfo,
 		});
 	},
-	getCityList() {
-		const selectProvince = this.data.selectProvince;
+	getProvinceList(data = {}) {
+		const provinceInfo = Object.values(data.shops) || [];
+		const provinceList = provinceInfo.map(item => {
+			return {
+				regid: item.district_id,
+				regname: item.district,
+				cityList: (item.citys || []).map(city => {
+					return {
+						regid: city.district_id,
+						regname: city.district,
+						shopList: city.shops,
+					};
+				}),
+			};
+		});
+		// 更新 globalData.provinceList
+		app.globalData.provinceList = provinceList;
+
 		this.setData({
-			cityList: app.cityData.cityArray,
+			provinceList,
 		});
 	},
-	getStoreList(t) {
+	getCityAndShopInfo(data = {}) {
+		const fixShops = Array.isArray(data.shops[0]) ? data.shops[0] : data.shops;
+		const storeList = fixShops.map(shop => {
+			return {
+				id: shop.id,
+				name: shop.shop_name,
+				isRead: false,
+				deviceNo: shop.device_no,
+				macAddr: shop.mac_addr,
+			};
+		});
+		const storeInfo = {
+			...globalData.storeInfo,
+			// 默认选中第一个shop
+			...storeList[0],
+		};
+		// 更新 globalData 信息
+		app.globalData.storeInfo = storeInfo;
+
+		const fixCity = Array.isArray(data.citys) ? data.citys[0] : data.citys;
+		const selectCity = {
+			regid: fixCity.district_id,
+			regname: fixCity.district,
+		};
+
 		this.setData({
-			storeList: [
-				{
-					id: 1,
-					name: "阳泉 康达店",
-					isRead: true,
-				},
-				{
-					id: 2,
-					name: "测试店铺",
-					isRead: true,
-				},
-				{
-					id: 3,
-					name: "测试店铺2",
-					isRead: false,
-				},
-				{
-					id: 4,
-					name: "测试店铺3",
-					isRead: true,
-				},
-			],
+			storeList,
+			storeInfo,
+			// 默认选中第一个shop
+			activeStoreIndex: 0,
+
+			selectCity,
+			cityInfo: {
+				name: selectCity.regname,
+			},
 		});
 	},
 
-	// 事件
-	handleChangePhoneShow() {
-		const isShowPhone = !this.data.isShowPhone;
-		const phone = this.data.userInfo.phone;
-		const showPhone = isShowPhone
-			? phone
-			: `${phone.slice(0, 3)}****${phone.slice(-4)}`;
-		this.setData({
-			isShowPhone,
-			showPhone,
-		});
-	},
-	// 跳转页面
-	handleGoto(e) {
-		const index = e.currentTarget.dataset.index;
-		const menuItem = this.data.showMenuList[index];
-		const { url, needStore } = menuItem;
-		console.log(menuItem);
-		const storeInfo = this.data.storeInfo;
-		if (storeInfo || !needStore) {
-			wx.navigateTo({
-				url,
-			});
-		} else {
-			wx.showToast({
-				icon: "none",
-				title: "请先选择店铺",
-			});
-		}
-	},
 	// 开始选择店铺
 	switchStore() {
 		this.setData({
@@ -177,15 +203,15 @@ Page({
 	checkStore(e) {
 		const storeIndex = +e.currentTarget.dataset.index;
 		const storeInfo = this.data.storeList[storeIndex];
-		if (this.data.activeCityIndex !== storeIndex) {
+		if (this.data.activeStoreIndex !== storeIndex) {
 			this.setData({
 				storeInfo,
+				activeStoreIndex: storeIndex,
 			});
-			globalData.storeInfo = storeInfo;
+			app.globalData.storeInfo = storeInfo;
 		}
 		this.closeStorePop();
 	},
-
 	showCityPop() {
 		this.setData({
 			isShowCityPop: true,
@@ -196,19 +222,16 @@ Page({
 			isShowCityPop: false,
 		});
 	},
-
 	onClickProvince(e) {
-		this.setData(
-			{
-				selectProvince: e.currentTarget.dataset.item,
-				selectCity: {
-					cityId: 0,
-				},
-			},
-			() => {
-				this.getCityList();
-			}
-		);
+		const selectProvince = e.currentTarget.dataset.item;
+		// 点击同一个省份，则页面无需变化
+		if (selectProvince.regid === this.data.selectProvince?.regid) return;
+
+		this.setData({
+			selectProvince,
+			selectCity: {},
+			cityList: selectProvince.cityList,
+		});
 	},
 	onClickCity(e) {
 		this.setData({
@@ -216,11 +239,49 @@ Page({
 		});
 	},
 	handleSaveSelectCity() {
-		const selectedCity = this.data.selectCity;
+		const { selectProvince, selectCity } = this.data;
 		this.setData({
-			cityInfo: selectedCity,
+			cityInfo: {
+				name: `${selectProvince.regname} ${selectCity.regname}`,
+			},
+			storeList: (selectCity.shopList || []).map(shop => {
+				return {
+					id: shop.id,
+					name: shop.shop_name,
+					isRead: false,
+					deviceNo: shop.device_no,
+					macAddr: shop.mac_addr,
+				};
+			}),
+			activeStoreIndex: -1,
 		});
-		this.getStoreList();
 		this.hideCityPop();
+	},
+
+	// 跳转页面
+	handleGoto(e) {
+		const index = e.currentTarget.dataset.index;
+		const menuItem = this.data.showMenuList[index];
+		const { url, needStore } = menuItem;
+		const storeInfo = this.data.storeInfo;
+		if (Object.keys(storeInfo).length > 0 || !needStore) {
+			wx.navigateTo({
+				url,
+			});
+		} else {
+			wx.showToast({
+				icon: "none",
+				title: "请先选择店铺",
+			});
+		}
+	},
+	handleChangePhoneShow() {
+		const isShowPhone = !this.data.isShowPhone;
+		const phone = this.data.userInfo.phone;
+		const showPhone = isShowPhone ? phone : `${phone.slice(0, 3)}****${phone.slice(-4)}`;
+		this.setData({
+			isShowPhone,
+			showPhone,
+		});
 	},
 });

@@ -2,6 +2,7 @@ const app = getApp();
 const { utils, globalData, ROLES } = app;
 
 const curMonthTxt = utils.formatTime(new Date(), "YYYY-MM");
+
 Page({
 	/**
 	 * 页面的初始数据

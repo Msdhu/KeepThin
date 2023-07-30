@@ -1,22 +1,21 @@
 import Notify from "@vant/weapp/notify/notify";
 
+const app = getApp();
+const { utils } = app;
+
 Page({
 	data: {
 		account: "",
 		password: "",
 	},
-	onLoad(options) {},
-	onShow() {},
-	onShareAppMessage() {},
-
 	bindInput(e) {
-		const type = e.target.dataset.type;
-		const val = e.detail.value;
+		const { type } = e.target.dataset;
+		const { value } = e.detail;
 		this.setData({
-			[type]: val,
+			[type]: value,
 		});
 	},
-	login: function () {
+	formSubmit: function () {
 		const { account, password } = this.data;
 		if (!(account && password)) {
 			Notify({
@@ -25,8 +24,37 @@ Page({
 			});
 			return;
 		}
-		wx.redirectTo({
-			url: "/pages/index/index",
+		utils.request({
+			url: `com/login`,
+			data: {
+				username: account,
+				password,
+			},
+			method: "POST",
+			success: (res) => {
+				const { data: realRes } = res;
+				const { data: loginInfo, code } = realRes;
+				if (code === 100) {
+					// 保存本次登陆时的 loginInfo
+					wx.setStorageSync("loginInfo", loginInfo);
+					// 保存本次登陆时的时间戳
+					wx.setStorageSync("loginTime", new Date().getTime());
+
+					app.globalData.userInfo = {
+						...app.globalData.userInfo,
+						// 更新用户类型
+						roleType: Number(loginInfo.level),
+					}
+					wx.redirectTo({
+						url: "/pages/index/index",
+					});
+				} else {
+					wx.showToast({
+						title: "账号或者密码错误",
+						icon: "none"
+					});
+				}
+			},
 		});
 	},
 });

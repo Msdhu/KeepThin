@@ -11,7 +11,8 @@
         </view>
         <view class="store-info-con">
           <text wx:if="{{ storeInfo }}">{{storeInfo.name}}</text>
-          <text class="select-btn" bindtap="switchStore">选择店铺</text>
+          <text wx:if="{{isAdmin || isMarketing}}" class="select-btn" bindtap="switchStore"
+            style="margin-left: {{ storeInfo ? 24 : 0 }}rpx;">选择店铺</text>
         </view>
         <view class="store-info-title" style="margin-top: 30rpx;">
           <image class="icon" mode="scaleToFill" src="/assets/img/phone.png"></image>
@@ -37,15 +38,15 @@
 <van-popup round bind:close="closeStorePop" customStyle="height: 50vh;overflow: hidden;" position="top" show="{{isStorePopShow}}">
   <view style="margin-top: {{offsetTop+4}}rpx; height: calc(50vh - {{offsetTop}}rpx); overflow: hidden;">
     <view style="margin:10rpx 0 10rpx 28rpx;">
-      <view  wx:if="{{isAdmin}}" class="currentCity">
-          <text wx:if="{{cityInfo}}">{{cityInfo.name}}</text>
-          <text catchtap="showCityPop" class="selectCity">选择城市</text>
+      <view wx:if="{{isAdmin}}" class="currentCity">
+        <text wx:if="{{cityInfo}}">{{cityInfo.name}}</text>
+        <text catchtap="showCityPop" class="selectCity">选择城市</text>
       </view>
       <view wx:else class="current-city">{{cityInfo.name}}</view>
     </view>
     <scroll-view lowerThreshold="50" scrollY="true" style="height: 33vh;">
       <view class="store-list">
-        <view wx:for="{{storeList}}" wx:key="index" class="store-item {{activeStoreIndex == index? 'check':''}}" data-index="{{index}}" bindtap="checkStore">
+        <view wx:for="{{storeList}}" wx:key="index" class="store-item {{activeStoreIndex == index ? 'check' : ''}}" data-index="{{index}}" bindtap="checkStore">
           {{item.name}}
           <view style="width: 10rpx;height: 10rpx;background-color: red;border-radius: 50%;flex: 1;margin-left: 6rpx;" wx:if="{{ item.isRead }}"></view>
         </view>

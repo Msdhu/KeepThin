@@ -177,8 +177,8 @@
 }
 
 .confirm {
-	height: 10vh;
-	line-height: 10vh;
+	/* height: 10vh;
+	line-height: 10vh; */
 	margin-right: 30rpx;
 	text-align: right;
 }
