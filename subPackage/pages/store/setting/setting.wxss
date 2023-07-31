@@ -78,10 +78,14 @@
 }
 
 .content {
-  align-items: center;
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   margin-top: 42rpx;
+}
+
+.empty-container {
+  flex: 1;
 }
 
 .serviceItem {

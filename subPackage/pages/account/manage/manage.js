@@ -23,6 +23,7 @@ const tabList = [
 		roles: [ROLES.manager, ROLES.admin, ROLES.marketing],
 	},
 ];
+
 Page({
 	data: {
 		ROLES,

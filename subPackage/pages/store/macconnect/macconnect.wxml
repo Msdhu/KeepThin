@@ -1,11 +1,11 @@
 <view class="wrap">
-    <view class="form">
-        <van-cell-group>
-            <van-field required customStyle="border-radius:28rpx 28rpx 0 0" inputAlign="right" label="MAC" value="{{mac}}" placeholder="请输入配网App上MAC地址"></van-field>
-            <van-field required inputAlign="right" label="设备编码" maxlength="10" value="{{deviceId}}" placeholder="请输入设备编码" type="number"></van-field>
-        </van-cell-group>
-    </view>
-    <view class="saveBtn">
-        <van-button round bind:click="handleSave" color="#FDB03F" customStyle="width:235rpx;height:80rpx;margin:20rpx 0;border-radius:8rpx !important;font-size:30rpx;">保 存</van-button>
-    </view>
+	<view class="form">
+		<van-cell-group>
+			<van-field required customStyle="border-radius: 28rpx 28rpx 0 0" inputAlign="right" label="MAC" model:value="{{mac}}" placeholder="请输入配网App上MAC地址"></van-field>
+			<van-field required inputAlign="right" label="设备编码" maxlength="10" model:value="{{deviceId}}" placeholder="请输入设备编码" type="number"></van-field>
+		</van-cell-group>
+	</view>
+	<view class="saveBtn">
+		<van-button round bind:click="handleSave" color="#FDB03F" customStyle="width:235rpx;height:80rpx;margin:20rpx 0;border-radius:8rpx !important;font-size:30rpx;">保 存</van-button>
+	</view>
 </view>

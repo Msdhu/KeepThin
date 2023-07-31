@@ -1,12 +1,10 @@
 const app = getApp();
-const { utils, globalData, ROLES, cityData } = app;
-const { provinceArray, cityArray } = cityData;
+const { utils, globalData, ROLES } = app;
 
 Page({
 	data: {
 		multiIndex: [0, 0],
 		multiArray: [
-			provinceArray,
 			[
 				{
 					regid: "52",
@@ -49,9 +47,4 @@ Page({
 			url: `/subPackage/pages/account/manage/manage?cityId=${this.data.defaultCity.provinceId}&provinceId=${t.currentTarget.dataset.params.cityId}`,
 		});
 	},
-	onHide: function () {},
-	onUnload: function () {},
-	onPullDownRefresh: function () {},
-	onReachBottom: function () {},
-	onShareAppMessage: function () {},
 });

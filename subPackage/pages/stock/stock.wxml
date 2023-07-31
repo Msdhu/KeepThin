@@ -1,8 +1,8 @@
 <view class="wrap">
   <Tabs bindtabChange="tabChangeListener" tabsList="{{tabsList}}"></Tabs>
   <view class="content">
-    <view class="productCon" wx:if="{{tabIndex==0}}">
-      <view class="addStock">
+    <view class="productCon" wx:if="{{tabIndex == 0}}">
+      <view class="addStock" wx:if="{{canHandle}}">
         <image src="/assets/img/circular.png"></image>
         <view bindtap="addData">新</view>
       </view>
@@ -13,26 +13,28 @@
         <view style="width: 30%;">操作库存</view>
       </view>
       <scroll-view class="scrollView" lowerThreshold="20" scrollY="{{true}}">
-        <view class="stockList">
-          <van-swipe-cell rightWidth="{{46}}" wx:for="{{stockList}}" wx:key="index">
-            <view class="stockItem">
-              <view class="stockData">
-                <view>{{item.goodsName}}</view>
-                <view>￥{{item.price}}</view>
-                <view>{{item.stock || 0}}</view>
-              </view>
-              <van-stepper value="{{item.count}}"  buttonSize="18px" data-index="{{index}}" min="0" bind:change="handleChangeStock"></van-stepper>
+        <van-swipe-cell rightWidth="{{46}}" wx:for="{{stockList}}" wx:key="index">
+          <view class="stockItem">
+            <view class="stockData">
+              <view>{{item.goodsName}}</view>
+              <view>￥{{item.price}}</view>
+              <view>{{item.stock || 0}}</view>
             </view>
-          </van-swipe-cell>
-        </view>
+            <van-stepper value="{{item.count}}" buttonSize="18px" data-index="{{index}}" min="0" bind:change="handleChangeStock" disabled="{{!canHandle}}"></van-stepper>
+          </view>
+          <view class="delete-btn" bindtap="deleteStockItem" data-item="{{item}}" slot="right">
+            删除
+          </view>
+        </van-swipe-cell>
+        <van-empty image="search" description="暂无数据" wx:if="{{ stockList.length === 0 }}" />
       </scroll-view>
-      <view class="options">
-        <van-button round bind:click="handleSave" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;" data-type="">
+      <view class="options" wx:if="{{canHandle}}">
+        <van-button round bind:click="handleSave" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">
           保存
         </van-button>
       </view>
     </view>
-    <view wx:if="{{tabIndex==1}}">
+    <view wx:else>
       <view bindtap="handleShowCalendar" class="slectDate">
         <image src="/assets/img/rectangle.png"></image>
         <view>选择时间：</view>
@@ -66,6 +68,7 @@
             <view>{{ item.outStockCount || 0 }} 个</view>
             <view>{{ item.totalPrice || 0 }} ￥</view>
           </view>
+          <van-empty image="search" description="暂无数据" wx:if="{{ stockLogList.length === 0 }}" />
         </scroll-view>
       </view>
       <view class="options">
@@ -78,8 +81,8 @@
   <van-popup round bind:close="handleCloseAddPop" customStyle="height:30%;" position="bottom" show="{{isShowAddPop}}">
     <view class="addstockForm">
       <van-cell-group>
-        <van-field label="商品名称" maxlength="8" value="{{addFormData.goodsName}}" placeholder="请输入商品名称"></van-field>
-        <van-field label="商品价格" maxlength="4" value="{{addFormData.price}}" placeholder="请输入商品价格" type="number"></van-field>
+        <van-field label="商品名称" maxlength="8" model:value="{{goodsName}}" placeholder="请输入商品名称"></van-field>
+        <van-field label="商品价格" maxlength="4" model:value="{{price}}" placeholder="请输入商品价格" type="number"></van-field>
       </van-cell-group>
       <view class="saveBtn">
         <van-button round bind:click="handleAddSave" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">

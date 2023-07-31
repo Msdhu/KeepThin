@@ -48,11 +48,6 @@
   width: 100%;
 }
 
-.stockList {
-  height: 100%;
-  width: 100%;
-}
-
 .stockItem {
   border-bottom: 1rpx solid #f2f2f2;
   box-sizing: border-box;
@@ -89,6 +84,15 @@
 
 .stockData>view:nth-child(3) {
   width: 30%;
+}
+
+.delete-btn {
+  padding: 4px 6px;
+  margin-top: 6px;
+  font-size: 12px;
+  background-color: #ef5c5c;
+  color: #fff;
+  border-radius: 4px;
 }
 
 .addstockForm {

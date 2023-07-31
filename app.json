@@ -63,7 +63,8 @@
       "van-notice-bar": "./miniprogram_npm/@vant/weapp/notice-bar/index",
       "van-switch": "./miniprogram_npm/@vant/weapp/switch/index",
       "van-steps": "./miniprogram_npm/@vant/weapp/steps/index",
-      "van-transition": "./miniprogram_npm/@vant/weapp/transition/index"
+      "van-transition": "./miniprogram_npm/@vant/weapp/transition/index",
+      "van-empty": "./miniprogram_npm/@vant/weapp/empty/index"
   },
   "sitemapLocation": "sitemap.json"
 }

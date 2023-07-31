@@ -35,7 +35,7 @@
 .form-tip {
 	color: #bfc9d4;
 	margin: 20rpx auto 0;
-	width: 500rpx;
+	width: 600rpx;
 	font-size: 26rpx;
 }
 

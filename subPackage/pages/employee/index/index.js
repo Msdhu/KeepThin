@@ -1,75 +1,69 @@
 const app = getApp();
-const { utils, globalData, ROLES } = app;
-const nowDateTxt = utils.formatTime(new Date(), "YYYY-MM-DD");
+const { utils, globalData } = app;
 
 Page({
 	data: {
-		isShowCalendar: !1,
-		startDate: utils.formatTime(
-			new Date(Date.now() - 7 * 24 * 3600000),
-			"YYYY-MM-DD"
-		), // 开始时间
-		endDate: utils.formatTime(new Date(), "YYYY-MM-DD"), // 结束时间
+		isShowCalendar: false,
+		// 开始时间
+		startDate: `${utils.formatTime(new Date(), "YYYY-MM")}-01`,
+		 // 结束时间
+		endDate: utils.formatTime(new Date(), "YYYY-MM-DD"),
 		listData: [],
 	},
 	onLoad() {
 		this.getListData();
 	},
 	getListData() {
-		this.setData({
-			listData: [
-				{
-					id: 1,
-					userName: "小二",
-					serviceList: [
-						{
-							name: "小腿",
-							count: 1,
-						},
-						{
-							name: "大腿",
-							count: 1,
-						},
-						{
-							name: "面部",
-							count: 1,
-						},
-					],
+		// 店铺id
+		const { id } = globalData.storeInfo;
+		const { startDate, endDate } = this.data;
+		utils.request(
+			{
+				url: `project/tongji`,
+				data: {
+					shop_id: id,
+					date_start: startDate,
+					date_end: endDate,
 				},
-				{
-					id: 1,
-					userName: "小四",
-					serviceList: [
-						{
-							name: "小腿",
-							count: 1,
-						},
-					],
+				method: "GET",
+				success: res => {
+					let list = res;
+					if (!Array.isArray(res)) {
+						list = Object.keys(res || {}).map(name => ({
+							userName: name,
+							serviceList: res[name].map(item => ({
+								name: item.body,
+								count: item.total,
+							}))
+						}));
+					}
+					this.setData({
+						listData: list,
+					});
 				},
-			],
-		});
+			},
+			true
+		);
 	},
 	showCalendar() {
 		this.setData({
 			isShowCalendar: true,
 		});
 	},
-	showCalendar() {
+	hideCalendar() {
 		this.setData({
 			isShowCalendar: false,
 		});
 	},
 	handleCalendarChange(e) {
-		const value = e.detail;
-		console.log(e);
-		if (this.data.isExport) {
-		} else {
-			this.setData({
-				startDate: value[0].replace(/\s.*/, ""),
-				endDate: value[1].replace(/\s.*/, ""),
-			});
-			this.getListData();
-		}
+		const nowTime = utils.formatTime(new Date(), "YYYY-MM-DD");
+		// 边界处理，防止页面报错
+		const [start, end] = (Array.isArray(e.detail) ? e.detail : [nowTime, nowTime]).map(time => time.replace(/\s.*/, ""));
+		this.setData({
+			startDate: start,
+			endDate: end,
+		});
+		this.getListData();
 		this.hideCalendar();
 	},
 });

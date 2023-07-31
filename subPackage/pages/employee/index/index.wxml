@@ -21,6 +21,7 @@
                 </view>
             </view>
         </view>
+        <van-empty image="search" description="暂无数据" wx:if="{{ listData.length === 0 }}" />
     </view>
 </view>
 <calendar bindonConfirmCalendar="handleCalendarChange" showCalendar="{{isShowCalendar}}" tabIndex="1"></calendar>

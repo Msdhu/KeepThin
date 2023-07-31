@@ -31,7 +31,7 @@ const menuList = [
 		img: "/assets/img/yuangogntongji.png",
 		url: "/subPackage/pages/employee/index/index",
 		needStore: true,
-		roles: [ROLES.manager, ROLES.admin, ROLES.marketing],
+		roles: [ROLES.manager, ROLES.admin, ROLES.employee, ROLES.marketing],
 	},
 	{
 		color: "#CC942C",
@@ -39,13 +39,16 @@ const menuList = [
 		img: "/assets/img/dianpushezhi.png",
 		url: "/subPackage/pages/store/setting/setting",
 		needStore: true,
-		roles: [ROLES.manager, ROLES.admin, ROLES.employee, ROLES.marketing],
+		roles: [ROLES.manager, ROLES.admin, ROLES.marketing],
 	},
 	{
 		color: "#DA7A7C",
 		title: "账号管理",
 		img: "/assets/img/zhanghaoguanli.png",
-		url: "/subPackage/pages/account/manage/manage",
+		url:
+			Number(wx.getStorageSync('loginInfo').level) !== ROLES.admin
+				? "/subPackage/pages/account/manage/manage"
+				: "/subPackage/pages/account/citys/citys",
 		needStore: true,
 		roles: [ROLES.manager, ROLES.admin, ROLES.marketing],
 	},
@@ -87,8 +90,9 @@ Page({
 			isAdmin: roleType === ROLES.admin,
 			isMarketing: roleType === ROLES.marketing,
 			showMenuList: menuList.filter(item => item.roles.includes(roleType)),
+		}, () => {
+			this.getIndexData();
 		});
-		this.getIndexData();
 	},
 	getIndexData() {
 		utils.request(
@@ -96,18 +100,9 @@ Page({
 				url: `com/info`,
 				method: "GET",
 				success: res => {
-					const { data: realRes } = res;
-					const { data: indexData, code } = realRes;
-					if (code === 100) {
-						this.getUserInfo(indexData);
-						this.data.isAdmin ? this.getProvinceList(indexData) : this.getCityAndShopInfo(indexData);
-					} else {
-						wx.showToast({
-							title: "网络请求失败，请稍后重试",
-							icon: "none",
-						});
-					}
-				},
+					this.getUserInfo(res);
+					this.data.isAdmin ? this.getProvinceList(res) : this.getCityAndShopInfo(res);
+				}
 			},
 			true
 		);
@@ -264,7 +259,7 @@ Page({
 		const menuItem = this.data.showMenuList[index];
 		const { url, needStore } = menuItem;
 		const storeInfo = this.data.storeInfo;
-		if (Object.keys(storeInfo).length > 0 || !needStore) {
+		if (storeInfo || !needStore) {
 			wx.navigateTo({
 				url,
 			});

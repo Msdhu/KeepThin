@@ -1,99 +1,53 @@
+import Notify from "@vant/weapp/notify/notify";
+
 const app = getApp();
-const { utils, globalData, ROLES } = app;
+const { utils, globalData } = app;
 
 Page({
 	data: {
 		tabsList: [
-			{
-				name: "身体部位",
-				index: 0,
-			},
-			{
-				name: "服务人员",
-				index: 1,
-			},
-			{
-				name: "其他",
-				index: 2,
-			},
+			{ name: "身体部位", index: 0 },
+			{ name: "服务人员", index: 1 },
+			{ name: "其他", index: 2 },
 		],
 		tabIndex: 0,
+		// 身体部位列表
 		serviceList: [],
+		// 服务人员列表
 		staffList: [],
 		isEdit: false,
-		formData: {
-			value: "",
-		},
+		formValue: "",
 		isShowAddPop: false,
-		type: "",
 	},
 	onLoad() {
-		this.getServiceList();
-		this.getStaffList();
+		this.getShopSettingInfo();
 	},
-	tabChangeListener: function (t) {
-		this.setData({
-			tabIndex: t.detail,
-		});
+	getShopSettingInfo() {
+		// 店铺id
+		const { id } = globalData.storeInfo;
+		utils.request(
+			{
+				url: `shop/config`,
+				data: {
+					shop_id: id,
+				},
+				method: "GET",
+				success: res => {
+					this.setData({
+						serviceList: (res?.shop_bodys || []).sort((a = {}, b = {}) => {
+							return Number(a.sort || 0) - Number(b.sort || 0);
+						}),
+						staffList: res?.shop_members || [],
+					});
+				},
+			},
+			true
+		);
 	},
-	getServiceList() {
+	tabChangeListener(e) {
 		this.setData({
-			serviceList: [
-				{
-					id: 1,
-					name: "小腿",
-				},
-				{
-					id: 2,
-					name: "面部",
-				},
-				{
-					id: 3,
-					name: "大腿",
-				},
-				{
-					id: 4,
-					name: "腹部",
-				},
-				{
-					id: 5,
-					name: "肚子",
-				},
-				{
-					id: 6,
-					name: "胳膊",
-				},
-			],
-		});
-	},
-	getStaffList() {
-		this.setData({
-			staffList: [
-				{
-					id: 1,
-					name: "张三",
-				},
-				{
-					id: 2,
-					name: "李四",
-				},
-				{
-					id: 3,
-					name: "王五",
-				},
-				{
-					id: 4,
-					name: "赵构",
-				},
-				{
-					id: 5,
-					name: "孙乾",
-				},
-				{
-					id: 6,
-					name: "凯尔",
-				},
-			],
+			tabIndex: e.detail,
+			isEdit: false,
 		});
 	},
 	handleEdit() {
@@ -102,48 +56,66 @@ Page({
 		});
 	},
 	handleSave() {
-		const { tabIndex } = this.data;
-		if (tabIndex == 0) {
-			this.saveService();
-		}
-		if (tabIndex == 1) {
-			this.saveStaff();
-		}
+		const { tabIndex, staffList, serviceList } = this.data;
+		const isSaveService = tabIndex === 0;
+		// 店铺id
+		const { id } = app.globalData.storeInfo;
+		utils.request(
+			{
+				url: isSaveService ? `shop/body-save` : `shop/members-save`,
+				data: {
+					shop_id: id,
+					list: isSaveService
+						? serviceList.map((item, index) => ({ ...item, sort: index }))
+						: staffList.map((item, index) => ({ ...item, sort: index })),
+				},
+				method: "POST",
+				success: res => {
+					this.setData({
+						isEdit: false,
+					});
+				},
+				isShowLoading: true,
+			},
+			true
+		);
+	},
+	// 提升服务项目排序
+	handleTopService(e) {
+		const index = e.currentTarget.dataset.index;
+		if (!this.data.isEdit || index === 0) return;
+
+		const { serviceList } = this.data;
+		// 交换数组的两个值
+		[serviceList[index], serviceList[index - 1]] = [serviceList[index - 1], serviceList[index]];
 		this.setData({
-			isEdit: false,
+			serviceList,
 		});
 	},
-	// 保存身体部位编辑结果
-	saveService() {},
-	// 保存服务人员编辑结果
-	saveStaff() {},
-
-	// 提升服务项目排序
-	handleTopService() {
-		if (!this.data.isEdit) return;
-	},
-
 	handleDelete(e) {
 		const index = e.currentTarget.dataset.index;
 		wx.showModal({
 			title: "提示",
 			content: "是否确认删除？",
-			success: (t) => {
+			success: t => {
 				if (t.confirm) {
 					const { tabIndex, staffList, serviceList } = this.data;
 					if (tabIndex == 0) {
-						this.deleteService(serviceList[index]);
+						serviceList.splice(index, 1);
+						this.setData({
+							serviceList,
+						});
 					}
 					if (tabIndex == 1) {
-						this.deleteStaff(staffList[index]);
+						staffList.splice(index, 1);
+						this.setData({
+							staffList,
+						});
 					}
 				}
 			},
 		});
 	},
-	deleteService(item) {},
-	deleteStaff(item) {},
-
 	openAdd() {
 		this.setData({
 			isShowAddPop: true,
@@ -151,35 +123,42 @@ Page({
 	},
 	handleCloseAddPop() {
 		this.setData({
-			formData: {
-				value: "",
-			},
+			formValue: "",
 			isShowAddPop: false,
 		});
 	},
 	handleAddSave() {
-		const { formData, tabIndex } = this.data;
-		if (!formData.value) {
+		const { formValue, tabIndex, staffList, serviceList } = this.data;
+		if (!formValue) {
 			Notify({
 				type: "danger",
 				message: "请填写完整信息！",
 			});
 			return;
-		} else {
-			if (tabIndex == 0) {
-				this.addService();
-			}
-			if (tabIndex == 1) {
-				this.addStaff();
-			}
+		}
+
+		if (tabIndex == 0) {
+			// 添加身体部位
+			serviceList.push({
+				name: formValue,
+				sort: serviceList.length,
+			});
+			this.setData({
+				serviceList,
+			});
+		}
+		if (tabIndex == 1) {
+			// 添加服务人员
+			staffList.push({
+				name: formValue,
+				sort: staffList.length,
+			});
+			this.setData({
+				staffList,
+			});
 		}
 		this.handleCloseAddPop();
 	},
-
-	// 添加身体部位
-	addService() {},
-	// 添加服务人员
-	addStaff() {},
 	handleGoto(e) {
 		const url = e.currentTarget.dataset.url;
 		wx.navigateTo({

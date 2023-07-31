@@ -31,29 +31,20 @@ Page({
 				password,
 			},
 			method: "POST",
-			success: (res) => {
-				const { data: realRes } = res;
-				const { data: loginInfo, code } = realRes;
-				if (code === 100) {
-					// 保存本次登陆时的 loginInfo
-					wx.setStorageSync("loginInfo", loginInfo);
-					// 保存本次登陆时的时间戳
-					wx.setStorageSync("loginTime", new Date().getTime());
+			success: (loginInfo) => {
+				// 保存本次登陆时的 loginInfo
+				wx.setStorageSync("loginInfo", loginInfo);
+				// 保存本次登陆时的时间戳
+				wx.setStorageSync("loginTime", new Date().getTime());
 
-					app.globalData.userInfo = {
-						...app.globalData.userInfo,
-						// 更新用户类型
-						roleType: Number(loginInfo.level),
-					}
-					wx.redirectTo({
-						url: "/pages/index/index",
-					});
-				} else {
-					wx.showToast({
-						title: "账号或者密码错误",
-						icon: "none"
-					});
+				app.globalData.userInfo = {
+					...app.globalData.userInfo,
+					// 更新用户类型
+					roleType: Number(loginInfo.level),
 				}
+				wx.redirectTo({
+					url: "/pages/index/index",
+				});
 			},
 		});
 	},
