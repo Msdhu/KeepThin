@@ -45,10 +45,7 @@ const menuList = [
 		color: "#DA7A7C",
 		title: "账号管理",
 		img: "/assets/img/zhanghaoguanli.png",
-		url:
-			Number(wx.getStorageSync('loginInfo').level) !== ROLES.admin
-				? "/subPackage/pages/account/manage/manage"
-				: "/subPackage/pages/account/citys/citys",
+		url: "/subPackage/pages/account/manage/manage",
 		needStore: true,
 		roles: [ROLES.manager, ROLES.admin, ROLES.marketing],
 	},
@@ -93,6 +90,9 @@ Page({
 		}, () => {
 			this.getIndexData();
 		});
+	},
+	onShow() {
+		this.data.isAdmin && this.getIndexData();
 	},
 	getIndexData() {
 		utils.request(
@@ -257,11 +257,16 @@ Page({
 	handleGoto(e) {
 		const index = e.currentTarget.dataset.index;
 		const menuItem = this.data.showMenuList[index];
-		const { url, needStore } = menuItem;
-		const storeInfo = this.data.storeInfo;
+		let { url, needStore } = menuItem;
+		const { storeInfo, selectCity, isAdmin } = this.data;
+		
 		if (storeInfo || !needStore) {
+			if (isAdmin && /account\/manage/.test(url)) {
+				url = "/subPackage/pages/account/citys/citys";
+			}
 			wx.navigateTo({
-				url,
+				// 账号管理页面需要 cityId
+				url: /account\/manage/.test(url) ? `${url}?cityId=${selectCity.regid}` : url,
 			});
 		} else {
 			wx.showToast({

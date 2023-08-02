@@ -1,6 +1,8 @@
 import Notify from "@vant/weapp/notify/notify";
+
 const app = getApp();
 const { utils, globalData, ROLES } = app;
+
 const TAB_TYPES = {
 	admin: 0,
 	marketing: 1,
@@ -15,132 +17,96 @@ const tabList = [
 	{
 		name: "市场部账号",
 		index: TAB_TYPES.marketing,
-		roles: [ROLES.manager, ROLES.admin],
+		roles: [ROLES.admin, ROLES.marketing],
 	},
 	{
 		name: "店长账号",
 		index: TAB_TYPES.manager,
-		roles: [ROLES.manager, ROLES.admin, ROLES.marketing],
+		roles: [ROLES.admin, ROLES.marketing, ROLES.manager],
 	},
 ];
 
 Page({
 	data: {
-		ROLES,
-		showTabList: tabList,
-		tabIndex: 0,
-		roleType: "",
-		isAdmin: false,
-		isManager: false,
-		isMarketing: false,
+		cityId: "",
 
-		isAdminTab: true,
-		isManagerTab: false,
+		showTabList: [],
+		tabIndex: 0,
+		isAdmin: false,
+		isMarketing: false,
+		isManager: false,
+		isAdminTab: false,
 		isMarketingTab: false,
+		isManagerTab: false,
 
 		isShowAddPop: false,
+		accountInfo: {},
 		accountList: [],
-		storeList: [],
-		checkStores: [],
-		formData: {
-			realName: "",
-			phone: "",
-			account: "",
-			password: "",
-			storeName: "",
-			expiredDate: "",
-		},
-		isEdit: false,
-		phoneError: false,
-		pageInfo: {
-			page: 1,
-			limit: 15,
-			total: 0,
-		},
-	},
-	onLoad() {
-		const userInfo = globalData.userInfo;
-		const roleType = userInfo.roleType;
 
+		// 新建账号和编辑账号 相关的字段
+		name: "",
+		phone: "",
+		account: "",
+		password: "",
+		shopName: "",
+		shopList: [],
+		checkShops: [],
+
+		isEdit: false,
+		editId: "",
+		phoneError: false,
+	},
+	onLoad(options) {
+		const { roleType } = globalData.userInfo;
 		const isAdmin = roleType === ROLES.admin;
-		const isManager = roleType === ROLES.manager;
 		const isMarketing = roleType === ROLES.marketing;
+		const isManager = roleType === ROLES.manager;
+		const tabsList = tabList.filter((item) => item.roles.includes(roleType))
 
 		this.setData({
-			userInfo,
-			roleType,
+			cityId: options.cityId,
 			isAdmin,
-			isManager,
 			isMarketing,
-			tabsList: tabList.filter((item) => item.roles.includes(roleType)),
-		});
-		this.getAccountList();
-		this.getStoreList();
-	},
-	initListData() {
-		this.initPageInfo();
-		this.getAccountList();
-	},
-	initPageInfo() {
-		const pageInfo = this.data.pageInfo;
-		pageInfo.page = 1;
-		pageInfo.total = 0;
-		this.data.accountList.length = 0;
+			isManager,
+			isAdminTab: isAdmin,
+			isMarketingTab: isMarketing,
+			isManagerTab: isManager,
+			showTabList: tabsList,
+			tabIndex: tabsList[0].index,
+		}, () => { this.getAccountList() });
 	},
 	getAccountList() {
-		const { pageInfo, tabIndex, accountList } = this.data;
-		const page = pageInfo.page;
-		const params = {
-			page,
-			limit: pageInfo.limit,
-			type: tabIndex,
-		};
-		const resList = [
+		const { isAdminTab, isMarketingTab, isManagerTab, cityId } = this.data;
+
+		(isMarketingTab || isManagerTab) && utils.request(
 			{
-				realName: "erkai",
-				phone: "1231231231231",
-				account: "123123123",
-				password: "12321312",
-				storeName: "阳泉的门店",
+				url: isMarketingTab ? "account/shichang-list" : "account/dianzhang-list",
+				data: {
+					city_id: cityId,
+				},
+				method: "GET",
+				success: res => {
+					let list = res;
+					if (!Array.isArray(res)) {
+						list = Object.keys(res || {}).map(id => ({ ...res[id], id }));
+					}
+					this.setData({
+						accountList: list,
+					});
+				},
+				isShowLoading: true,
 			},
-			{
-				realName: "erkai",
-				phone: "1231231231231",
-				account: "123",
-				password: "12321312",
-				storeName: "阳泉的门店",
-			},
-			{
-				realName: "erkai",
-				phone: "1231231231231",
-				account: "32432",
-				password: "12321312",
-				storeName: "阳泉的门店",
-			},
-			{
-				realName: "erkai",
-				phone: "1231231231231",
-				account: "777",
-				password: "12321312",
-				storeName: "阳泉的门店",
-			},
-			{
-				realName: "erkai",
-				phone: "1231231231231",
-				account: "666",
-				password: "12321312",
-				storeName: "阳泉的门店",
-			},
-		];
-		this.setData({
-			accountList: accountList.concat(resList),
-		});
-		pageInfo.total = 1000;
+			true
+		);
 	},
-	getStoreList() {
+
+	tabChangeListener(ev) {
+		const tabIndex = ev.detail;
 		this.setData({
-			storeList: [],
+			tabIndex,
+			...this.getTabInfo(tabIndex),
 		});
+		this.getAccountList();
 	},
 	getTabInfo(tabIndex) {
 		return {
@@ -149,15 +115,169 @@ Page({
 			isManagerTab: tabIndex === TAB_TYPES.manager,
 		};
 	},
-	tabChangeListener(t) {
-		const tabIndex = t.detail;
-		this.setData({
-			tabIndex,
-			...this.getTabInfo(tabIndex),
+
+	editStaff(ev) {
+		const accountInfo = ev.currentTarget.dataset.item;
+		wx.navigateTo({
+			url: `/subPackage/pages/employee/list/list?${utils.obj2query({
+				shopId: accountInfo.shop_id,
+				shopName: accountInfo.shop_name,
+				nickName: accountInfo.nickname,
+				cityId: this.data.cityId,
+			})}`,
 		});
-		this.initListData();
 	},
-	addAccount() {
+	handleEditAccount(ev) {
+		const accountInfo = ev.currentTarget.dataset.item;
+		// 获取 账号详情
+		utils.request(
+			{
+				url: "account/detail",
+				data: {
+					// FIXME: user_id -> id
+					user_id: accountInfo.id,
+				},
+				method: "GET",
+				success: res => {
+					this.setData({
+						isEdit: true,
+						editId: accountInfo.id,
+						isShowAddPop: true,
+
+						name: res.nickname,
+						phone: res.phone,
+						account: res.phone,
+						password: res.password,
+						shopName: res?.shops[0]?.shop_name || "",
+						shopList: (res?.all_shops || []).map(item => ({ ...item, shop_id: String(item.shop_id) })),
+						// FIXME: checkShops 修改
+						checkShops: (res?.all_shops || []).map(item => String(item.shop_id)),
+					});
+				},
+				isShowLoading: true,
+			},
+			true
+		);
+	},
+	handleDelAccount(ev) {
+		const accountInfo = ev.currentTarget.dataset.item;
+		wx.showModal({
+			title: "提示",
+			content: "是否确认删除该账号？",
+			success: res => {
+				if (res.confirm) {
+					this.deleteAccount(accountInfo);
+				}
+			},
+		});
+	},
+	deleteAccount(accountInfo) {
+		utils.request(
+			{
+				url: "account/del",
+				data: {
+					// FIXME: user_id -> id
+					user_id: accountInfo.id,
+				},
+				method: "POST",
+				success: res => {
+					wx.showToast({
+						title: "删除账号成功",
+						icon: "none",
+					});
+					this.getAccountList();
+				},
+				isShowLoading: true,
+			},
+			true
+		);
+	},
+	// 新建
+	handleSave() {
+		if (!this.checkData()) return;
+		const { isManagerTab, isMarketingTab, checkShops, name, phone, password, cityId, shopName } = this.data;
+		const params = {
+			nickname: name,
+			phone,
+			password,
+			city_id: cityId,
+			level: globalData.userInfo.roleType,
+		};
+		if (isManagerTab) {
+			// FIXME: shop_name 查询参数待重命名
+			params.shop_name = shopName;
+		}
+		if (isMarketingTab) {
+			params.shop_id = checkShops.join(',');
+		}
+		utils.request(
+			{
+				url: "account/add",
+				data: params,
+				method: "POST",
+				success: res => {
+					wx.showToast({
+						title: "添加账号成功",
+						icon: "none",
+					});
+					this.getAccountList();
+					this.onClose();
+				},
+				isShowLoading: true,
+			},
+			true
+		);
+	},
+	// 编辑
+	handleUpdate() {
+		if (!this.checkData()) return;
+		const { isManagerTab, isMarketingTab, checkShops, name, phone, password, cityId, shopName, editId } = this.data;
+		const params = {
+			// FIXME: user_id -> id
+			user_id: editId,
+			nickname: name,
+			phone,
+			password,
+		};
+		if (isManagerTab) {
+			// FIXME: shop_name 查询参数待重命名
+			params.shop_name = shopName;
+		}
+		if (isMarketingTab) {
+			params.shop_id = checkShops.join(',');
+		}
+		utils.request(
+			{
+				url: "account/modify",
+				data: params,
+				method: "POST",
+				success: res => {
+					wx.showToast({
+						title: "编辑账号成功",
+						icon: "none",
+					});
+					this.getAccountList();
+					this.onClose();
+				},
+				isShowLoading: true,
+			},
+			true
+		);
+	},
+	checkData() {
+		const { isManagerTab, isMarketingTab, checkShops, name, phone, password, shopName } = this.data;
+		if (name && phone && password) {
+			if (isMarketingTab && checkShops.length > 0) return true;
+			if (isManagerTab && shopName) return true;
+		}
+		Notify({
+			type: "danger",
+			message: "请填写完整账号信息！",
+		});
+		return false;
+	},
+
+	handleAddBtnClick() {
 		this.setData({
 			isEdit: false,
 			isShowAddPop: true,
@@ -166,141 +286,33 @@ Page({
 	onClose() {
 		this.setData({
 			isShowAddPop: false,
-		}),
-			this.initFormData();
+			isEdit: false,
+			shopList: [],
+			checkShops: [],
+			phoneError: false,
+			name: "",
+			phone: "",
+			password: "",
+			shopName: "",
+		});
 	},
-	onChangeCheckbox(t) {
+	onChangeCheckbox(ev) {
 		this.setData({
-			checkStores: t.detail,
+			checkShops: ev.detail,
 		});
 	},
-
-	initFormData() {
-		this.setData({
-			formData: {
-				isShowAddPop: false,
-				checkStores: [],
-				user: "",
-				phone: "",
-				account: "",
-				password: "",
-				storeName: "",
-				edit: false,
-				phoneError: false,
-				id: "",
-				deptId: "",
-				expiredDate: "",
-			},
-		});
-	},
-	handleEditAccount(e) {
-		const index = e.currentTarget.dataset.index;
-		const accountInfo = this.data.accountList[index];
-		const formData = {
-			...accountInfo,
-		};
-		this.setData({
-			formData,
-			isEdit: true,
-			isShowAddPop: true,
-		});
-	},
-	editStaff(e) {
-		var index = e.currentTarget.dataset.index;
-		const accountInfo = this.data.accountList[index];
-		wx.navigateTo({
-			url: `/subPackage/pages/employee/list/list?${utils.obj2query({
-				storeId: accountInfo.storeId,
-				storeName: accountInfo.storeName,
-				name: accountInfo.realName,
-			})}`,
-		});
-	},
-	checkData() {
-		const data = this.data;
-		const { isAdminTab, isManagerTab, isMarketingTab, formData, checkStores } =
-			data;
-		const requireKeyList = ["realName", "phone", "account", "password"];
-		const isCross = requireKeyList.every((key) => !!formData[key]);
-		if (isCross) {
-			if (isManagerTab && formData.storeName) return true;
-			if (isMarketingTab && checkStores.length > 0) return true;
-		}
-		Notify({
-			type: "danger",
-			message: "请填写完整账号信息！",
-		});
-		return false;
-	},
-	saveAdd() {
-		if (!this.checkData()) return;
-		const params = {
-			...this.data.formData,
-		};
-		this.initListData();
-	},
-	updateData() {
-		if (!this.checkData()) return;
-		const params = {
-			...this.data.formData,
-		};
-		this.initListData();
-	},
-	deleteAccount(accountInfo) {
-		wx.showToast({
-			icon: "none",
-			title: "删除账号成功",
-		});
-		this.initListData();
-	},
-	handleDelAccount(e) {
-		const index = e.currentTarget.dataset.index;
-		const accountInfo = this.data.accountList[index];
-		wx.showModal({
-			title: "提示",
-			content: "是否确认删除该账号？",
-			success: (res) => {
-				if (res.confirm) {
-					this.deleteAccount(accountInfo);
-				} else {
-					console.log("用户点击取消");
-				}
-			},
-		});
-	},
+	// 电话号码校验
 	phoneBlur() {
-		const phone = this.data.formData.phone;
+		const phone = this.data.phone;
 		const isValid = utils.checkPhone(phone);
-		this.setData(
-			{
-				phoneError: !isValid,
-			},
-			() => {
-				if (isValid) {
-					this.setData({
-						"formData.account": phone,
-					});
-				}
-			}
-		);
-	},
-	selectExpiredDate(e) {
-		const formData = this.data.formData;
-		formData.expiredDate = e.detail.value;
 		this.setData({
-			formData,
+			phoneError: !isValid,
+		}, () => {
+			if (isValid) {
+				this.setData({
+					account: phone,
+				});
+			}
 		});
 	},
-	onReachBottom: utils.throttle(function () {
-		const { accountList, pageInfo } = this.data;
-		if (accountList.length >= pageInfo.length) {
-			return wx.showToast({
-				icon: "none",
-				title: "没有更多数据",
-			});
-		} else {
-			pageInfo.page++;
-			this.getAccountList();
-		}
-	}, 100),
 });

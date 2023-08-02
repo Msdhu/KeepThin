@@ -90,19 +90,23 @@ const utils = {
 			url: `${baseUrl}/${resParams.url}`,
 			header,
 			success: res => {
-				isShowLoading && wx.hideLoading();
+        // FIXME: just for test, fix after all page work done
+        setTimeout(() => {
+          isShowLoading && wx.hideLoading();
+        }, 500);
 				const { data: realRes } = res;
-				const { data: resData, code } = realRes;
+				const { data: resData, code, msg } = realRes;
 				if (code === 100) {
 					success(resData);
 				} else {
 					wx.showToast({
-						title: "请求失败，请稍后重试",
+						title: msg || "请求失败，请稍后重试",
 						icon: "none",
 					});
 				}
 			},
 			fail: () => {
+        isShowLoading && wx.hideLoading();
 				wx.showToast({
 					title: "请求失败，请稍后重试",
 					icon: "none",
@@ -129,40 +133,33 @@ const utils = {
 			data: {
 				...params,
 			},
+      method: "GET",
 			responseType: "arraybuffer",
 			header,
 			success: res => {
 				wx.hideLoading();
 				const { data: realRes } = res;
-				const { data: resData, code } = realRes;
-				if (code === 100) {
-					const fs = wx.getFileSystemManager(),
-						filePath = `${wx.env.USER_DATA_PATH}/${fileName}.xlsx}`;
+        const fs = wx.getFileSystemManager(),
+          filePath = `${wx.env.USER_DATA_PATH}/${fileName}.xlsx}`;
 
-					fs.writeFile({
-						data: resData,
-						filePath,
-						encoding: "utf8",
-						success: () => {
-							wx.openDocument({
-								filePath,
-								showMenu: true,
-								fileType: "xlsx",
-								success: () => {
-									console.log("打开文档成功");
-								},
-								fail: e => {
-									console.log("打开文档失败", e);
-								},
-							});
-						},
-					});
-				} else {
-					wx.showToast({
-						title: "请求失败，请稍后重试",
-						icon: "none",
-					});
-				}
+        fs.writeFile({
+          data: realRes,
+          filePath,
+          encoding: "utf8",
+          success: () => {
+            wx.openDocument({
+              filePath,
+              showMenu: true,
+              fileType: "xlsx",
+              success: () => {
+                console.log("打开文档成功");
+              },
+              fail: e => {
+                console.log("打开文档失败", e);
+              },
+            });
+          },
+        });
 			},
 			fail: () => {
 				wx.showToast({

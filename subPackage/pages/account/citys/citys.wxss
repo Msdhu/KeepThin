@@ -32,7 +32,7 @@
 }
 
 .defaultCity>view:nth-child(2) {
-    margin: 0 12rpx;
+    margin: 0 6rpx;
 }
 
 .defaultCity>view:nth-child(3) {
@@ -67,9 +67,9 @@
 }
 
 .storeNum {
-    margin-left: 28rpx;
+    margin-left: 10rpx;
 }
 
 .expiredFlag {
-    margin-right: 28rpx;
+    margin-right: 10rpx;
 }

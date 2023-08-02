@@ -81,8 +81,8 @@
   <van-popup round bind:close="handleCloseAddPop" customStyle="height:30%;" position="bottom" show="{{isShowAddPop}}">
     <view class="addstockForm">
       <van-cell-group>
-        <van-field label="商品名称" maxlength="8" model:value="{{goodsName}}" placeholder="请输入商品名称"></van-field>
-        <van-field label="商品价格" maxlength="4" model:value="{{price}}" placeholder="请输入商品价格" type="number"></van-field>
+        <van-field label="商品名称" maxlength="12" model:value="{{goodsName}}" placeholder="请输入商品名称"></van-field>
+        <van-field label="商品价格" maxlength="8" model:value="{{price}}" placeholder="请输入商品价格" type="number"></van-field>
       </van-cell-group>
       <view class="saveBtn">
         <van-button round bind:click="handleAddSave" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">

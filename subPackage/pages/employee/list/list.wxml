@@ -2,7 +2,7 @@
   <view class="header">
     <view class="store">
       <view>店员列表</view>
-      <view>{{storeName}} {{name}}</view>
+      <view>{{shopName}} {{nickName}}</view>
     </view>
     <view bindtap="showAddStaff" class="icon">
       <van-icon name="add-o" size="20"></van-icon>
@@ -11,13 +11,13 @@
   <view class="staffList">
     <view class="itemStaff" wx:for="{{staffList}}" wx:key="*this">
       <van-cell-group border="{{false}}">
-        <van-cell customClass="label" title="姓名：" value="{{item.user}}"></van-cell>
+        <van-cell customClass="label" title="姓名：" value="{{item.nickname}}"></van-cell>
         <van-cell customClass="label" title="手机：" value="{{item.phone}}"></van-cell>
-        <van-cell customClass="label" title="账号：" value="{{item.account}}"></van-cell>
+        <van-cell customClass="label" title="账号：" value="{{item.phone}}"></van-cell>
         <van-cell customClass="label" title="密码：" value="{{item.password}}"></van-cell>
       </van-cell-group>
       <view class="options">
-        <image bindtap="handleDelete" data-index="{{index}}" src="/assets/img/delete.png"></image>
+        <image bindtap="handleDelete" data-item="{{item}}" src="/assets/img/delete.png"></image>
       </view>
     </view>
   </view>
@@ -25,10 +25,10 @@
     <view class="addStaffForm">
       <view class="addStaffFormTitle">店员信息</view>
       <van-cell-group>
-        <van-field inputAlign="right" label="姓名：" maxlength="20" value="{{formData.user}}" placeholder="请输入姓名"></van-field>
-        <van-field bind:blur="phoneBlur" errorMessage="{{phoneError?'手机号格式错误':''}}" inputAlign="right" label="手机：" maxlength="11" value="{{formData.phone}}" placeholder="请输入手机号" type="number"></van-field>
-        <van-field disabled inputAlign="right" label="账号：" maxlength="12" value="{{formData.account}}" placeholder="请输入账号"></van-field>
-        <van-field inputAlign="right" label="密码：" maxlength="14" value="{{formData.password}}" placeholder="请输入密码"></van-field>
+        <van-field inputAlign="right" label="姓名：" maxlength="20" required model:value="{{name}}" placeholder="请输入姓名" />
+        <van-field bind:blur="phoneBlur" errorMessage="{{ phoneError ? '手机号格式错误' : '' }}" inputAlign="right" label="手机：" maxlength="11" required model:value="{{phone}}" placeholder="请输入手机号" type="number" />
+        <van-field disabled inputAlign="right" label="账号：" maxlength="12" value="{{account}}" placeholder="请输入账号" />
+        <van-field inputAlign="right" label="密码：" maxlength="14" required model:value="{{password}}" placeholder="请输入密码" />
       </van-cell-group>
     </view>
     <view class="saveBtn">
@@ -38,3 +38,4 @@
     </view>
   </van-popup>
 </view>
+<van-notify id="van-notify"></van-notify>

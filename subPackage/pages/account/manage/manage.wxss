@@ -22,7 +22,7 @@
 }
 
 .stores {
-	margin: 28rpx 0;
+	padding: 28rpx 0;
 }
 
 .stores > view:nth-child(1) {
@@ -74,7 +74,8 @@
 }
 
 .van-cell__value {
-	color: #333 !important;
+	flex: 3!important;
+	color: #333!important;
 }
 
 .options {

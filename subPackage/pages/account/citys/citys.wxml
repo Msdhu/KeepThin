@@ -1,29 +1,28 @@
 <view class="wrap">
-    <picker bindchange="bindProvinceIdChange" mode="selector" range="{{provinceArray}}" rangeKey="provinceName" value="{{provinceIndex}}">
-        <view class="defaultCity">
-            <view class="title">当前省份：</view>
-            <view>{{defaultCity.provinceName}}</view>
-            <view>({{defaultCity.storeCount}})</view>
-            <van-icon name="info-o" style="color: red;" wx:if="{{defaultCity.expiredFlag}}"></van-icon>
-            <van-icon name="arrow-down"></van-icon>
-        </view>
-    </picker>
-    <view class="cityList">
-        <view class="title">城市：</view>
-        <view bindtap="jumpAccountManagement" class="cityListItem" data-params="{{item}}" wx:for="{{cityList}}" wx:key="index">
-            <view>
-                <view>{{item.cityName}}</view>
-                <view class="storeNum">({{item.storeCount}})</view>
-            </view>
-            <view>
-                <van-icon class="expiredFlag" name="info-o" style="color: red;" wx:if="{{item.expiredFlag}}"></van-icon>
-                <van-icon name="arrow"></van-icon>
-            </view>
-        </view>
-    </view>
-    <view class="addCity" wx:if="{{loginInfo.roleType==1}}">
-        <picker bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" mode="multiSelector" range="{{multiArray}}" rangeKey="regname" value="{{multiIndex}}">
-            <van-button round bind:click="saveAdd" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">添加城市</van-button>
-        </picker>
-    </view>
+	<picker bindchange="bindProvinceIdChange" mode="selector" range="{{provinceList}}" rangeKey="regname" value="{{provinceIndex}}">
+		<view class="defaultCity">
+			<view class="title">当前省份：</view>
+			<view>{{provinceList[provinceIndex].regname}}</view>
+			<view>({{provinceList[provinceIndex].count}})</view>
+			<van-icon name="arrow-down"></van-icon>
+		</view>
+	</picker>
+	<view class="cityList">
+		<view class="title">城市：</view>
+		<view bindtap="jumpAccountManagement" class="cityListItem" data-index="{{index}}" wx:for="{{cityList}}" wx:key="index">
+			<view>
+				<view>{{item.regname}}</view>
+				<view class="storeNum">({{item.count}})</view>
+			</view>
+			<view>
+				<van-icon name="arrow"></van-icon>
+			</view>
+		</view>
+	</view>
+	<view class="addCity">
+		<picker bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" mode="multiSelector" range="{{multiArray}}" rangeKey="regname" value="{{multiIndex}}">
+			<van-button color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">添加城市</van-button>
+		</picker>
+	</view>
 </view>
+<van-notify id="van-notify"></van-notify>

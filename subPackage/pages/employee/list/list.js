@@ -1,155 +1,161 @@
+import Notify from "@vant/weapp/notify/notify";
+
 const app = getApp();
-const { utils, globalData, ROLES } = app;
+const { utils, globalData } = app;
+
 Page({
 	data: {
-		page: 1,
+		// 页面url查询参数相关字段
+		shopId: "",
+		shopName: "",
+		nickName: "",
+		cityId: "",
+		
+		staffList: [],
+
+		// 新建账号 相关的字段
+		name: "",
+		phone: "",
+		account: "",
+		password: "",
+
 		phoneError: false,
 		isShowPop: false,
-		storeId: "",
-		storeName: "",
-		name: "",
-		formData: {
-			user: "",
-			phone: "",
-			account: "",
-			password: "",
-		},
 	},
-	onLoad(opts) {
-		this.setData(
-			{
-				storeId: opts.storeId,
-				storeName: opts.storeName,
-				name: opts.name,
-			},
-			() => {
-				this.getSubAccounts();
-			}
-		);
-	},
-	getSubAccounts() {
-		const staffList = [
-			{
-				user: "erkai",
-				phone: "1231231231231",
-				account: "123123123",
-				password: "12321312",
-			},
-			{
-				user: "erkai",
-				phone: "1231231231231",
-				account: "123",
-				password: "12321312",
-			},
-			{
-				user: "erkai",
-				phone: "1231231231231",
-				account: "32432",
-				password: "12321312",
-			},
-			{
-				user: "erkai",
-				phone: "1231231231231",
-				account: "777",
-				password: "12321312",
-			},
-			{
-				user: "erkai",
-				phone: "1231231231231",
-				account: "666",
-				password: "12321312",
-			},
-		];
+	onLoad(options) {
 		this.setData({
-			staffList,
+			shopId: options.shopId,
+			shopName: options.shopName,
+			nickName: options.nickName,
+			cityId: options.cityId,
+		}, () => {
+			this.getStaffList();
 		});
 	},
+	getStaffList() {
+		utils.request(
+			{
+				url: "account/dianyuan-list",
+				data: {
+					shop_id: this.data.shopId,
+				},
+				method: "GET",
+				success: res => {
+					let list = res;
+					if (!Array.isArray(res)) {
+						list = Object.keys(res || {}).map(id => ({ ...res[id], id }));
+					}
+					this.setData({
+						staffList: list,
+					});
+				},
+				isShowLoading: true,
+			},
+			true
+		);
+	},
+	saveAddStaff() {
+		const { phoneError } = this.data;
+		if (this.checkData() && !phoneError) {
+			const { name, phone, password, shopId, cityId } = this.data;
+			utils.request(
+				{
+					url: "account/add",
+					data: {
+						nickname: name,
+						phone,
+						password,
+						shop_id: shopId,
+						city_id: cityId,
+						level: globalData.userInfo.roleType,
+					},
+					method: "POST",
+					success: res => {
+						wx.showToast({
+							title: "添加账号成功",
+							icon: "none",
+						});
+						this.getStaffList();
+						this.onClose();
+					},
+					isShowLoading: true,
+				},
+				true
+			);
+		}
+	},
+	checkData() {
+		const { name, password, phone } = this.data;
+		const isValid = name && password && phone;
+		if (!isValid) {
+			Notify({
+				type: "danger",
+				message: "请填写完整账号信息！",
+			});
+		}
+		return isValid;
+	},
+	handleDelete(t) {
+		const staffInfo = t.currentTarget.dataset.item;
+		wx.showModal({
+			title: "提示",
+			content: "是否确认删除该账号？",
+			success: (t) => {
+				if (t.confirm) {
+					this.deleteStaff(staffInfo);
+				}
+			},
+		});
+	},
+	deleteStaff(staffInfo) {
+		utils.request(
+			{
+				url: "account/del",
+				data: {
+					// FIXME: user_id -> id
+					user_id: staffInfo.id,
+				},
+				method: "POST",
+				success: res => {
+					wx.showToast({
+						title: "删除账号成功",
+						icon: "none",
+					});
+					this.getStaffList();
+				},
+				isShowLoading: true,
+			},
+			true
+		);
+	},
+
 	showAddStaff() {
 		this.setData({
 			isShowPop: true,
 		});
 	},
 	onClose() {
-		var t = this;
-		this.setData(
-			{
-				isShowPop: false,
-			},
-			() => {
-				t.clearAddStaffForm();
-			}
-		);
-	},
-	clearAddStaffForm() {
 		this.setData({
-			formData: {
-				user: "",
-				phone: "",
-				account: "",
-				password: "",
-			},
+			isShowPop: false,
 			phoneError: false,
+			name: "",
+			phone: "",
+			account: "",
+			password: "",
 		});
 	},
-	checkFormData() {
-		const formData = this.data.formData;
-		const { account, password, phone, user } = formData;
-		const isValid = account && password && phone && user;
-		if (!isValid) {
-			wx.showToast({
-				icon: "none",
-				title: "请填写完整信息!",
-			});
-		}
-		return isValid;
-	},
-	saveAddStaff() {
-		const data = this.data;
-		const formData = data.formData;
-		if (this.checkFormData() && !data.phoneError) {
-			// save
-			const params = {
-				...formData,
-			};
-		}
-	},
-	handleDelete(t) {
-		const index = t.currentTarget.dataset.index;
-		const info = this.data.staffList[index];
-		wx.showModal({
-			title: "提示",
-			content: "是否确认删除该账号？",
-			success: (t) => {
-				if (t.confirm) {
-					this.deleteInfo(info);
-				} else if (t.cancel) {
-					console.log("用户点击取消");
-				}
-			},
-		});
-	},
-
-	deleteInfo(info) {
-		wx.showToast({
-			icon: "none",
-			title: "删除成功",
-		});
-		this.getSubAccounts();
-	},
+	// 电话号码校验
 	phoneBlur() {
-		const phone = this.data.formData.phone;
+		const phone = this.data.phone;
 		const isValid = utils.checkPhone(phone);
-		this.setData(
-			{
-				phoneError: !isValid,
-			},
-			() => {
-				if (isValid) {
-					this.setData({
-						"formData.account": phone,
-					});
-				}
+		this.setData({
+			phoneError: !isValid,
+		}, () => {
+			if (isValid) {
+				this.setData({
+					account: phone,
+				});
 			}
-		);
+		});
 	},
 });

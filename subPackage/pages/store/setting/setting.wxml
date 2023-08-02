@@ -14,13 +14,15 @@
         </view>
       </view>
     </view>
-    <view class="serviceModule" wx:if="{{tabIndex == 0}}">
+    <view class="serviceModule" hidden="{{tabIndex !== 0}}">
       <view class="content">
-        <view wx:for="{{serviceList}}" wx:key="index" bindtap="handleTopService" class="serviceItem" data-index="{{index}}">
-          <image wx:if="{{isEdit}}" class="topping" src="/assets/img/xiangshang.png" />
-          {{item.name}}
-          <image wx:if="{{isEdit}}" class="close" data-index="{{index}}" src="/assets/img/guanbi.png" catchtap="handleDelete" />
-        </view>
+        <block wx:for="{{serviceList}}">
+          <view bindtap="handleTopService" class="serviceItem" data-index="{{index}}" wx:key="{{index}}">
+            <image wx:if="{{isEdit}}" class="topping" src="/assets/img/xiangshang.png" />
+            {{item.name}}
+            <image wx:if="{{isEdit}}" class="close" data-index="{{index}}" src="/assets/img/guanbi.png" catchtap="handleDelete" />
+          </view>
+        </block>
         <view wx:if="{{isEdit}}" bindtap="openAdd" class="newBtn">
           <image src="/assets/img/xinjian.png" />
           <text>新建</text>
@@ -30,9 +32,9 @@
         </view>
       </view>
     </view>
-    <view class="staffModule" wx:if="{{tabIndex == 1}}">
+    <view class="staffModule" hidden="{{tabIndex !== 1}}">
       <view class="content">
-        <view class="serviceItem" wx:for="{{staffList}}" wx:key="index">
+        <view class="serviceItem" wx:for="{{staffList}}">
           {{item.name}}
           <image wx:if="{{isEdit}}" class="close" data-index="{{index}}" src="/assets/img/guanbi.png" bindtap="handleDelete" />
         </view>
@@ -45,7 +47,7 @@
         </view>
       </view>
     </view>
-    <view class="other" wx:if="{{tabIndex == 2}}">
+    <view class="other" hidden="{{tabIndex !== 2}}">
       <view bindtap="handleGoto" class="moduleCard" data-url="/subPackage/pages/store/macconnect/macconnect">
         <view style="color:#A27954;">设备连接</view>
         <image class="moduleCard_back" src="/assets/img/dianpushezhi.png" />
@@ -63,8 +65,8 @@
   <van-popup round bind:close="handleCloseAddPop" customStyle="height:25%;" position="bottom" show="{{isShowAddPop}}">
     <view class="addForm">
       <van-cell-group>
-        <van-field wx:if="{{tabIndex == 0}}" label="身体部位" maxlength="8" model:value="{{formValue}}" placeholder="请输入身体部位"></van-field>
-        <van-field wx:if="{{tabIndex == 1}}" label="服务人员" maxlength="4" model:value="{{formValue}}" placeholder="请输入服务人员"></van-field>
+        <van-field wx:if="{{tabIndex == 0}}" label="身体部位" model:value="{{formValue}}" placeholder="请输入身体部位"></van-field>
+        <van-field wx:if="{{tabIndex == 1}}" label="服务人员" model:value="{{formValue}}" placeholder="请输入服务人员"></van-field>
       </van-cell-group>
       <view class="saveBtn">
         <van-button round bind:click="handleAddSave" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">

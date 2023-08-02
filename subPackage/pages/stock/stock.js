@@ -34,7 +34,7 @@ Page({
 		isShowAddPop: false,
 		goodsName: "",
 		price: "",
-		isExport: false,
+		exportIds: "",
 		// 是否有权限新增商品
 		canHandle: false,
 	},
@@ -59,19 +59,19 @@ Page({
 				success: res => {
 					let list = res;
 					if (!Array.isArray(res)) {
-						list = Object.keys(res || {}).map(id => ({
-							id,
-							goodsName: list[id].good_name,
-							price: list[id].price,
-							stock: list[id].remain,
-							addSum: list[id].add_sum,
-							delSum: list[id].del_sum,
-							// steper 计数
-							count: 0,
-						}));
+						list = Object.keys(res || {}).map(id => ({ ...res[id], id }));
 					}
 					this.setData({
-						stockList: list,
+						stockList: list.map(item => ({
+							id: item.id,
+							goodsName: item.good_name,
+							price: item.price,
+							stock: item.remain,
+							addSum: item.add_sum,
+							delSum: item.del_sum,
+							// steper 计数
+							count: 0,
+						})),
 					});
 				},
 			},
@@ -92,23 +92,23 @@ Page({
 				},
 				method: "GET",
 				success: res => {
-					let list = res;
-					if (!Array.isArray(res)) {
-						list = Object.keys(res || {}).map(id => ({
-							id,
-							goodsName: list[id].good_name,
-							totalPrice: list[id].price,
-							inputStockCount: list[id].add_sum,
-							outStockCount: list[id].del_sum,
-						}));
+					let { list, customers_num: customerCount, totalMoney: totalIncome, customer_id_list: exportIds } = res;
+					if (!Array.isArray(list)) {
+						list = Object.keys(list || {}).map(id => ({ ...list[id], id }));
 					}
 					this.setData({
-						stockLogList: list,
-						// FIXME: 根据后端完成后的接口字段进行修改
+						stockLogList: list.map(item => ({
+							id: item.id,
+							goodsName: item.good_name,
+							totalPrice: item.price,
+							inputStockCount: item.add_sum,
+							outStockCount: item.del_sum,
+						})),
 						saleData: {
-							customerCount: 20,
-							totalIncome: 1000,
+							customerCount,
+							totalIncome,
 						},
+						exportIds,
 					});
 				},
 			},
@@ -241,6 +241,13 @@ Page({
 			true
 		);
 	},
+	handleExport() {
+		// TODO: 待调试，打开文件报错
+		const { startDate, endDate } = this.data;
+		utils.downLoadFile('goods/export', {
+			customer_id_list: this.data.exportIds || '6,7,8',
+		}, `${startDate}至${endDate}库存记录`)
+	},
 
 	handleShowCalendar() {
 		this.setData({
@@ -250,34 +257,19 @@ Page({
 	hideCalendar() {
 		this.setData({
 			isShowCalendar: false,
-			isExport: false,
-		});
-	},
-	handleExport() {
-		this.setData({
-			isShowCalendar: true,
-			isExport: true,
 		});
 	},
 	handleCalendarChange(e) {
 		const nowTime = utils.formatTime(new Date(), "YYYY-MM-DD");
 		// 边界处理，防止页面报错
 		const [start, end] = (Array.isArray(e.detail) ? e.detail : [nowTime, nowTime]).map(time => time.replace(/\s.*/, ""));
-		if (this.data.isExport) {
-			const { id } = globalData.storeInfo;
-			// TODO: 导出数据 url 添加
-			utils.downLoadFile('goods/sku-download', {
-				shop_id: id,
-				date_start: start,
-				date_end: end,
-			}, `${start}至${end}库存记录`)
-		} else {
-			this.setData({
-				startDate: start,
-				endDate: end,
-			});
+
+		this.setData({
+			startDate: start,
+			endDate: end,
+		}, () => {
 			this.getStockLogs();
-		}
+		});
 		this.hideCalendar();
 	},
 });

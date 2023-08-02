@@ -1,6 +1,7 @@
 // app.js
 import { ROLES } from "/utils/constant";
 const utils = require("/utils/util");
+const cityData = require("/utils/cityData");
 
 // 整个小程序只有一个 App 实例，是全部页面共享的，可以通过 getApp 方法获取到全局唯一的 App 实例
 App({
@@ -19,6 +20,7 @@ App({
     });
   },
   utils,
+  cityData,
   ROLES,
   globalData: {
     provinceList: [],

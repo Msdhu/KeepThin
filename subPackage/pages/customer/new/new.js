@@ -1,11 +1,13 @@
 const app = getApp();
 const { utils, globalData, ROLES } = app;
+
 const READ_STORAGE_KEY = "readAgreement";
-function getDateTxt(dateStr) {
+const getDateTxt = (dateStr) => {
 	return utils.formatTime(
 		new Date(dateStr.replace(/-/g, "/")), "YYYY年MM月DD日"
 	);
 }
+
 Page({
 	data: {
 		action: 1,

@@ -70,10 +70,15 @@ Page({
 						: staffList.map((item, index) => ({ ...item, sort: index })),
 				},
 				method: "POST",
-				success: res => {
+				success: () => {
 					this.setData({
 						isEdit: false,
+						// 身体部位列表
+						serviceList: [],
+						// 服务人员列表
+						staffList: [],
 					});
+					this.getShopSettingInfo();
 				},
 				isShowLoading: true,
 			},
