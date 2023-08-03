@@ -1,7 +1,7 @@
 import Notify from "@vant/weapp/notify/notify";
 
 const app = getApp();
-const { utils, globalData } = app;
+const { utils, ROLES } = app;
 
 Page({
 	data: {
@@ -67,7 +67,7 @@ Page({
 						password,
 						shop_id: shopId,
 						city_id: cityId,
-						level: globalData.userInfo.roleType,
+						level: ROLES.employee,
 					},
 					method: "POST",
 					success: res => {
@@ -112,8 +112,7 @@ Page({
 			{
 				url: "account/del",
 				data: {
-					// FIXME: user_id -> id
-					user_id: staffInfo.id,
+					id: staffInfo.id,
 				},
 				method: "POST",
 				success: res => {

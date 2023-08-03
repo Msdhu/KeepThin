@@ -1,1554 +1,527 @@
-module.exports = {
-    provinceArray: [ {
-        regid: "2",
-        regname: "北京市",
-    }, {
-        regid: "3",
-        regname: "安徽省",
-    }, {
-        regid: "4",
-        regname: "福建省",
-    }, {
-        regid: "5",
-        regname: "甘肃省",
-    }, {
-        regid: "6",
-        regname: "广东省",
-    }, {
-        regid: "7",
-        regname: "广西省",
-    }, {
-        regid: "8",
-        regname: "贵州省",
-    }, {
-        regid: "9",
-        regname: "海南省",
-    }, {
-        regid: "10",
-        regname: "河北省",
-    }, {
-        regid: "11",
-        regname: "河南省",
-    }, {
-        regid: "12",
-        regname: "黑龙江自治区",
-    }, {
-        regid: "13",
-        regname: "湖北省",
-    }, {
-        regid: "14",
-        regname: "湖南省",
-    }, {
-        regid: "15",
-        regname: "吉林省",
-    }, {
-        regid: "16",
-        regname: "江苏省",
-    }, {
-        regid: "17",
-        regname: "江西省",
-    }, {
-        regid: "18",
-        regname: "辽宁省",
-    }, {
-        regid: "19",
-        regname: "内蒙古自治区",
-    }, {
-        regid: "20",
-        regname: "宁夏回族自治区",
-    }, {
-        regid: "21",
-        regname: "青海省",
-    }, {
-        regid: "22",
-        regname: "山东省",
-    }, {
-        regid: "23",
-        regname: "山西省",
-    }, {
-        regid: "24",
-        regname: "陕西省",
-    }, {
-        regid: "25",
-        regname: "上海市",
-    }, {
-        regid: "26",
-        regname: "四川省",
-    }, {
-        regid: "27",
-        regname: "天津省",
-    }, {
-        regid: "28",
-        regname: "西藏自治区",
-    }, {
-        regid: "29",
-        regname: "新疆维吾尔自治区",
-    }, {
-        regid: "30",
-        regname: "云南省",
-    }, {
-        regid: "31",
-        regname: "浙江省",
-    }, {
-        regid: "32",
-        regname: "重庆省",
-    }, {
-        regid: "33",
-        regname: "香港",
-    }, {
-        regid: "34",
-        regname: "澳门",
-    }, {
-        regid: "35",
-        regname: "台湾",
-    } ],
-    cityArray: [ {
-        regid: "36",
-        parid: "3",
-        regname: "安庆市",
-    }, {
-        regid: "37",
-        parid: "3",
-        regname: "蚌埠市",
-    }, {
-        regid: "38",
-        parid: "3",
-        regname: "巢湖市",
-    }, {
-        regid: "39",
-        parid: "3",
-        regname: "池州市",
-    }, {
-        regid: "40",
-        parid: "3",
-        regname: "滁州市",
-    }, {
-        regid: "41",
-        parid: "3",
-        regname: "阜阳市",
-    }, {
-        regid: "42",
-        parid: "3",
-        regname: "淮北市",
-    }, {
-        regid: "43",
-        parid: "3",
-        regname: "淮南市",
-    }, {
-        regid: "44",
-        parid: "3",
-        regname: "黄山市",
-    }, {
-        regid: "45",
-        parid: "3",
-        regname: "六安市",
-    }, {
-        regid: "46",
-        parid: "3",
-        regname: "马鞍山市",
-    }, {
-        regid: "47",
-        parid: "3",
-        regname: "宿州市",
-    }, {
-        regid: "48",
-        parid: "3",
-        regname: "铜陵市",
-    }, {
-        regid: "49",
-        parid: "3",
-        regname: "芜湖市",
-    }, {
-        regid: "50",
-        parid: "3",
-        regname: "宣城市",
-    }, {
-        regid: "51",
-        parid: "3",
-        regname: "亳州市",
-    }, {
-        regid: "52",
-        parid: "2",
-        regname: "北京市",
-    }, {
-        regid: "53",
-        parid: "4",
-        regname: "福州市",
-    }, {
-        regid: "54",
-        parid: "4",
-        regname: "龙岩市",
-    }, {
-        regid: "55",
-        parid: "4",
-        regname: "南平市",
-    }, {
-        regid: "56",
-        parid: "4",
-        regname: "宁德市",
-    }, {
-        regid: "57",
-        parid: "4",
-        regname: "莆田市",
-    }, {
-        regid: "58",
-        parid: "4",
-        regname: "泉州市",
-    }, {
-        regid: "59",
-        parid: "4",
-        regname: "三明市",
-    }, {
-        regid: "60",
-        parid: "4",
-        regname: "厦门市",
-    }, {
-        regid: "61",
-        parid: "4",
-        regname: "漳州市",
-    }, {
-        regid: "62",
-        parid: "5",
-        regname: "兰州市",
-    }, {
-        regid: "63",
-        parid: "5",
-        regname: "白银市",
-    }, {
-        regid: "64",
-        parid: "5",
-        regname: "定西市",
-    }, {
-        regid: "65",
-        parid: "5",
-        regname: "甘南市",
-    }, {
-        regid: "66",
-        parid: "5",
-        regname: "嘉峪关市",
-    }, {
-        regid: "67",
-        parid: "5",
-        regname: "金昌市",
-    }, {
-        regid: "68",
-        parid: "5",
-        regname: "酒泉市",
-    }, {
-        regid: "69",
-        parid: "5",
-        regname: "临夏市",
-    }, {
-        regid: "70",
-        parid: "5",
-        regname: "陇南市",
-    }, {
-        regid: "71",
-        parid: "5",
-        regname: "平凉市",
-    }, {
-        regid: "72",
-        parid: "5",
-        regname: "庆阳市",
-    }, {
-        regid: "73",
-        parid: "5",
-        regname: "天水市",
-    }, {
-        regid: "74",
-        parid: "5",
-        regname: "武威市",
-    }, {
-        regid: "75",
-        parid: "5",
-        regname: "张掖市",
-    }, {
-        regid: "76",
-        parid: "6",
-        regname: "广州市",
-    }, {
-        regid: "77",
-        parid: "6",
-        regname: "深圳市",
-    }, {
-        regid: "78",
-        parid: "6",
-        regname: "潮州市",
-    }, {
-        regid: "79",
-        parid: "6",
-        regname: "东莞市",
-    }, {
-        regid: "80",
-        parid: "6",
-        regname: "佛山市",
-    }, {
-        regid: "81",
-        parid: "6",
-        regname: "河源市",
-    }, {
-        regid: "82",
-        parid: "6",
-        regname: "惠州市",
-    }, {
-        regid: "83",
-        parid: "6",
-        regname: "江门市",
-    }, {
-        regid: "84",
-        parid: "6",
-        regname: "揭阳市",
-    }, {
-        regid: "85",
-        parid: "6",
-        regname: "茂名市",
-    }, {
-        regid: "86",
-        parid: "6",
-        regname: "梅州市",
-    }, {
-        regid: "87",
-        parid: "6",
-        regname: "清远市",
-    }, {
-        regid: "88",
-        parid: "6",
-        regname: "汕头市",
-    }, {
-        regid: "89",
-        parid: "6",
-        regname: "汕尾市",
-    }, {
-        regid: "90",
-        parid: "6",
-        regname: "韶关市",
-    }, {
-        regid: "91",
-        parid: "6",
-        regname: "阳江市",
-    }, {
-        regid: "92",
-        parid: "6",
-        regname: "云浮市",
-    }, {
-        regid: "93",
-        parid: "6",
-        regname: "湛江市",
-    }, {
-        regid: "94",
-        parid: "6",
-        regname: "肇庆市",
-    }, {
-        regid: "95",
-        parid: "6",
-        regname: "中山市",
-    }, {
-        regid: "96",
-        parid: "6",
-        regname: "珠海市",
-    }, {
-        regid: "97",
-        parid: "7",
-        regname: "南宁市",
-    }, {
-        regid: "98",
-        parid: "7",
-        regname: "桂林市",
-    }, {
-        regid: "99",
-        parid: "7",
-        regname: "百色市",
-    }, {
-        regid: "100",
-        parid: "7",
-        regname: "北海市",
-    }, {
-        regid: "101",
-        parid: "7",
-        regname: "崇左市",
-    }, {
-        regid: "102",
-        parid: "7",
-        regname: "防城港市",
-    }, {
-        regid: "103",
-        parid: "7",
-        regname: "贵港市",
-    }, {
-        regid: "104",
-        parid: "7",
-        regname: "河池市",
-    }, {
-        regid: "105",
-        parid: "7",
-        regname: "贺州市",
-    }, {
-        regid: "106",
-        parid: "7",
-        regname: "来宾市",
-    }, {
-        regid: "107",
-        parid: "7",
-        regname: "柳州市",
-    }, {
-        regid: "108",
-        parid: "7",
-        regname: "钦州市",
-    }, {
-        regid: "109",
-        parid: "7",
-        regname: "梧州市",
-    }, {
-        regid: "110",
-        parid: "7",
-        regname: "玉林市",
-    }, {
-        regid: "111",
-        parid: "8",
-        regname: "贵阳市",
-    }, {
-        regid: "112",
-        parid: "8",
-        regname: "安顺市",
-    }, {
-        regid: "113",
-        parid: "8",
-        regname: "毕节市",
-    }, {
-        regid: "114",
-        parid: "8",
-        regname: "六盘水市",
-    }, {
-        regid: "115",
-        parid: "8",
-        regname: "黔东南市",
-    }, {
-        regid: "116",
-        parid: "8",
-        regname: "黔南市",
-    }, {
-        regid: "117",
-        parid: "8",
-        regname: "黔西南市",
-    }, {
-        regid: "118",
-        parid: "8",
-        regname: "铜仁市",
-    }, {
-        regid: "119",
-        parid: "8",
-        regname: "遵义市",
-    }, {
-        regid: "120",
-        parid: "9",
-        regname: "海口市",
-    }, {
-        regid: "121",
-        parid: "9",
-        regname: "三亚市",
-    }, {
-        regid: "122",
-        parid: "9",
-        regname: "白沙市",
-    }, {
-        regid: "123",
-        parid: "9",
-        regname: "保亭市",
-    }, {
-        regid: "124",
-        parid: "9",
-        regname: "昌江市",
-    }, {
-        regid: "125",
-        parid: "9",
-        regname: "澄迈县市",
-    }, {
-        regid: "126",
-        parid: "9",
-        regname: "定安县市",
-    }, {
-        regid: "127",
-        parid: "9",
-        regname: "东方市",
-    }, {
-        regid: "128",
-        parid: "9",
-        regname: "乐东市",
-    }, {
-        regid: "129",
-        parid: "9",
-        regname: "临高县市",
-    }, {
-        regid: "130",
-        parid: "9",
-        regname: "陵水市",
-    }, {
-        regid: "131",
-        parid: "9",
-        regname: "琼海市",
-    }, {
-        regid: "132",
-        parid: "9",
-        regname: "琼中市",
-    }, {
-        regid: "133",
-        parid: "9",
-        regname: "屯昌县",
-    }, {
-        regid: "134",
-        parid: "9",
-        regname: "万宁市",
-    }, {
-        regid: "135",
-        parid: "9",
-        regname: "文昌市",
-    }, {
-        regid: "136",
-        parid: "9",
-        regname: "五指山市",
-    }, {
-        regid: "137",
-        parid: "9",
-        regname: "儋州市",
-    }, {
-        regid: "138",
-        parid: "10",
-        regname: "石家庄市",
-    }, {
-        regid: "139",
-        parid: "10",
-        regname: "保定市",
-    }, {
-        regid: "140",
-        parid: "10",
-        regname: "沧州市",
-    }, {
-        regid: "141",
-        parid: "10",
-        regname: "承德市",
-    }, {
-        regid: "142",
-        parid: "10",
-        regname: "邯郸市",
-    }, {
-        regid: "143",
-        parid: "10",
-        regname: "衡水市",
-    }, {
-        regid: "144",
-        parid: "10",
-        regname: "廊坊市",
-    }, {
-        regid: "145",
-        parid: "10",
-        regname: "秦皇岛市",
-    }, {
-        regid: "146",
-        parid: "10",
-        regname: "唐山市",
-    }, {
-        regid: "147",
-        parid: "10",
-        regname: "邢台市",
-    }, {
-        regid: "148",
-        parid: "10",
-        regname: "张家口市",
-    }, {
-        regid: "149",
-        parid: "11",
-        regname: "郑州市",
-    }, {
-        regid: "150",
-        parid: "11",
-        regname: "洛阳市",
-    }, {
-        regid: "151",
-        parid: "11",
-        regname: "开封市",
-    }, {
-        regid: "152",
-        parid: "11",
-        regname: "安阳市",
-    }, {
-        regid: "153",
-        parid: "11",
-        regname: "鹤壁市",
-    }, {
-        regid: "154",
-        parid: "11",
-        regname: "济源市",
-    }, {
-        regid: "155",
-        parid: "11",
-        regname: "焦作市",
-    }, {
-        regid: "156",
-        parid: "11",
-        regname: "南阳市",
-    }, {
-        regid: "157",
-        parid: "11",
-        regname: "平顶山市",
-    }, {
-        regid: "158",
-        parid: "11",
-        regname: "三门峡市",
-    }, {
-        regid: "159",
-        parid: "11",
-        regname: "商丘市",
-    }, {
-        regid: "160",
-        parid: "11",
-        regname: "新乡市",
-    }, {
-        regid: "161",
-        parid: "11",
-        regname: "信阳市",
-    }, {
-        regid: "162",
-        parid: "11",
-        regname: "许昌市",
-    }, {
-        regid: "163",
-        parid: "11",
-        regname: "周口市",
-    }, {
-        regid: "164",
-        parid: "11",
-        regname: "驻马店市",
-    }, {
-        regid: "165",
-        parid: "11",
-        regname: "漯河市",
-    }, {
-        regid: "166",
-        parid: "11",
-        regname: "濮阳市",
-    }, {
-        regid: "167",
-        parid: "12",
-        regname: "哈尔滨市",
-    }, {
-        regid: "168",
-        parid: "12",
-        regname: "大庆市",
-    }, {
-        regid: "169",
-        parid: "12",
-        regname: "大兴安岭市",
-    }, {
-        regid: "170",
-        parid: "12",
-        regname: "鹤岗市",
-    }, {
-        regid: "171",
-        parid: "12",
-        regname: "黑河市",
-    }, {
-        regid: "172",
-        parid: "12",
-        regname: "鸡西市",
-    }, {
-        regid: "173",
-        parid: "12",
-        regname: "佳木斯市",
-    }, {
-        regid: "174",
-        parid: "12",
-        regname: "牡丹江市",
-    }, {
-        regid: "175",
-        parid: "12",
-        regname: "七台河市",
-    }, {
-        regid: "176",
-        parid: "12",
-        regname: "齐齐哈尔市",
-    }, {
-        regid: "177",
-        parid: "12",
-        regname: "双鸭山市",
-    }, {
-        regid: "178",
-        parid: "12",
-        regname: "绥化市",
-    }, {
-        regid: "179",
-        parid: "12",
-        regname: "伊春市",
-    }, {
-        regid: "180",
-        parid: "13",
-        regname: "武汉市",
-    }, {
-        regid: "181",
-        parid: "13",
-        regname: "仙桃市",
-    }, {
-        regid: "182",
-        parid: "13",
-        regname: "鄂州市",
-    }, {
-        regid: "183",
-        parid: "13",
-        regname: "黄冈市",
-    }, {
-        regid: "184",
-        parid: "13",
-        regname: "黄石市",
-    }, {
-        regid: "185",
-        parid: "13",
-        regname: "荆门市",
-    }, {
-        regid: "186",
-        parid: "13",
-        regname: "荆州市",
-    }, {
-        regid: "187",
-        parid: "13",
-        regname: "潜江市",
-    }, {
-        regid: "188",
-        parid: "13",
-        regname: "神农架林区市",
-    }, {
-        regid: "189",
-        parid: "13",
-        regname: "十堰市",
-    }, {
-        regid: "190",
-        parid: "13",
-        regname: "随州市",
-    }, {
-        regid: "191",
-        parid: "13",
-        regname: "天门市",
-    }, {
-        regid: "192",
-        parid: "13",
-        regname: "咸宁市",
-    }, {
-        regid: "193",
-        parid: "13",
-        regname: "襄阳(襄樊市)",
-    }, {
-        regid: "194",
-        parid: "13",
-        regname: "孝感市",
-    }, {
-        regid: "195",
-        parid: "13",
-        regname: "宜昌市",
-    }, {
-        regid: "196",
-        parid: "13",
-        regname: "恩施市",
-    }, {
-        regid: "197",
-        parid: "14",
-        regname: "长沙市",
-    }, {
-        regid: "198",
-        parid: "14",
-        regname: "张家界市",
-    }, {
-        regid: "199",
-        parid: "14",
-        regname: "常德市",
-    }, {
-        regid: "200",
-        parid: "14",
-        regname: "郴州市",
-    }, {
-        regid: "201",
-        parid: "14",
-        regname: "衡阳市",
-    }, {
-        regid: "202",
-        parid: "14",
-        regname: "怀化市",
-    }, {
-        regid: "203",
-        parid: "14",
-        regname: "娄底市",
-    }, {
-        regid: "204",
-        parid: "14",
-        regname: "邵阳市",
-    }, {
-        regid: "205",
-        parid: "14",
-        regname: "湘潭市",
-    }, {
-        regid: "206",
-        parid: "14",
-        regname: "湘西市",
-    }, {
-        regid: "207",
-        parid: "14",
-        regname: "益阳市",
-    }, {
-        regid: "208",
-        parid: "14",
-        regname: "永州市",
-    }, {
-        regid: "209",
-        parid: "14",
-        regname: "岳阳市",
-    }, {
-        regid: "210",
-        parid: "14",
-        regname: "株洲市",
-    }, {
-        regid: "211",
-        parid: "15",
-        regname: "长春市",
-    }, {
-        regid: "212",
-        parid: "15",
-        regname: "吉林市",
-    }, {
-        regid: "213",
-        parid: "15",
-        regname: "白城市",
-    }, {
-        regid: "214",
-        parid: "15",
-        regname: "白山市",
-    }, {
-        regid: "215",
-        parid: "15",
-        regname: "辽源市",
-    }, {
-        regid: "216",
-        parid: "15",
-        regname: "四平市",
-    }, {
-        regid: "217",
-        parid: "15",
-        regname: "松原市",
-    }, {
-        regid: "218",
-        parid: "15",
-        regname: "通化市",
-    }, {
-        regid: "219",
-        parid: "15",
-        regname: "延边市",
-    }, {
-        regid: "220",
-        parid: "16",
-        regname: "南京市",
-    }, {
-        regid: "221",
-        parid: "16",
-        regname: "苏州市",
-    }, {
-        regid: "222",
-        parid: "16",
-        regname: "无锡市",
-    }, {
-        regid: "223",
-        parid: "16",
-        regname: "常州市",
-    }, {
-        regid: "224",
-        parid: "16",
-        regname: "淮安市",
-    }, {
-        regid: "225",
-        parid: "16",
-        regname: "连云港市",
-    }, {
-        regid: "226",
-        parid: "16",
-        regname: "南通市",
-    }, {
-        regid: "227",
-        parid: "16",
-        regname: "宿迁市",
-    }, {
-        regid: "228",
-        parid: "16",
-        regname: "泰州市",
-    }, {
-        regid: "229",
-        parid: "16",
-        regname: "徐州市",
-    }, {
-        regid: "230",
-        parid: "16",
-        regname: "盐城市",
-    }, {
-        regid: "231",
-        parid: "16",
-        regname: "扬州市",
-    }, {
-        regid: "232",
-        parid: "16",
-        regname: "镇江市",
-    }, {
-        regid: "233",
-        parid: "17",
-        regname: "南昌市",
-    }, {
-        regid: "234",
-        parid: "17",
-        regname: "抚州市",
-    }, {
-        regid: "235",
-        parid: "17",
-        regname: "赣州市",
-    }, {
-        regid: "236",
-        parid: "17",
-        regname: "吉安市",
-    }, {
-        regid: "237",
-        parid: "17",
-        regname: "景德镇市",
-    }, {
-        regid: "238",
-        parid: "17",
-        regname: "九江市",
-    }, {
-        regid: "239",
-        parid: "17",
-        regname: "萍乡市",
-    }, {
-        regid: "240",
-        parid: "17",
-        regname: "上饶市",
-    }, {
-        regid: "241",
-        parid: "17",
-        regname: "新余市",
-    }, {
-        regid: "242",
-        parid: "17",
-        regname: "宜春市",
-    }, {
-        regid: "243",
-        parid: "17",
-        regname: "鹰潭市",
-    }, {
-        regid: "244",
-        parid: "18",
-        regname: "沈阳市",
-    }, {
-        regid: "245",
-        parid: "18",
-        regname: "大连市",
-    }, {
-        regid: "246",
-        parid: "18",
-        regname: "鞍山市",
-    }, {
-        regid: "247",
-        parid: "18",
-        regname: "本溪市",
-    }, {
-        regid: "248",
-        parid: "18",
-        regname: "朝阳市",
-    }, {
-        regid: "249",
-        parid: "18",
-        regname: "丹东市",
-    }, {
-        regid: "250",
-        parid: "18",
-        regname: "抚顺市",
-    }, {
-        regid: "251",
-        parid: "18",
-        regname: "阜新市",
-    }, {
-        regid: "252",
-        parid: "18",
-        regname: "葫芦岛市",
-    }, {
-        regid: "253",
-        parid: "18",
-        regname: "锦州市",
-    }, {
-        regid: "254",
-        parid: "18",
-        regname: "辽阳市",
-    }, {
-        regid: "255",
-        parid: "18",
-        regname: "盘锦市",
-    }, {
-        regid: "256",
-        parid: "18",
-        regname: "铁岭市",
-    }, {
-        regid: "257",
-        parid: "18",
-        regname: "营口市",
-    }, {
-        regid: "258",
-        parid: "19",
-        regname: "呼和浩特市",
-    }, {
-        regid: "259",
-        parid: "19",
-        regname: "阿拉善盟市",
-    }, {
-        regid: "260",
-        parid: "19",
-        regname: "巴彦淖尔盟市",
-    }, {
-        regid: "261",
-        parid: "19",
-        regname: "包头市",
-    }, {
-        regid: "262",
-        parid: "19",
-        regname: "赤峰市",
-    }, {
-        regid: "263",
-        parid: "19",
-        regname: "鄂尔多斯市",
-    }, {
-        regid: "264",
-        parid: "19",
-        regname: "呼伦贝尔市",
-    }, {
-        regid: "265",
-        parid: "19",
-        regname: "通辽市",
-    }, {
-        regid: "266",
-        parid: "19",
-        regname: "乌海市",
-    }, {
-        regid: "267",
-        parid: "19",
-        regname: "乌兰察布市",
-    }, {
-        regid: "268",
-        parid: "19",
-        regname: "锡林郭勒盟市",
-    }, {
-        regid: "269",
-        parid: "19",
-        regname: "兴安盟市",
-    }, {
-        regid: "270",
-        parid: "20",
-        regname: "银川市",
-    }, {
-        regid: "271",
-        parid: "20",
-        regname: "固原市",
-    }, {
-        regid: "272",
-        parid: "20",
-        regname: "石嘴山市",
-    }, {
-        regid: "273",
-        parid: "20",
-        regname: "吴忠市",
-    }, {
-        regid: "274",
-        parid: "20",
-        regname: "中卫市",
-    }, {
-        regid: "275",
-        parid: "21",
-        regname: "西宁市",
-    }, {
-        regid: "276",
-        parid: "21",
-        regname: "果洛市",
-    }, {
-        regid: "277",
-        parid: "21",
-        regname: "海北市",
-    }, {
-        regid: "278",
-        parid: "21",
-        regname: "海东市",
-    }, {
-        regid: "279",
-        parid: "21",
-        regname: "海南市",
-    }, {
-        regid: "280",
-        parid: "21",
-        regname: "海西市",
-    }, {
-        regid: "281",
-        parid: "21",
-        regname: "黄南市",
-    }, {
-        regid: "282",
-        parid: "21",
-        regname: "玉树市",
-    }, {
-        regid: "283",
-        parid: "22",
-        regname: "济南市",
-    }, {
-        regid: "284",
-        parid: "22",
-        regname: "青岛市",
-    }, {
-        regid: "285",
-        parid: "22",
-        regname: "滨州市",
-    }, {
-        regid: "286",
-        parid: "22",
-        regname: "德州市",
-    }, {
-        regid: "287",
-        parid: "22",
-        regname: "东营市",
-    }, {
-        regid: "288",
-        parid: "22",
-        regname: "菏泽市",
-    }, {
-        regid: "289",
-        parid: "22",
-        regname: "济宁市",
-    }, {
-        regid: "290",
-        parid: "22",
-        regname: "莱芜市",
-    }, {
-        regid: "291",
-        parid: "22",
-        regname: "聊城市",
-    }, {
-        regid: "292",
-        parid: "22",
-        regname: "临沂市",
-    }, {
-        regid: "293",
-        parid: "22",
-        regname: "日照市",
-    }, {
-        regid: "294",
-        parid: "22",
-        regname: "泰安市",
-    }, {
-        regid: "295",
-        parid: "22",
-        regname: "威海市",
-    }, {
-        regid: "296",
-        parid: "22",
-        regname: "潍坊市",
-    }, {
-        regid: "297",
-        parid: "22",
-        regname: "烟台市",
-    }, {
-        regid: "298",
-        parid: "22",
-        regname: "枣庄市",
-    }, {
-        regid: "299",
-        parid: "22",
-        regname: "淄博市",
-    }, {
-        regid: "300",
-        parid: "23",
-        regname: "太原市",
-    }, {
-        regid: "301",
-        parid: "23",
-        regname: "长治市",
-    }, {
-        regid: "302",
-        parid: "23",
-        regname: "大同市",
-    }, {
-        regid: "303",
-        parid: "23",
-        regname: "晋城市",
-    }, {
-        regid: "304",
-        parid: "23",
-        regname: "晋中市",
-    }, {
-        regid: "305",
-        parid: "23",
-        regname: "临汾市",
-    }, {
-        regid: "306",
-        parid: "23",
-        regname: "吕梁市",
-    }, {
-        regid: "307",
-        parid: "23",
-        regname: "朔州市",
-    }, {
-        regid: "308",
-        parid: "23",
-        regname: "忻州市",
-    }, {
-        regid: "309",
-        parid: "23",
-        regname: "阳泉市",
-    }, {
-        regid: "310",
-        parid: "23",
-        regname: "运城市",
-    }, {
-        regid: "311",
-        parid: "24",
-        regname: "西安市",
-    }, {
-        regid: "312",
-        parid: "24",
-        regname: "安康市",
-    }, {
-        regid: "313",
-        parid: "24",
-        regname: "宝鸡市",
-    }, {
-        regid: "314",
-        parid: "24",
-        regname: "汉中市",
-    }, {
-        regid: "315",
-        parid: "24",
-        regname: "商洛市",
-    }, {
-        regid: "316",
-        parid: "24",
-        regname: "铜川市",
-    }, {
-        regid: "317",
-        parid: "24",
-        regname: "渭南市",
-    }, {
-        regid: "318",
-        parid: "24",
-        regname: "咸阳市",
-    }, {
-        regid: "319",
-        parid: "24",
-        regname: "延安市",
-    }, {
-        regid: "320",
-        parid: "24",
-        regname: "榆林市",
-    }, {
-        regid: "321",
-        parid: "25",
-        regname: "上海市",
-    }, {
-        regid: "322",
-        parid: "26",
-        regname: "成都市",
-    }, {
-        regid: "323",
-        parid: "26",
-        regname: "绵阳市",
-    }, {
-        regid: "324",
-        parid: "26",
-        regname: "阿坝市",
-    }, {
-        regid: "325",
-        parid: "26",
-        regname: "巴中市",
-    }, {
-        regid: "326",
-        parid: "26",
-        regname: "达州市",
-    }, {
-        regid: "327",
-        parid: "26",
-        regname: "德阳市",
-    }, {
-        regid: "328",
-        parid: "26",
-        regname: "甘孜市",
-    }, {
-        regid: "329",
-        parid: "26",
-        regname: "广安市",
-    }, {
-        regid: "330",
-        parid: "26",
-        regname: "广元市",
-    }, {
-        regid: "331",
-        parid: "26",
-        regname: "乐山市",
-    }, {
-        regid: "332",
-        parid: "26",
-        regname: "凉山市",
-    }, {
-        regid: "333",
-        parid: "26",
-        regname: "眉山市",
-    }, {
-        regid: "334",
-        parid: "26",
-        regname: "南充市",
-    }, {
-        regid: "335",
-        parid: "26",
-        regname: "内江市",
-    }, {
-        regid: "336",
-        parid: "26",
-        regname: "攀枝花",
-    }, {
-        regid: "337",
-        parid: "26",
-        regname: "遂宁市",
-    }, {
-        regid: "338",
-        parid: "26",
-        regname: "雅安市",
-    }, {
-        regid: "339",
-        parid: "26",
-        regname: "宜宾市",
-    }, {
-        regid: "340",
-        parid: "26",
-        regname: "资阳市",
-    }, {
-        regid: "341",
-        parid: "26",
-        regname: "自贡市",
-    }, {
-        regid: "342",
-        parid: "26",
-        regname: "泸州市",
-    }, {
-        regid: "343",
-        parid: "27",
-        regname: "天津市",
-    }, {
-        regid: "344",
-        parid: "28",
-        regname: "拉萨市",
-    }, {
-        regid: "345",
-        parid: "28",
-        regname: "阿里市",
-    }, {
-        regid: "346",
-        parid: "28",
-        regname: "昌都市",
-    }, {
-        regid: "347",
-        parid: "28",
-        regname: "林芝市",
-    }, {
-        regid: "348",
-        parid: "28",
-        regname: "那曲市",
-    }, {
-        regid: "349",
-        parid: "28",
-        regname: "日喀则市",
-    }, {
-        regid: "350",
-        parid: "28",
-        regname: "山南市",
-    }, {
-        regid: "351",
-        parid: "29",
-        regname: "乌鲁木齐市",
-    }, {
-        regid: "352",
-        parid: "29",
-        regname: "阿克苏市",
-    }, {
-        regid: "353",
-        parid: "29",
-        regname: "阿拉尔市",
-    }, {
-        regid: "354",
-        parid: "29",
-        regname: "巴音郭楞市",
-    }, {
-        regid: "355",
-        parid: "29",
-        regname: "博尔塔拉市",
-    }, {
-        regid: "356",
-        parid: "29",
-        regname: "昌吉市",
-    }, {
-        regid: "357",
-        parid: "29",
-        regname: "哈密市",
-    }, {
-        regid: "358",
-        parid: "29",
-        regname: "和田市",
-    }, {
-        regid: "359",
-        parid: "29",
-        regname: "喀什市",
-    }, {
-        regid: "360",
-        parid: "29",
-        regname: "克拉玛依市",
-    }, {
-        regid: "361",
-        parid: "29",
-        regname: "克孜勒苏市",
-    }, {
-        regid: "362",
-        parid: "29",
-        regname: "石河子",
-    }, {
-        regid: "363",
-        parid: "29",
-        regname: "图木舒克市",
-    }, {
-        regid: "364",
-        parid: "29",
-        regname: "吐鲁番市",
-    }, {
-        regid: "365",
-        parid: "29",
-        regname: "五家渠市",
-    }, {
-        regid: "366",
-        parid: "29",
-        regname: "伊犁市",
-    }, {
-        regid: "367",
-        parid: "30",
-        regname: "昆明市",
-    }, {
-        regid: "368",
-        parid: "30",
-        regname: "怒江市",
-    }, {
-        regid: "369",
-        parid: "30",
-        regname: "普洱市",
-    }, {
-        regid: "370",
-        parid: "30",
-        regname: "丽江市",
-    }, {
-        regid: "371",
-        parid: "30",
-        regname: "保山市",
-    }, {
-        regid: "372",
-        parid: "30",
-        regname: "楚雄市",
-    }, {
-        regid: "373",
-        parid: "30",
-        regname: "大理市",
-    }, {
-        regid: "374",
-        parid: "30",
-        regname: "德宏市",
-    }, {
-        regid: "375",
-        parid: "30",
-        regname: "迪庆市",
-    }, {
-        regid: "376",
-        parid: "30",
-        regname: "红河市",
-    }, {
-        regid: "377",
-        parid: "30",
-        regname: "临沧市",
-    }, {
-        regid: "378",
-        parid: "30",
-        regname: "曲靖市",
-    }, {
-        regid: "379",
-        parid: "30",
-        regname: "文山市",
-    }, {
-        regid: "380",
-        parid: "30",
-        regname: "西双版纳市",
-    }, {
-        regid: "381",
-        parid: "30",
-        regname: "玉溪市",
-    }, {
-        regid: "382",
-        parid: "30",
-        regname: "昭通市",
-    }, {
-        regid: "383",
-        parid: "31",
-        regname: "杭州市",
-    }, {
-        regid: "384",
-        parid: "31",
-        regname: "湖州市",
-    }, {
-        regid: "385",
-        parid: "31",
-        regname: "嘉兴市",
-    }, {
-        regid: "386",
-        parid: "31",
-        regname: "金华市",
-    }, {
-        regid: "387",
-        parid: "31",
-        regname: "丽水市",
-    }, {
-        regid: "388",
-        parid: "31",
-        regname: "宁波市",
-    }, {
-        regid: "389",
-        parid: "31",
-        regname: "绍兴市",
-    }, {
-        regid: "390",
-        parid: "31",
-        regname: "台州市",
-    }, {
-        regid: "391",
-        parid: "31",
-        regname: "温州市",
-    }, {
-        regid: "392",
-        parid: "31",
-        regname: "舟山市",
-    }, {
-        regid: "393",
-        parid: "31",
-        regname: "衢州市",
-    }, {
-        regid: "394",
-        parid: "32",
-        regname: "重庆市",
-    }, {
-        regid: "395",
-        parid: "33",
-        regname: "香港",
-    }, {
-        regid: "396",
-        parid: "34",
-        regname: "澳门",
-    }, {
-        regid: "397",
-        parid: "35",
-        regname: "台湾",
-    } ]
-};
+module.exports = [
+	{ regid: "2", regname: "北京市", citys: [{ regid: "52", regname: "北京" }] },
+	{
+		regid: "3",
+		regname: "安徽省",
+		citys: [
+			{ regid: "36", regname: "安庆" },
+			{ regid: "37", regname: "蚌埠" },
+			{ regid: "38", regname: "巢湖" },
+			{ regid: "39", regname: "池州" },
+			{ regid: "40", regname: "滁州" },
+			{ regid: "41", regname: "阜阳" },
+			{ regid: "42", regname: "淮北" },
+			{ regid: "43", regname: "淮南" },
+			{ regid: "44", regname: "黄山" },
+			{ regid: "45", regname: "六安" },
+			{ regid: "46", regname: "马鞍山" },
+			{ regid: "47", regname: "宿州" },
+			{ regid: "48", regname: "铜陵" },
+			{ regid: "49", regname: "芜湖" },
+			{ regid: "50", regname: "宣城" },
+			{ regid: "51", regname: "亳州" },
+			{ regid: "3401", regname: "合肥" },
+		],
+	},
+	{
+		regid: "4",
+		regname: "福建省",
+		citys: [
+			{ regid: "53", regname: "福州" },
+			{ regid: "54", regname: "龙岩" },
+			{ regid: "55", regname: "南平" },
+			{ regid: "56", regname: "宁德" },
+			{ regid: "57", regname: "莆田" },
+			{ regid: "58", regname: "泉州" },
+			{ regid: "59", regname: "三明" },
+			{ regid: "60", regname: "厦门" },
+			{ regid: "61", regname: "漳州" },
+		],
+	},
+	{
+		regid: "5",
+		regname: "甘肃省",
+		citys: [
+			{ regid: "62", regname: "兰州" },
+			{ regid: "63", regname: "白银" },
+			{ regid: "64", regname: "定西" },
+			{ regid: "65", regname: "甘南" },
+			{ regid: "66", regname: "嘉峪关" },
+			{ regid: "67", regname: "金昌" },
+			{ regid: "68", regname: "酒泉" },
+			{ regid: "69", regname: "临夏" },
+			{ regid: "70", regname: "陇南" },
+			{ regid: "71", regname: "平凉" },
+			{ regid: "72", regname: "庆阳" },
+			{ regid: "73", regname: "天水" },
+			{ regid: "74", regname: "武威" },
+			{ regid: "75", regname: "张掖" },
+		],
+	},
+	{
+		regid: "6",
+		regname: "广东省",
+		citys: [
+			{ regid: "76", regname: "广州" },
+			{ regid: "77", regname: "深圳" },
+			{ regid: "78", regname: "潮州" },
+			{ regid: "79", regname: "东莞" },
+			{ regid: "80", regname: "佛山" },
+			{ regid: "81", regname: "河源" },
+			{ regid: "82", regname: "惠州" },
+			{ regid: "83", regname: "江门" },
+			{ regid: "84", regname: "揭阳" },
+			{ regid: "85", regname: "茂名" },
+			{ regid: "86", regname: "梅州" },
+			{ regid: "87", regname: "清远" },
+			{ regid: "88", regname: "汕头" },
+			{ regid: "89", regname: "汕尾" },
+			{ regid: "90", regname: "韶关" },
+			{ regid: "91", regname: "阳江" },
+			{ regid: "92", regname: "云浮" },
+			{ regid: "93", regname: "湛江" },
+			{ regid: "94", regname: "肇庆" },
+			{ regid: "95", regname: "中山" },
+			{ regid: "96", regname: "珠海" },
+		],
+	},
+	{
+		regid: "7",
+		regname: "广西壮族自治区",
+		citys: [
+			{ regid: "97", regname: "南宁" },
+			{ regid: "98", regname: "桂林" },
+			{ regid: "99", regname: "百色" },
+			{ regid: "100", regname: "北海" },
+			{ regid: "101", regname: "崇左" },
+			{ regid: "102", regname: "防城港" },
+			{ regid: "103", regname: "贵港" },
+			{ regid: "104", regname: "河池" },
+			{ regid: "105", regname: "贺州" },
+			{ regid: "106", regname: "来宾" },
+			{ regid: "107", regname: "柳州" },
+			{ regid: "108", regname: "钦州" },
+			{ regid: "109", regname: "梧州" },
+			{ regid: "110", regname: "玉林" },
+		],
+	},
+	{
+		regid: "8",
+		regname: "贵州省",
+		citys: [
+			{ regid: "111", regname: "贵阳" },
+			{ regid: "112", regname: "安顺" },
+			{ regid: "113", regname: "毕节" },
+			{ regid: "114", regname: "六盘水" },
+			{ regid: "115", regname: "黔东南" },
+			{ regid: "116", regname: "黔南" },
+			{ regid: "117", regname: "黔西南" },
+			{ regid: "118", regname: "铜仁" },
+			{ regid: "119", regname: "遵义" },
+		],
+	},
+	{
+		regid: "9",
+		regname: "海南省",
+		citys: [
+			{ regid: "120", regname: "海口" },
+			{ regid: "121", regname: "三亚" },
+			{ regid: "122", regname: "白沙" },
+			{ regid: "123", regname: "保亭" },
+			{ regid: "124", regname: "昌江" },
+			{ regid: "125", regname: "澄迈县" },
+			{ regid: "126", regname: "定安县" },
+			{ regid: "127", regname: "东方" },
+			{ regid: "128", regname: "乐东" },
+			{ regid: "129", regname: "临高县" },
+			{ regid: "130", regname: "陵水" },
+			{ regid: "131", regname: "琼海" },
+			{ regid: "132", regname: "琼中" },
+			{ regid: "133", regname: "屯昌县" },
+			{ regid: "134", regname: "万宁" },
+			{ regid: "135", regname: "文昌" },
+			{ regid: "136", regname: "五指山" },
+			{ regid: "137", regname: "儋州" },
+		],
+	},
+	{
+		regid: "10",
+		regname: "河北省",
+		citys: [
+			{ regid: "138", regname: "石家庄" },
+			{ regid: "139", regname: "保定" },
+			{ regid: "140", regname: "沧州" },
+			{ regid: "141", regname: "承德" },
+			{ regid: "142", regname: "邯郸" },
+			{ regid: "143", regname: "衡水" },
+			{ regid: "144", regname: "廊坊" },
+			{ regid: "145", regname: "秦皇岛" },
+			{ regid: "146", regname: "唐山" },
+			{ regid: "147", regname: "邢台" },
+			{ regid: "148", regname: "张家口" },
+		],
+	},
+	{
+		regid: "11",
+		regname: "河南省",
+		citys: [
+			{ regid: "149", regname: "郑州" },
+			{ regid: "150", regname: "洛阳" },
+			{ regid: "151", regname: "开封" },
+			{ regid: "152", regname: "安阳" },
+			{ regid: "153", regname: "鹤壁" },
+			{ regid: "154", regname: "济源" },
+			{ regid: "155", regname: "焦作" },
+			{ regid: "156", regname: "南阳" },
+			{ regid: "157", regname: "平顶山" },
+			{ regid: "158", regname: "三门峡" },
+			{ regid: "159", regname: "商丘" },
+			{ regid: "160", regname: "新乡" },
+			{ regid: "161", regname: "信阳" },
+			{ regid: "162", regname: "许昌" },
+			{ regid: "163", regname: "周口" },
+			{ regid: "164", regname: "驻马店" },
+			{ regid: "165", regname: "漯河" },
+			{ regid: "166", regname: "濮阳" },
+		],
+	},
+	{
+		regid: "12",
+		regname: "黑龙江省",
+		citys: [
+			{ regid: "167", regname: "哈尔滨" },
+			{ regid: "168", regname: "大庆" },
+			{ regid: "169", regname: "大兴安岭" },
+			{ regid: "170", regname: "鹤岗" },
+			{ regid: "171", regname: "黑河" },
+			{ regid: "172", regname: "鸡西" },
+			{ regid: "173", regname: "佳木斯" },
+			{ regid: "174", regname: "牡丹江" },
+			{ regid: "175", regname: "七台河" },
+			{ regid: "176", regname: "齐齐哈尔" },
+			{ regid: "177", regname: "双鸭山" },
+			{ regid: "178", regname: "绥化" },
+			{ regid: "179", regname: "伊春" },
+		],
+	},
+	{
+		regid: "13",
+		regname: "湖北省",
+		citys: [
+			{ regid: "180", regname: "武汉" },
+			{ regid: "181", regname: "仙桃" },
+			{ regid: "182", regname: "鄂州" },
+			{ regid: "183", regname: "黄冈" },
+			{ regid: "184", regname: "黄石" },
+			{ regid: "185", regname: "荆门" },
+			{ regid: "186", regname: "荆州" },
+			{ regid: "187", regname: "潜江" },
+			{ regid: "188", regname: "神农架林区" },
+			{ regid: "189", regname: "十堰" },
+			{ regid: "190", regname: "随州" },
+			{ regid: "191", regname: "天门" },
+			{ regid: "192", regname: "咸宁" },
+			{ regid: "193", regname: "襄樊" },
+			{ regid: "194", regname: "孝感" },
+			{ regid: "195", regname: "宜昌" },
+			{ regid: "196", regname: "恩施" },
+		],
+	},
+	{
+		regid: "14",
+		regname: "湖南省",
+		citys: [
+			{ regid: "197", regname: "长沙" },
+			{ regid: "198", regname: "张家界" },
+			{ regid: "199", regname: "常德" },
+			{ regid: "200", regname: "郴州" },
+			{ regid: "201", regname: "衡阳" },
+			{ regid: "202", regname: "怀化" },
+			{ regid: "203", regname: "娄底" },
+			{ regid: "204", regname: "邵阳" },
+			{ regid: "205", regname: "湘潭" },
+			{ regid: "206", regname: "湘西" },
+			{ regid: "207", regname: "益阳" },
+			{ regid: "208", regname: "永州" },
+			{ regid: "209", regname: "岳阳" },
+			{ regid: "210", regname: "株洲" },
+		],
+	},
+	{
+		regid: "15",
+		regname: "吉林省",
+		citys: [
+			{ regid: "211", regname: "长春" },
+			{ regid: "212", regname: "吉林" },
+			{ regid: "213", regname: "白城" },
+			{ regid: "214", regname: "白山" },
+			{ regid: "215", regname: "辽源" },
+			{ regid: "216", regname: "四平" },
+			{ regid: "217", regname: "松原" },
+			{ regid: "218", regname: "通化" },
+			{ regid: "219", regname: "延边" },
+		],
+	},
+	{
+		regid: "16",
+		regname: "江苏省",
+		citys: [
+			{ regid: "220", regname: "南京" },
+			{ regid: "221", regname: "苏州" },
+			{ regid: "222", regname: "无锡" },
+			{ regid: "223", regname: "常州" },
+			{ regid: "224", regname: "淮安" },
+			{ regid: "225", regname: "连云港" },
+			{ regid: "226", regname: "南通" },
+			{ regid: "227", regname: "宿迁" },
+			{ regid: "228", regname: "泰州" },
+			{ regid: "229", regname: "徐州" },
+			{ regid: "230", regname: "盐城" },
+			{ regid: "231", regname: "扬州" },
+			{ regid: "232", regname: "镇江" },
+		],
+	},
+	{
+		regid: "17",
+		regname: "江西省",
+		citys: [
+			{ regid: "233", regname: "南昌" },
+			{ regid: "234", regname: "抚州" },
+			{ regid: "235", regname: "赣州" },
+			{ regid: "236", regname: "吉安" },
+			{ regid: "237", regname: "景德镇" },
+			{ regid: "238", regname: "九江" },
+			{ regid: "239", regname: "萍乡" },
+			{ regid: "240", regname: "上饶" },
+			{ regid: "241", regname: "新余" },
+			{ regid: "242", regname: "宜春" },
+			{ regid: "243", regname: "鹰潭" },
+		],
+	},
+	{
+		regid: "18",
+		regname: "辽宁省",
+		citys: [
+			{ regid: "244", regname: "沈阳" },
+			{ regid: "245", regname: "大连" },
+			{ regid: "246", regname: "鞍山" },
+			{ regid: "247", regname: "本溪" },
+			{ regid: "248", regname: "朝阳" },
+			{ regid: "249", regname: "丹东" },
+			{ regid: "250", regname: "抚顺" },
+			{ regid: "251", regname: "阜新" },
+			{ regid: "252", regname: "葫芦岛" },
+			{ regid: "253", regname: "锦州" },
+			{ regid: "254", regname: "辽阳" },
+			{ regid: "255", regname: "盘锦" },
+			{ regid: "256", regname: "铁岭" },
+			{ regid: "257", regname: "营口" },
+		],
+	},
+	{
+		regid: "19",
+		regname: "内蒙古自治区",
+		citys: [
+			{ regid: "258", regname: "呼和浩特" },
+			{ regid: "259", regname: "阿拉善盟" },
+			{ regid: "260", regname: "巴彦淖尔盟" },
+			{ regid: "261", regname: "包头" },
+			{ regid: "262", regname: "赤峰" },
+			{ regid: "263", regname: "鄂尔多斯" },
+			{ regid: "264", regname: "呼伦贝尔" },
+			{ regid: "265", regname: "通辽" },
+			{ regid: "266", regname: "乌海" },
+			{ regid: "267", regname: "乌兰察布市" },
+			{ regid: "268", regname: "锡林郭勒盟" },
+			{ regid: "269", regname: "兴安盟" },
+		],
+	},
+	{
+		regid: "20",
+		regname: "宁夏回族自治区",
+		citys: [
+			{ regid: "270", regname: "银川" },
+			{ regid: "271", regname: "固原" },
+			{ regid: "272", regname: "石嘴山" },
+			{ regid: "273", regname: "吴忠" },
+			{ regid: "274", regname: "中卫" },
+		],
+	},
+	{
+		regid: "21",
+		regname: "青海省",
+		citys: [
+			{ regid: "275", regname: "西宁" },
+			{ regid: "276", regname: "果洛" },
+			{ regid: "277", regname: "海北" },
+			{ regid: "278", regname: "海东" },
+			{ regid: "279", regname: "海南" },
+			{ regid: "280", regname: "海西" },
+			{ regid: "281", regname: "黄南" },
+			{ regid: "282", regname: "玉树" },
+		],
+	},
+	{
+		regid: "22",
+		regname: "山东省",
+		citys: [
+			{ regid: "283", regname: "济南" },
+			{ regid: "284", regname: "青岛" },
+			{ regid: "285", regname: "滨州" },
+			{ regid: "286", regname: "德州" },
+			{ regid: "287", regname: "东营" },
+			{ regid: "288", regname: "菏泽" },
+			{ regid: "289", regname: "济宁" },
+			{ regid: "290", regname: "莱芜" },
+			{ regid: "291", regname: "聊城" },
+			{ regid: "292", regname: "临沂" },
+			{ regid: "293", regname: "日照" },
+			{ regid: "294", regname: "泰安" },
+			{ regid: "295", regname: "威海" },
+			{ regid: "296", regname: "潍坊" },
+			{ regid: "297", regname: "烟台" },
+			{ regid: "298", regname: "枣庄" },
+			{ regid: "299", regname: "淄博" },
+		],
+	},
+	{
+		regid: "23",
+		regname: "山西省",
+		citys: [
+			{ regid: "300", regname: "太原" },
+			{ regid: "301", regname: "长治" },
+			{ regid: "302", regname: "大同" },
+			{ regid: "303", regname: "晋城" },
+			{ regid: "304", regname: "晋中" },
+			{ regid: "305", regname: "临汾" },
+			{ regid: "306", regname: "吕梁" },
+			{ regid: "307", regname: "朔州" },
+			{ regid: "308", regname: "忻州" },
+			{ regid: "309", regname: "阳泉" },
+			{ regid: "310", regname: "运城" },
+		],
+	},
+	{
+		regid: "24",
+		regname: "陕西省",
+		citys: [
+			{ regid: "311", regname: "西安" },
+			{ regid: "312", regname: "安康" },
+			{ regid: "313", regname: "宝鸡" },
+			{ regid: "314", regname: "汉中" },
+			{ regid: "315", regname: "商洛" },
+			{ regid: "316", regname: "铜川" },
+			{ regid: "317", regname: "渭南" },
+			{ regid: "318", regname: "咸阳" },
+			{ regid: "319", regname: "延安" },
+			{ regid: "320", regname: "榆林" },
+		],
+	},
+	{ regid: "25", regname: "上海市", citys: [{ regid: "321", regname: "上海" }] },
+	{
+		regid: "26",
+		regname: "四川省",
+		citys: [
+			{ regid: "322", regname: "成都" },
+			{ regid: "323", regname: "绵阳" },
+			{ regid: "324", regname: "阿坝" },
+			{ regid: "325", regname: "巴中" },
+			{ regid: "326", regname: "达州" },
+			{ regid: "327", regname: "德阳" },
+			{ regid: "328", regname: "甘孜" },
+			{ regid: "329", regname: "广安" },
+			{ regid: "330", regname: "广元" },
+			{ regid: "331", regname: "乐山" },
+			{ regid: "332", regname: "凉山" },
+			{ regid: "333", regname: "眉山" },
+			{ regid: "334", regname: "南充" },
+			{ regid: "335", regname: "内江" },
+			{ regid: "336", regname: "攀枝花" },
+			{ regid: "337", regname: "遂宁" },
+			{ regid: "338", regname: "雅安" },
+			{ regid: "339", regname: "宜宾" },
+			{ regid: "340", regname: "资阳" },
+			{ regid: "341", regname: "自贡" },
+			{ regid: "342", regname: "泸州" },
+		],
+	},
+	{ regid: "27", regname: "天津市", citys: [{ regid: "343", regname: "天津" }] },
+	{
+		regid: "28",
+		regname: "西藏自治区",
+		citys: [
+			{ regid: "344", regname: "拉萨" },
+			{ regid: "345", regname: "阿里" },
+			{ regid: "346", regname: "昌都" },
+			{ regid: "347", regname: "林芝" },
+			{ regid: "348", regname: "那曲" },
+			{ regid: "349", regname: "日喀则" },
+			{ regid: "350", regname: "山南" },
+		],
+	},
+	{
+		regid: "29",
+		regname: "新疆维吾尔自治区",
+		citys: [
+			{ regid: "351", regname: "乌鲁木齐" },
+			{ regid: "352", regname: "阿克苏" },
+			{ regid: "353", regname: "阿拉尔" },
+			{ regid: "354", regname: "巴音郭楞" },
+			{ regid: "355", regname: "博尔塔拉" },
+			{ regid: "356", regname: "昌吉" },
+			{ regid: "357", regname: "哈密" },
+			{ regid: "358", regname: "和田" },
+			{ regid: "359", regname: "喀什" },
+			{ regid: "360", regname: "克拉玛依" },
+			{ regid: "361", regname: "克孜勒苏" },
+			{ regid: "362", regname: "石河子" },
+			{ regid: "363", regname: "图木舒克" },
+			{ regid: "364", regname: "吐鲁番" },
+			{ regid: "365", regname: "五家渠" },
+			{ regid: "366", regname: "伊犁" },
+		],
+	},
+	{
+		regid: "30",
+		regname: "云南省",
+		citys: [
+			{ regid: "367", regname: "昆明" },
+			{ regid: "368", regname: "怒江" },
+			{ regid: "369", regname: "普洱" },
+			{ regid: "370", regname: "丽江" },
+			{ regid: "371", regname: "保山" },
+			{ regid: "372", regname: "楚雄" },
+			{ regid: "373", regname: "大理" },
+			{ regid: "374", regname: "德宏" },
+			{ regid: "375", regname: "迪庆" },
+			{ regid: "376", regname: "红河" },
+			{ regid: "377", regname: "临沧" },
+			{ regid: "378", regname: "曲靖" },
+			{ regid: "379", regname: "文山" },
+			{ regid: "380", regname: "西双版纳" },
+			{ regid: "381", regname: "玉溪" },
+			{ regid: "382", regname: "昭通" },
+		],
+	},
+	{
+		regid: "31",
+		regname: "浙江省",
+		citys: [
+			{ regid: "383", regname: "杭州" },
+			{ regid: "384", regname: "湖州" },
+			{ regid: "385", regname: "嘉兴" },
+			{ regid: "386", regname: "金华" },
+			{ regid: "387", regname: "丽水" },
+			{ regid: "388", regname: "宁波" },
+			{ regid: "389", regname: "绍兴" },
+			{ regid: "390", regname: "台州" },
+			{ regid: "391", regname: "温州" },
+			{ regid: "392", regname: "舟山" },
+			{ regid: "393", regname: "衢州" },
+		],
+	},
+	{ regid: "32", regname: "重庆市", citys: [{ regid: "394", regname: "重庆" }] },
+	{ regid: "33", regname: "香港特别行政区", citys: [{ regid: "395", regname: "香港" }] },
+	{ regid: "34", regname: "澳门特别行政区", citys: [{ regid: "396", regname: "澳门" }] },
+	{ regid: "35", regname: "台湾省", citys: [{ regid: "397", regname: "台湾" }] },
+];

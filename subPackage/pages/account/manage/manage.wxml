@@ -1,7 +1,7 @@
 <view class="wrap" style="{{ isShowAddPop ? 'overflow: hidden' : '' }}">
   <Tabs bindtabChange="tabChangeListener" tabIndex="{{tabIndex}}" tabsList="{{showTabList}}"></Tabs>
   <view class="addAccountBtn">
-    <van-button round bind:click="handleAddBtnClick" color="#FDB03F" customStyle="width:236rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;" wx:if="{{isAdmin}}">
+    <van-button round bind:click="handleAddBtnClick" color="#FDB03F" customStyle="width:236rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;" wx:if="{{isAdmin && !isAdminTab}}">
       添加账号
     </van-button>
   </view>
@@ -17,8 +17,8 @@
         </van-cell-group>
         <view class="options">
           <image wx:if="{{isManagerTab}}" data-item="{{item}}" src="/assets/img/staff.png" bindtap="editStaff"></image>
-          <image wx:if="{{isAdmin || isMarketing}}" data-item="{{item}}" src="/assets/img/update.png" bindtap="handleEditAccount"></image>
-          <image wx:if="{{isAdmin}}" data-item="{{item}}" src="/assets/img/delete.png" bindtap="handleDelAccount"></image>
+          <image wx:if="{{!isAdminTab && (isAdmin || isMarketing)}}" data-item="{{item}}" src="/assets/img/update.png" bindtap="handleEditAccount"></image>
+          <image wx:if="{{!isAdminTab && isAdmin}}" data-item="{{item}}" src="/assets/img/delete.png" bindtap="handleDelAccount"></image>
         </view>
       </view>
     </view>
@@ -33,6 +33,16 @@
       <van-field model:value="{{account}}" disabled inputAlign="right" label="账号" maxlength="12" placeholder="请输入账号" />
       <van-field model:value="{{password}}" required inputAlign="right" label="密码" maxlength="14" placeholder="请输入密码" />
       <van-field wx:if="{{isManagerTab}}" model:value="{{shopName}}" required inputAlign="right" label="店铺名称" maxlength="30" placeholder="请输入店铺名称" />
+      <van-cell value="{{selectCity.regname}}" wx:if="{{isManagerTab && !isEdit}}">
+        <view slot="title">
+          <view class="van-cell-text">
+            <picker bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" mode="multiSelector" range="{{multiArray}}" rangeKey="regname" value="{{multiIndex}}">
+              <van-button color="#FDB03F" size="mini">绑定城市</van-button>
+            </picker>
+          </view>
+        </view>
+      </van-cell>
+      <view class="select-city-tips" wx:if="{{isManagerTab && !isEdit}}">新建店铺默认绑定在当前城市下，点击"绑定城市"可自由选择店铺绑定城市!</view>
       <!-- <block wx:if="{{ isManagerTab }}">
         <picker wx:if="{{ isAdmin }}" mode="date" value="{{expiredDate}}" bindchange="selectExpiredDate">
           <van-cell title="到期日期" value="{{expiredDate}}"></van-cell>

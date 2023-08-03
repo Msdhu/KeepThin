@@ -1,7 +1,7 @@
 import Notify from "@vant/weapp/notify/notify";
 
 const app = getApp();
-const { utils, globalData, ROLES } = app;
+const { utils, globalData, ROLES, cityData } = app;
 
 const TAB_TYPES = {
 	admin: 0,
@@ -29,6 +29,15 @@ const tabList = [
 Page({
 	data: {
 		cityId: "",
+		cityName: "",
+
+		multiIndex: [0, 0],
+		multiArray: [
+			cityData,
+			cityData[0].citys,
+		],
+		// 新建店长账号(即新建店铺)时，用于店铺绑定城市
+		selectCity: {},
 
 		showTabList: [],
 		tabIndex: 0,
@@ -56,7 +65,7 @@ Page({
 		editId: "",
 		phoneError: false,
 	},
-	onLoad(options) {
+	onLoad({ cityId, cityName }) {
 		const { roleType } = globalData.userInfo;
 		const isAdmin = roleType === ROLES.admin;
 		const isMarketing = roleType === ROLES.marketing;
@@ -64,7 +73,12 @@ Page({
 		const tabsList = tabList.filter((item) => item.roles.includes(roleType))
 
 		this.setData({
-			cityId: options.cityId,
+			cityId: cityId,
+			cityName: cityName,
+			selectCity: {
+				regid: cityId,
+				regname: cityName,
+			},
 			isAdmin,
 			isMarketing,
 			isManager,
@@ -77,7 +91,10 @@ Page({
 	},
 	getAccountList() {
 		const { isAdminTab, isMarketingTab, isManagerTab, cityId } = this.data;
+		const { userInfo: { phone, name } } = globalData;
 
+		this.setData({ accountList:[] });
+		
 		(isMarketingTab || isManagerTab) && utils.request(
 			{
 				url: isMarketingTab ? "account/shichang-list" : "account/dianzhang-list",
@@ -98,6 +115,16 @@ Page({
 			},
 			true
 		);
+
+		isAdminTab && this.setData({
+			accountList: [{
+				nickname: name,
+				phone,
+				account: phone,
+				// FIXME: 密码暂时设置为 phone 的后4位
+				password: phone.slice(-4),
+			}],
+		});
 	},
 
 	tabChangeListener(ev) {
@@ -134,8 +161,7 @@ Page({
 			{
 				url: "account/detail",
 				data: {
-					// FIXME: user_id -> id
-					user_id: accountInfo.id,
+					id: accountInfo.id,
 				},
 				method: "GET",
 				success: res => {
@@ -150,8 +176,7 @@ Page({
 						password: res.password,
 						shopName: res?.shops[0]?.shop_name || "",
 						shopList: (res?.all_shops || []).map(item => ({ ...item, shop_id: String(item.shop_id) })),
-						// FIXME: checkShops 修改
-						checkShops: (res?.all_shops || []).map(item => String(item.shop_id)),
+						checkShops: (res?.shops || []).map(item => String(item.shop_id)),
 					});
 				},
 				isShowLoading: true,
@@ -176,8 +201,7 @@ Page({
 			{
 				url: "account/del",
 				data: {
-					// FIXME: user_id -> id
-					user_id: accountInfo.id,
+					id: accountInfo.id,
 				},
 				method: "POST",
 				success: res => {
@@ -195,17 +219,19 @@ Page({
 	// 新建
 	handleSave() {
 		if (!this.checkData()) return;
-		const { isManagerTab, isMarketingTab, checkShops, name, phone, password, cityId, shopName } = this.data;
+		const { isManagerTab, isMarketingTab, checkShops, name, phone, password, cityId, shopName, selectCity } = this.data;
 		const params = {
 			nickname: name,
 			phone,
 			password,
 			city_id: cityId,
-			level: globalData.userInfo.roleType,
+			// 新建账号对应的level, 不是登陆账号的level
+			level: isManagerTab ? ROLES.manager : ROLES.marketing,
 		};
 		if (isManagerTab) {
-			// FIXME: shop_name 查询参数待重命名
 			params.shop_name = shopName;
+			// 新建店长账号时的 city_id 取 selectCity.regid
+			params.city_id = selectCity.regid;
 		}
 		if (isMarketingTab) {
 			params.shop_id = checkShops.join(',');
@@ -231,16 +257,14 @@ Page({
 	// 编辑
 	handleUpdate() {
 		if (!this.checkData()) return;
-		const { isManagerTab, isMarketingTab, checkShops, name, phone, password, cityId, shopName, editId } = this.data;
+		const { isManagerTab, isMarketingTab, checkShops, name, phone, password, shopName, editId } = this.data;
 		const params = {
-			// FIXME: user_id -> id
-			user_id: editId,
+			id: editId,
 			nickname: name,
 			phone,
 			password,
 		};
 		if (isManagerTab) {
-			// FIXME: shop_name 查询参数待重命名
 			params.shop_name = shopName;
 		}
 		if (isMarketingTab) {
@@ -278,7 +302,20 @@ Page({
 	},
 
 	handleAddBtnClick() {
+		let shopList = [];
+		if (this.data.isMarketingTab) {
+			// 添加市场部账号时，需要绑定相应的店铺，初始化时并没有办法拿到该城市下的所有店铺，通过 globalData.provinceList 来获取
+			for(let i = 0; i < globalData.provinceList.length; i++) {
+				const item = globalData.provinceList[i];
+				const [city = {}] = item.cityList.filter(city => String(city.regid) === String(this.data.cityId));
+				shopList = (city?.shopList || []).map(item => ({ shop_name: item.shop_name, shop_id: String(item.id) }));
+
+				if (shopList.length > 0) break;
+			}
+		}
+
 		this.setData({
+			shopList,
 			isEdit: false,
 			isShowAddPop: true,
 		});
@@ -292,8 +329,15 @@ Page({
 			phoneError: false,
 			name: "",
 			phone: "",
+			account: "",
 			password: "",
 			shopName: "",
+
+			// 设置为选择的默认城市
+			selectCity: {
+				regid: this.data.cityId,
+				regname: this.data.cityName,
+			},
 		});
 	},
 	onChangeCheckbox(ev) {
@@ -314,5 +358,31 @@ Page({
 				});
 			}
 		});
+	},
+
+	addCity() {
+		const { multiIndex, multiArray } = this.data;
+		const { regid, regname } = multiArray[1][multiIndex[1]];
+		this.setData({
+			selectCity: { regid, regname },
+		});
+	},
+	bindMultiPickerChange(ev) {
+		const multiIndex = ev.detail.value;
+		this.setData({
+			multiIndex,
+		}, () => {
+			this.addCity();
+		});
+	},
+	bindMultiPickerColumnChange(ev) {
+		const { column, value } = ev.detail;
+		switch (column) {
+			case 0:
+				this.setData({
+					"multiArray[1]": cityData[value].citys,
+					multiIndex: [value, 0],
+				});
+		}
 	},
 });

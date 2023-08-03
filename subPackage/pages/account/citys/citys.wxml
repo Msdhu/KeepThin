@@ -19,10 +19,5 @@
 			</view>
 		</view>
 	</view>
-	<view class="addCity">
-		<picker bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" mode="multiSelector" range="{{multiArray}}" rangeKey="regname" value="{{multiIndex}}">
-			<van-button color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">添加城市</van-button>
-		</picker>
-	</view>
 </view>
 <van-notify id="van-notify"></van-notify>

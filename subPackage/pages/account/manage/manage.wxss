@@ -109,3 +109,12 @@
 	font-weight: 700;
 	padding: 30rpx;
 }
+
+.select-city-tips {
+	margin-top: 4px;
+	padding: 0 28rpx;
+	color: #969799;
+	font-size: 12px;
+	line-height: 18px;
+	font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+}

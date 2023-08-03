@@ -266,7 +266,7 @@ Page({
 			}
 			wx.navigateTo({
 				// 账号管理页面需要 cityId
-				url: /account\/manage/.test(url) ? `${url}?cityId=${selectCity.regid}` : url,
+				url: /account\/manage/.test(url) ? `${url}?cityId=${selectCity.regid}&cityName=${selectCity.regname}` : url,
 			});
 		} else {
 			wx.showToast({

@@ -98,7 +98,19 @@ const utils = {
 				const { data: resData, code, msg } = realRes;
 				if (code === 100) {
 					success(resData);
-				} else {
+				} else if (code === 403) {
+          // 后端返回 token 过期
+          wx.showToast({
+						title: msg || "请求失败，请稍后重试",
+						icon: "none",
+					});
+          // 1 秒后 redirectTo login page
+          setTimeout(() => {
+            wx.redirectTo({
+              url: "/pages/login/login",
+            });
+          }, 1000);
+        } else {
 					wx.showToast({
 						title: msg || "请求失败，请稍后重试",
 						icon: "none",
@@ -140,7 +152,7 @@ const utils = {
 				wx.hideLoading();
 				const { data: realRes } = res;
         const fs = wx.getFileSystemManager(),
-          filePath = `${wx.env.USER_DATA_PATH}/${fileName}.xlsx}`;
+          filePath = `${wx.env.USER_DATA_PATH}/${fileName}.xlsx`;
 
         fs.writeFile({
           data: realRes,
