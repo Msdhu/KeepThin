@@ -52,7 +52,7 @@
               ￥
             </van-button>
           </van-field>
-          <picker bindchange="handleSelectDealDate" mode="date" value="{{dealDate}}">
+          <picker bindchange="handleSelectDealDate" end="{{currentDate}}" mode="date" value="{{dealDate}}">
             <van-cell isLink required title="签约日期" value="{{dealDate}}"></van-cell>
           </picker>
           <van-cell isLink required title="巩固期" value="{{consolidationPeriod}} 年"></van-cell>

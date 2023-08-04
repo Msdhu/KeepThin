@@ -120,6 +120,7 @@ Page({
 		courseCost: "",
 		// 补缴疗程金额
 		remainCost: "",
+		currentDate: utils.formatTime(new Date(), "YYYY-MM-DD"),
 	},
 	onLoad(opts) {
 		!wx.getStorageSync(READ_STORAGE_KEY) && this.setData({
