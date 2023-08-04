@@ -1,21 +1,24 @@
+import Notify from "@vant/weapp/notify/notify";
+
 const app = getApp();
-const { utils, globalData, ROLES } = app;
+const { utils, globalData } = app;
 
 const READ_STORAGE_KEY = "readAgreement";
-const getDateTxt = (dateStr) => {
-	return utils.formatTime(
-		new Date(dateStr.replace(/-/g, "/")), "YYYY年MM月DD日"
-	);
-}
+const getDateTxt = dateStr => {
+	return utils.formatTime(new Date(dateStr.replace(/-/g, "/")), "YYYY年MM月DD日");
+};
 
 Page({
 	data: {
+		// 是否编辑顾客信息
+		isEdit: false,
+		// 顾客id
+		consumerId: "",
 		action: 1,
-		currentDate: utils.formatTime(new Date(), "YYYY-MM-DD"),
-		minDate: "2023-07-01",
-		isShowSource: false, // 是否展示顾客来源选择
+		// 是否展示顾客来源选择
+		isShowSource: false,
+		// 顾客来源列表
 		sourceActions: [
-			// 顾客来源列表
 			{
 				name: "转介绍",
 			},
@@ -29,89 +32,175 @@ Page({
 				name: "老转新",
 			},
 		],
-		source: "", // 顾客来源
-		isShowSizePop: false, // 是否显示尺寸选择
+		// 顾客来源
+		source: "",
+		// 是否显示尺寸选择
+		isShowSizePop: false,
 		sizeDTOList: [
 			{
 				name: "脐上",
 				size: "",
+				flag: "size_js",
 			},
 			{
 				name: "脐中",
 				size: "",
+				flag: "size_jz",
 			},
 			{
 				name: "脐下",
 				size: "",
+				flag: "size_jx",
 			},
 			{
 				name: "左臂",
 				size: "",
+				flag: "size_zb",
 			},
 			{
 				name: "右臂",
 				size: "",
+				flag: "size_yb",
 			},
 			{
 				name: "左大腿",
 				size: "",
+				flag: "size_zdt",
 			},
 			{
 				name: "左小腿",
 				size: "",
+				flag: "size_zxt",
 			},
 			{
 				name: "右大腿",
 				size: "",
+				flag: "size_ydt",
 			},
 			{
 				name: "右小腿",
 				size: "",
+				flag: "size_yxt",
 			},
 		],
-
-		name: "", // 姓名
-		phone: "", // 手机号
-		gender: "女", // 性别
-		age: 0, // 年龄
-		height: 0, // 身高
-		originWeight: 0, // 初始体重
-		standardWeight: "", // 标准体重
-		loseWeight: "", // 应减体重
-		dealDate: "", // 签约日期
-		dealDates: "", // 签约日期选中原始值
-		expireDate: "", // 到期日期
-		expireDates: "", // 到期日期原始值
-		loseWeightPeriod: 0, // 减重期/疗程期
-		consolidationPeriod: 2, // 巩固期
-		source: "", // 顾客来源
-		reset: false, // 是否二次成交
-		isConsolidationPeriod: false, // 是否转入巩固期
-		courseCost: 0, // 疗程金额
-		remainCost: 0, // 补缴疗程金额
+		sizeDTOPreList: [],
+		// 姓名
+		name: "",
+		// 手机号
+		phone: "",
+		// 性别
+		gender: "女",
+		// 年龄
+		age: "",
+		// 身高
+		height: "",
+		// 初始体重
+		originWeight: "",
+		// 标准体重
+		standardWeight: "",
+		// 应减体重
+		loseWeight: "",
+		// 签约日期
+		dealDate: "",
+		// 签约日期选中原始值
+		dealDateOrigin: "",
+		// 到期日期
+		expireDate: "",
+		// 到期日期原始值
+		expireDateOrigin: "",
+		// 减重期/疗程期
+		loseWeightPeriod: 0,
+		// 巩固期
+		consolidationPeriod: 2,
+		// 是否二次成交
+		reset: false,
+		// 是否转入巩固期
+		isConsolidationPeriod: 0,
+		// 疗程金额
+		courseCost: "",
+		// 补缴疗程金额
+		remainCost: "",
 	},
 	onLoad(opts) {
-		const isRead = wx.getStorageSync(READ_STORAGE_KEY);
-		if (!isRead) {
-			this.setData({
-				isShowAgreement: true,
-			});
-		}
+		!wx.getStorageSync(READ_STORAGE_KEY) && this.setData({
+			isShowAggrement: true,
+		});
 
-		const isEdit = opts.type;
+		const isEdit = !!opts.type;
 		wx.setNavigationBarTitle({
 			title: isEdit ? "修改顾客资料" : "新客录入",
 		});
+		this.setData({
+			sizeDTOPreList: this.data.sizeDTOList.map(item => ({ ...item })),
+		});
 		if (isEdit) {
-			this.setData(
-				{
-					updateData: true,
-					id: opts.consumerId,
-					isEdit: true,
-				},
-				() => this.getConsumerInfo()
-			);
+			this.setData({
+				consumerId: opts.consumerId,
+				isEdit,
+			}, () => {
+				this.getConsumerInfo();
+			});
 		}
+	},
+	onConsumerSave() {
+		// 店铺id
+		const { id: shop_id } = app.globalData.storeInfo
+		const { isEdit, consumerId, source, sizeDTOList, name, phone, gender, age, height, originWeight, standardWeight, loseWeight, dealDateOrigin, expireDateOrigin, loseWeightPeriod, consolidationPeriod, reset, isConsolidationPeriod, courseCost, remainCost } = this.data;
+		if (!(courseCost && dealDateOrigin && expireDateOrigin)) {
+			Notify({
+				type: "danger",
+				message: "请填写完整顾客信息！",
+			});
+			return;
+		}
+		const params = {
+			shop_id,
+			base: {
+				phone,
+				username: name,
+				sex: gender,
+				age,
+				height,
+				weight_init: originWeight,
+				weight_normal: standardWeight,
+				weight_reduce: loseWeight,
+				weight_reduce_period: loseWeightPeriod,
+				period_money: courseCost,
+				sign_date: dealDateOrigin,
+				end_date: expireDateOrigin,
+				consoli_date: consolidationPeriod,
+				into_consoli_if: isConsolidationPeriod,
+				source,
+			},
+			body: sizeDTOList.reduce((size, item) => {
+				size[item.flag] = item.size;
+				return size;
+			}, {}),
+		};
+		if (isEdit) {
+			// 补缴疗程金额
+			params.base.period_money_ext = remainCost;
+			// 是否二次成交
+			params.base.second_if = reset ? 1 : -1;
+		}
+		utils.request(
+			{
+				url: "member/save",
+				data: params,
+				method: "POST",
+				success: () => {
+					wx.showToast({
+						title: "新增顾客成功",
+						icon: "none",
+					});
+					wx.navigateBack({
+						delta: 1
+					});
+				},
+				isShowLoading: true,
+			},
+			true
+		);
 	},
 	getConsumerInfo() {
 		const resData = {};
@@ -125,9 +214,9 @@ Page({
 			standardWeight: resData.standardWeight,
 			loseWeight: resData.loseWeight,
 			dealDate: resData.dealDate,
-			dealDates: resData.dealDates,
+			dealDateOrigin: resData.dealDateOrigin,
 			expireDate: resData.expireDate,
-			expireDates: resData.expireDates,
+			expireDateOrigin: resData.expireDateOrigin,
 			loseWeightPeriod: resData.loseWeightPeriod,
 			consolidationPeriod: resData.consolidationPeriod,
 			source: resData.source, // 顾客来源
@@ -139,24 +228,20 @@ Page({
 	},
 	// 改变性别
 	onChangeGender(e) {
-		this.setData(
-			{
-				gender: e.detail,
-			},
-			() => {
-				this.calculateVal();
-			}
-		);
+		this.setData({
+			gender: e.detail,
+		}, () => {
+			this.calculationStandardWeight();
+			this.calculationShouldWeight();
+		});
 	},
 	// 选择签约日期
 	handleSelectDealDate(e) {
 		const value = e.detail.value;
-		console.log(value);
-		console.log(getDateTxt(value))
 		const dealDate = getDateTxt(value);
 		this.setData({
 			dealDate,
-			dealDates: value,
+			dealDateOrigin: value,
 		});
 	},
 	// 选择到期时间
@@ -165,12 +250,7 @@ Page({
 		const expireDate = getDateTxt(value);
 		this.setData({
 			expireDate,
-			expireDates: value,
-		});
-	},
-	onInput(e) {
-		this.setData({
-			currentDate: e.detail,
+			expireDateOrigin: value,
 		});
 	},
 	showSource() {
@@ -191,46 +271,68 @@ Page({
 	},
 	showSizePop() {
 		this.setData({
+			sizeDTOPreList: this.data.sizeDTOList,
 			isShowSizePop: true,
 		});
 	},
 	onCloseSelectSize() {
 		this.setData({
+			sizeDTOList: this.data.sizeDTOPreList,
 			isShowSizePop: false,
 		});
 	},
 	onChangeSize(e) {
-		var index = e.currentTarget.dataset.index;
-		console.log(e);
+		const index = e.currentTarget.dataset.index;
 		const sizeDTOList = this.data.sizeDTOList;
 		sizeDTOList[index].size = e.detail;
-		this.setData({sizeDTOList});
+		this.setData({ sizeDTOList });
 	},
 	saveSize() {
-		this.onCloseSelectSize();
-	},
-	calculateVal() {
-		this.calculationStandardWeight();
-		this.calculationShouldWeight();
+		this.setData({
+			isShowSizePop: false,
+		});
 	},
 	// 计算标准体重
 	calculationStandardWeight() {
-		const data = this.data;
-		const { gender, height, age } = data;
+		const { gender, height, age } = this.data;
 		if (gender && height && age) {
+			const ageFix = 30 - age;
+			const heightFix = gender ===  "男" ? 65 : 70;
+			let fix = 0.6 * (height - heightFix) - (gender ===  "男" ? 2 : 3.5);
+			if (ageFix < 0) {
+				fix += 0.2 * Math.abs(ageFix)
+			} else {
+				fix -= 0.2 * Math.abs(ageFix)
+			}
 			this.setData({
-				standardWeight: "",
+				standardWeight: (fix * 2).toFixed(2),
+			}, () => {
+				this.calculationShouldWeight();
 			});
 		}
 	},
 	// 计算应减体重
 	calculationShouldWeight() {
-		this.setData({
-			loseWeight: 0,
-			loseWeightPeriod: 0,
+		const { originWeight, standardWeight } = this.data;
+		if (originWeight && standardWeight) {
+			const loseWeight = (originWeight - standardWeight).toFixed(2);
+			this.setData({
+				loseWeight,
+				loseWeightPeriod: Math.ceil(loseWeight / 10),
+			});
+		}
+	},
+	checkPreData() {
+		const { name, phone, gender, age, height, originWeight } = this.data;
+		if (name && phone && gender && age && height && originWeight) return true;
+		Notify({
+			type: "danger",
+			message: "请填写完整顾客信息！",
 		});
+		return false;
 	},
 	handleNext() {
+		if (!this.checkPreData()) return;
 		this.setData({
 			action: 2,
 		});
@@ -240,47 +342,34 @@ Page({
 			action: 1,
 		});
 	},
-	save() {
-		wx.showToast({
-			icon: "none",
-			title: "保存成功",
-			success: function () {
-				wx.navigateBack({
-					delta: 1,
-				});
-			},
-		});
-	},
 	handleSwitchReset(e) {
 		this.setData({
 			reset: e.detail,
+			isConsolidationPeriod: false,
 		});
 	},
 	handleSwitchIsConsolidationPeriod(e) {
 		this.setData({
-			isConsolidationPeriod: e.detail,
+			isConsolidationPeriod: Number(e.detail),
+			reset: false,
 		});
 	},
-	seeAgreement() {
+	showAggrement() {
 		this.setData({
-			isShowAgreement: true,
+			isShowAggrement: true,
 		});
 	},
-	onCloseAgreement(e) {
+	closeAggrement(e) {
 		const closeType = e.currentTarget.dataset.type;
 		if (closeType === "btn") {
-			this.setData(
-				{
-					isShowAgreement: false,
-				},
-				function () {
-					wx.setStorageSync(READ_STORAGE_KEY, true);
-				}
-			);
+			wx.setStorageSync(READ_STORAGE_KEY, true);
+			this.setData({
+				isShowAggrement: false,
+			});
 		} else {
 			wx.showToast({
-				icon: "none",
 				title: "请完整阅读并同意协议",
+				icon: "none",
 			});
 		}
 	},

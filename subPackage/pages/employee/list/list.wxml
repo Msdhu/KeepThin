@@ -20,6 +20,7 @@
         <image bindtap="handleDelete" data-item="{{item}}" src="/assets/img/delete.png"></image>
       </view>
     </view>
+    <van-empty image="search" description="暂无数据" wx:if="{{ staffList.length === 0 }}" />
   </view>
   <van-popup bind:close="onClose" customStyle="width: 80%;" show="{{isShowPop}}">
     <view class="addStaffForm">

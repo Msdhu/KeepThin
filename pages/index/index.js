@@ -68,7 +68,7 @@ Page({
 		// 登陆用户信息
 		userInfo: globalData.userInfo,
 		// 店铺信息
-		storeInfo: null,
+		storeInfo: {},
 		storeList: [],
 		isStorePopShow: false,
 		// 城市信息

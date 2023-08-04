@@ -126,6 +126,7 @@ const utils = {
 			},
 		});
 	},
+  // TODO: 待调试，打开文件报错
 	downLoadFile: (url, params, fileName) => {
 		const { token } = checkLoginToken(true);
 		let header = {
@@ -146,19 +147,36 @@ const utils = {
 				...params,
 			},
       method: "GET",
-			responseType: "arraybuffer",
+			// responseType: "arraybuffer",
 			header,
 			success: res => {
 				wx.hideLoading();
-				const { data: realRes } = res;
-        const fs = wx.getFileSystemManager(),
-          filePath = `${wx.env.USER_DATA_PATH}/${fileName}.xlsx`;
-
-        fs.writeFile({
-          data: realRes,
+				const { data: downloadUrl } = res;
+        const filePath = `${wx.env.USER_DATA_PATH}/${fileName}.xlsx`;
+        
+        // const fs = wx.getFileSystemManager();
+        // fs.writeFile({
+        //   data: realRes,
+        //   filePath,
+        //   encoding: "utf8",
+        //   success: () => {
+        //     wx.openDocument({
+        //       filePath,
+        //       showMenu: true,
+        //       fileType: "xlsx",
+        //       success: () => {
+        //         console.log("打开文档成功");
+        //       },
+        //       fail: e => {
+        //         console.log("打开文档失败", e);
+        //       },
+        //     });
+        //   },
+        // });
+        wx.downloadFile({
+          url: downloadUrl,
           filePath,
-          encoding: "utf8",
-          success: () => {
+          success: (res) => {
             wx.openDocument({
               filePath,
               showMenu: true,

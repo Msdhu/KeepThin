@@ -242,7 +242,6 @@ Page({
 		);
 	},
 	handleExport() {
-		// TODO: 待调试，打开文件报错
 		const { startDate, endDate } = this.data;
 		utils.downLoadFile('goods/export', {
 			customer_id_list: this.data.exportIds || '6,7,8',
