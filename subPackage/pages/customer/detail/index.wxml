@@ -13,9 +13,9 @@ module.exports = ({
     })
 });
 </wxs>
-<page-meta pageStyle="overflow: {{isShowCurrentWeight?'hidden':'visible'}}"></page-meta>
+<page-meta pageStyle="overflow: {{isShowCurrentWeight ? 'hidden' : 'visible'}}"></page-meta>
 <navigation-bar color="{{navColor}}" showBack="{{true}}" title="顾客详情"></navigation-bar>
-<view style="width: 100%;margin-top:{{offsetTop}}rpx;position:absolute;z-index: 1;">
+<view style="width: 100%;margin-top: {{offsetTop}}rpx;position:absolute;z-index: 1;">
     <van-notice-bar scrollable leftIcon="/assets/img/icon-voice.png" mode="closeable" text="{{warnData.notArrivateStore?'该顾客长时间未到店':''}} {{warnData.notProjectof3Days?'服务项目已经3天未做':''}} {{warnData.notProjectof7Days?'服务项目已经7天未做':''}}" wx:if="{{warnData.notArrivateStore||warnData.notProjectof3Days||warnData.notProjectof7Days}}"></van-notice-bar>
 </view>
 <view wx:if="{{ detailData }}" class="wraper">
@@ -36,8 +36,8 @@ module.exports = ({
                     </view>
                 </view>
             </view>
-            <view bindtap="{{detailData.standarded==2&&!detailData.isConsolidationPeriod?'jumpUrl':''}}" class="periodTag" data-url="../standard/index">
-                {{detailData.standarded==1?'匀减期':detailData.standarded==2?'已达标':'速减期'}}
+            <view bindtap="{{detailData.standarded == 2 && !detailData.isConsolidationPeriod ? 'jumpUrl' : '' }}" class="periodTag" data-url="../standard/index">
+                {{detailData.standarded == 1 ? '匀减期' : detailData.standarded == 2 ? '已达标' : '速减期'}}
             </view>
         </view>
         <view class="dailyWeight">
@@ -130,12 +130,12 @@ module.exports = ({
             </view>
         </view>
     </view>
-    <van-collapse bind:change="onChangeCollapse" customClass="collapse" value="{{activeNames}}" wx:if="{{!isShowCurrentWeight&&!isShowCalendar}}">
+    <van-collapse bind:change="onChangeCollapse" customClass="collapse" value="{{activeNames}}" wx:if="{{!isShowCurrentWeight && !isShowCalendar}}">
         <van-collapse-item name="1" title="历史体重">
-            <view class="canvasCon"  wx:if="{{activeNames.length>0}}" style="height: {{weightHistory.length? '550rpx;' : '100%'}}">
+            <view class="canvasCon"  wx:if="{{activeNames.length > 0}}" style="height: {{weightHistory.length ? '550rpx;' : '100%'}}">
                 <view>历史体重</view>
                 <view style="text-align: center;" wx:if="{{!weightHistory.length}}">暂无历史体重</view>
-                <ec-canvas wx:else id="mychart-dom-line" class="canvas" canvas-id="mychart-line" ec="{{ chartBar }}"></ec-canvas>
+                <canvas wx:else bindtouchstart="touchcanvas" canvasId="lineCanvas" class="canvas" disableScroll="true"></canvas>
             </view>
         </van-collapse-item>
     </van-collapse>
@@ -177,7 +177,7 @@ module.exports = ({
 <van-popup round bind:close="hideCurrentWeight" customStyle="height:50%;" position="bottom" show="{{isShowCurrentWeight}}">
     <view class="currentWeightForm">
         <van-cell-group>
-            <van-field label="今日体重" maxlength="5" value="{{currentWeight}}" placeholder="请输入今日体重" type="digit"></van-field>
+            <van-field label="今日体重" maxlength="5" model:value="{{currentWeight}}" placeholder="请输入今日体重" type="digit"></van-field>
         </van-cell-group>
         <view class="saveBtn">
             <van-button round bind:click="saveCurrentWeight" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;">

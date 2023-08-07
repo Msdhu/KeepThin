@@ -180,10 +180,8 @@
     <van-button round bindtap="handleInputHistory" color="#FDB03F" customStyle="width:100%;height:80rpx;margin-top:36rpx;margin-bottom:30rpx;border-radius:8rpx !important;font-size:30rpx;" data-type="export" icon="label-o">
       历史体重导入
     </van-button>
-    <picker bindchange="handleExportData" fields="month" mode="date" value="{{dateMonth}}">
-      <van-button round color="#FDB03F" customStyle="width:100%;height:80rpx;margin-bottom:60rpx;border-radius:8rpx !important;font-size:30rpx;" data-type="export" icon="label-o">
-        详情数据导出
-      </van-button>
-    </picker>
+    <van-button round bindchange="handleExportData" color="#FDB03F" customStyle="width:100%;height:80rpx;margin-bottom:60rpx;border-radius:8rpx !important;font-size:30rpx;" data-type="export" icon="label-o">
+      详情数据导出
+    </van-button>
   </view>
 </view>

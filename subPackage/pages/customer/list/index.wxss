@@ -56,24 +56,25 @@
     align-items: center;
     box-sizing: border-box;
     display: flex;
-    font-size: 30rpx;
+    font-size: 24rpx;
     height: 68rpx;
-    padding-left: 42rpx;
+    padding-left: 20rpx;
     position: relative;
     width: 400rpx;
+    color: #a9a9a9;
 }
 
 .clearDate {
-    background: #000;
+    background: #b5aaaa;
     border-radius: 50%;
     color: #fff;
     font-size: 20rpx;
     height: 30rpx;
     line-height: 30rpx;
     position: absolute;
-    right: 0rpx;
+    right: 20rpx;
     text-align: center;
-    top: -15rpx;
+    top: -5rpx;
     width: 30rpx;
 }
 

@@ -112,6 +112,7 @@ Page({
 			...globalData.userInfo,
 			phone: data.phone,
 			name: data.nickname,
+			password: data.password_show,
 		};
 		// 更新 globalData 信息
 		app.globalData.userInfo = userInfo;
@@ -259,8 +260,7 @@ Page({
 		const menuItem = this.data.showMenuList[index];
 		let { url, needStore } = menuItem;
 		const { storeInfo, selectCity, isAdmin } = this.data;
-		
-		if (storeInfo || !needStore) {
+		if (Object.keys(storeInfo).length || !needStore) {
 			if (isAdmin && /account\/manage/.test(url)) {
 				url = "/subPackage/pages/account/citys/citys";
 			}

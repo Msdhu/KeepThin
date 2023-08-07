@@ -183,15 +183,16 @@ Page({
 			params.base.period_money_ext = remainCost;
 			// 是否二次成交
 			params.base.second_if = reset ? 1 : -1;
+			params.customer_id = consumerId;
 		}
 		utils.request(
 			{
-				url: "member/save",
+				url: isEdit ? "member/edit" : "member/save",
 				data: params,
 				method: "POST",
 				success: () => {
 					wx.showToast({
-						title: "新增顾客成功",
+						title: isEdit ? "修改顾客信息成功" : "新增顾客成功",
 						icon: "none",
 					});
 					wx.navigateBack({
@@ -204,28 +205,50 @@ Page({
 		);
 	},
 	getConsumerInfo() {
-		const resData = {};
-		this.setData({
-			name: resData.name,
-			phone: resData.phone,
-			gender: resData.gender,
-			age: resData.age,
-			height: resData.height,
-			originWeight: resData.originWeight,
-			standardWeight: resData.standardWeight,
-			loseWeight: resData.loseWeight,
-			dealDate: resData.dealDate,
-			dealDateOrigin: resData.dealDateOrigin,
-			expireDate: resData.expireDate,
-			expireDateOrigin: resData.expireDateOrigin,
-			loseWeightPeriod: resData.loseWeightPeriod,
-			consolidationPeriod: resData.consolidationPeriod,
-			source: resData.source, // 顾客来源
-			reset: !resData.reset,
-			isConsolidationPeriod: resData.isConsolidationPeriod,
-			courseCost: resData.courseCost,
-			remainCost: resData.remainCost,
-		});
+		const { consumerId, sizeDTOList } = this.data;
+		utils.request(
+			{
+				url: `member/detail`,
+				data: {
+					customer_id: consumerId,
+				},
+				method: "GET",
+				success: res => {
+					const sizeList = sizeDTOList.map(item => ({
+						...item,
+						'size': res[item.flag],
+					}))
+					this.setData({
+						phone: res.phone,
+						name: res.username,
+						gender: res.sex || '女',
+						age: res.age,
+						height: res.height,
+						originWeight: res.weight_init,
+						standardWeight: res.weight_normal,
+						loseWeight: res.weight_reduce,
+						loseWeightPeriod: res.weight_reduce_period,
+						courseCost: res.period_money,
+						dealDateOrigin: res.sign_date,
+						dealDate: getDateTxt(res.sign_date),
+						expireDateOrigin: res.end_date,
+						expireDate: getDateTxt(res.end_date),
+						consolidationPeriod: res.consoli_date,
+						isConsolidationPeriod: Number(res.into_consoli_if || 0),
+						source: res.source,
+						// TODO: 字段待填充
+						remainCost: res?.period_money_ext || "",
+						reset: res?.second_if == 1,
+						sizeDTOList: sizeList,
+						sizeDTOPreList: sizeList.map(item => ({ ...item })),
+					}, () => {
+						this.calculationStandardWeight();
+					});
+				},
+				isShowLoading: true,
+			},
+			true
+		);
 	},
 	// 改变性别
 	onChangeGender(e) {
@@ -233,7 +256,6 @@ Page({
 			gender: e.detail,
 		}, () => {
 			this.calculationStandardWeight();
-			this.calculationShouldWeight();
 		});
 	},
 	// 选择签约日期
@@ -360,7 +382,7 @@ Page({
 			isShowAggrement: true,
 		});
 	},
-	closeAggrement(e) {
+	onCloseAgreement(e) {
 		const closeType = e.currentTarget.dataset.type;
 		if (closeType === "btn") {
 			wx.setStorageSync(READ_STORAGE_KEY, true);

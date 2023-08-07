@@ -112,14 +112,14 @@ Page({
 			const endDate = utils.formatTime(new Date(), "YYYY-MM-DD");
 			const startDate =
 				type === "today" ? endDate : endDate.slice(0, 7) + "-01";
-			//今日新客 和 本月新客
+			// 今日新客 和 本月新客
 			wx.navigateTo({
-				url: `/subPackage/pages/customer/list/index?startData=${startDate}&endDate=${endDate}`,
+				url: `/subPackage/pages/customer/list/index?dealStartDate=${startDate}&dealEndDate=${endDate}`,
 			});
 		} else {
 			// 今日到店
 			wx.navigateTo({
-				url: "/subPackage/pages/customer/list/index?arriveStore=2",
+				url: "/subPackage/pages/customer/list/index?arriveStore=1",
 			});
 		}
 	},
@@ -132,14 +132,76 @@ Page({
 	},
 	// 详情数据导出
 	handleExportData(ev) {
-		const exporDate = ev.detail.value;
-		wx.showToast({
-			icon: "none",
-			title: `导出${exporDate}数据成功`,
-		});
+		const { dateMonth } = this.data;
+		// TODO: 修改 url 和 params
+		utils.downLoadFile('store/export', {
+			id: globalData.storeInfo.id, // 店铺id
+			date: dateMonth,
+		}, `店铺${dateMonth}详细数据`)
 	},
 	// 导入历史数据
-	handleInputHistory() {},
+	handleInputHistory() {
+		wx.chooseMessageFile({
+			count: 1,
+			type: "file",
+			success: (res) => {
+				console.log(res.tempFiles[0], res);
+				const { path, size, name } = res.tempFiles[0]
+				var e = t.tempFiles[0].path, o = (t.tempFiles[0].size, t.tempFiles[0].name);
+				if (name.indexOf(".xlsx") === -1 || name.indexOf(".xls") === -1) {
+					wx.showModal({
+						title: "提示",
+						content: "文件类型必须为excel!(.xls或.xlsx)",
+						confirmColor: "#0177ff",
+						confirmText: "确定",
+					})
+				} else {
+					wx.showModal({
+						title: "提示",
+						content: `确定上传${name}?`,
+						confirmColor: "#0177ff",
+						confirmText: "上传",
+						success: (res) => {
+							if (res.confirm) {
+								wx.showLoading({
+									title: "上传中"
+								});
+								wx.uploadFile({
+									// TODO: 修改url 和 formData 参数
+									url: ``,
+									filePath: path,
+									name: "file",
+									header: {
+										"Content-Type": "multipart/form-data"
+									},
+									formData: {
+										id: globalData.storeInfo.id, // 店铺id
+									},
+									success: (res) => {
+										const e = JSON.parse(res.data);
+										wx.hideLoading();
+										wx.showModal({
+											title: "提示",
+											content: e.msg ? e.msg : (200 === e.code ? "文件上传成功" : "文件上传失败"),
+											showCancel: false,
+										});
+									},
+									fail: (t) => {
+										wx.hideLoading()
+										wx.showModal({
+											title: "提示",
+											content: "文件上传失败" + t.msg,
+											showCancel: false,
+										});
+									}
+								});
+							}
+						}
+					});
+				}
+			}
+		});
+	},
 
 	onPageScroll(ev) {
 		this.setData({

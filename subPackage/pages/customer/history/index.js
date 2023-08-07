@@ -1,47 +1,43 @@
 const app = getApp();
-const { utils, globalData, ROLES } = app;
+const { utils, globalData } = app;
 Page({
 	data: {
 		customerId: "",
-		historyList: [], // 购买历史
+		weightHistory: [],
 		isShowEditPop: false,
 		editId: "",
 		weight: "",
 	},
 	onLoad(opts) {
-		this.data.customerId = opts.customerId;
-		this.getHistoryList();
-	},
-	getHistoryList() {
 		this.setData({
-			historyList: [
-				{
-					id: 1,
-					createTime: "2023-7-15 15:32:11",
-					currentWeight: 100,
-				},
-				{
-					id: 1,
-					createTime: "2023-7-15 15:32:11",
-					currentWeight: 98,
-				},
-				{
-					id: 1,
-					createTime: "2023-7-15 15:32:11",
-					currentWeight: 111,
-				},
-				{
-					id: 1,
-					createTime: "2023-7-15 15:32:11",
-					currentWeight: 2,
-				},
-				{
-					id: 1,
-					createTime: "2023-7-15 15:32:11",
-					currentWeight: 61,
-				},
-			],
+			customerId: opts?.customerId,
+		}, () => {
+			this.getWeightHistory();
 		});
+	},
+	getWeightHistory() {
+		const { customerId } = this.data;
+		utils.request(
+			{
+				url: `member/weight-history`,
+				data: {
+					// 店铺id
+					shop_id: globalData.storeInfo.id,
+					customer_id: customerId,
+				},
+				method: "GET",
+				success: res => {
+					this.setData({
+						weightHistory: (res || []).map((item, index) => ({
+							createTime: item.date,
+							currentWeight: item.weight,
+							id: index,
+						})),
+					});
+				},
+			},
+			true
+		);
 	},
 	showEditPop(t) {
 		var id = t.currentTarget.dataset.id;
@@ -54,23 +50,34 @@ Page({
 		this.setData({
 			isShowEditPop: false,
 			weight: "",
+			editId: "",
 		});
 	},
+	// 保存今日体重
 	handleSaveEdit() {
-		const { editId, weight, customerId } = this.data;
-		this.hideEditPop();
-    this.getHistoryList();
-	},
-	handleDelItem(e) {
-		var id = e.currentTarget.dataset.id;
-		wx.showModal({
-			title: "提示",
-			content: "是否确认删除该数据？",
-			success: ({ confirm }) => {
-				if (confirm) {
-					this.getHistoryList();
-				}
+		const { editId, weight, customerId, weightHistory } = this.data;
+		utils.request(
+			{
+				url: "member/weight-update",
+				data: {
+					// 店铺id
+					shop_id: globalData.storeInfo.id,
+					customer_id: customerId,
+					ymd: weightHistory[editId].createTime,
+					weight,
+				},
+				method: "POST",
+				success: () => {
+					this.getWeightHistory();
+					wx.showToast({
+						title: "保存成功",
+						icon: "none",
+					});
+				},
+				isShowLoading: true,
 			},
-		});
+			true
+		);
+		this.hideEditPop();
 	},
 });

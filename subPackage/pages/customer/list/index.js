@@ -3,135 +3,125 @@ const { utils, globalData, ROLES } = app;
 
 Page({
 	data: {
-		isLoading: false,
 		isShowPhone: true,
-		total: 0,
-		page: 1,
-		limit: 15,
 		listData: [],
-		searchType: "name", // 顶部导航
-		isShowScreenPop: false, // 是否展示筛选
-		isShowCalendar: false, // 是否展示日历选择
-		calendarType: "", // 日历组件选择时间的类型
+		total: 0,
+		// 顶部导航
+		searchType: "name",
+		// 是否展示筛选
+		isShowScreenPop: false,
+		// 是否展示日历选择
+		isShowCalendar: false,
+		// 日历组件选择时间的类型
+		calendarType: "",
+
+		/* ---搜索框参数--- */
+		// 姓名/电话
+		nameOrPhone: "",
+		// 成交日期
+		dealStartDate: "",
+		dealEndDate: "",
 
 		formData: {
-			nameOrPhone: "",
-			dealStartDate: "",
-			dealEndDate: "",
-
+			// 到店日期
 			arriveStartStoreDate: "",
 			arriveEndStoreDate: "",
-			standarded: "", // 减重期
-			arriveStore: "", // 今日到店
-			unArriveDay: "", // 未到店天数,
-			haveProduct: "", // 是否有产品
-			remain10Weight: "", // 剩余10斤以内顾客
-			soonExpired: "", // 快到期顾客（6个月
+			// 减重期
+			standarded: "",
+			// 今日到店(0-全部 1-已到店 2-未到店)
+			arriveStore: "",
+			// 未到店天数,
+			unArriveDay: "",
+			// 是否有产品(1-有产品 2-无产品)
+			haveProduct: "",
+			// 剩余10斤以内顾客
+			remain10Weight: "",
+			// 快到期顾客(6个月)
+			soonExpired: "",
 		},
-		searchParams: null,
 		topNum: 0,
 	},
 	onLoad(opts) {
 		const formData = this.data.formData;
-		Object.keys(opts).forEach((key) => {
-			if (key in formData) {
-				formData[key] = opts[key];
-			}
-		});
+		const { dealStartDate, dealEndDate, arriveStore } = opts
+		arriveStore && (formData.arriveStore = String(arriveStore));
+
 		this.setData({
+			dealStartDate,
+			dealEndDate,
 			formData,
-			searchParams: formData,
+			searchType: dealStartDate ? "date" : "name",
+		}, () => {
+			this.getListData();
 		});
-		this.getListData();
 	},
-	chageShowPhone() {
-		this.setData({
-			isShowPhone: !this.data.isShowPhone,
-		});
+	getParams() {
+		const { formData: { arriveStartStoreDate, arriveEndStoreDate, arriveStore, haveProduct }, nameOrPhone, searchType, dealStartDate, dealEndDate } = this.data;
+		const params = {
+			// 店铺id
+			shop_id: globalData.storeInfo.id,
+		};
+		if (searchType === "name") {
+			nameOrPhone && (params.keyword = nameOrPhone);
+		} else if (dealStartDate && dealEndDate) {
+			// TODO: 成交日期 字段修改
+			params.sign_date = dealStartDate;
+			params.end_date = dealEndDate;
+		}
+		arriveStartStoreDate && (params.arrive_start = arriveStartStoreDate);
+		arriveEndStoreDate && (params.arrive_end = arriveEndStoreDate);
+		arriveStore && (params.today_arrive = arriveStore);
+		haveProduct && (params.product_solution = haveProduct);
+
+		return params;
 	},
 	getListData() {
-		this.data.isLoading = true;
-		this.setData({
-			listData: [
-				{
-					id: 0,
-					transfer: false, // 是否转店
-					expired: false, // 是否到期
-					name: "小龙", // 姓名
-					phone: "18500225772", // 手机号
-					gender: 0, // 性别 0 女 1 男
-					dealDate: "2013-05-15 8:12:10", // 成交日期
-					arriveStoreDate: "2013-05-15 8:12:10", // 到店日期
-					originWeight: 130, // 初始体重
-					currentWeight: 120, // 目前体重
-					lossedWeight: 10, // 已减斤数
-					unLossWeight: 5, // 未减斤数
+		utils.request(
+			{
+				url: `member/list`,
+				data: this.getParams(),
+				method: "GET",
+				success: res => {
+					this.setData({
+						listData: (res || []).map(item => ({
+							id: item?.customer_id,
+							// 是否转店 TODO: 修改字段
+							transfer: false,
+							// 是否到期 TODO: 修改字段
+							expired: false,
+							// 姓名
+							name: item.username,
+							// 手机号
+							phone: item.phone,
+							// 性别
+							gender: item.sex || "女",
+							// 成交日期
+							dealDate: item.sign_date,
+							// 到店日期 TODO: 修改字段
+							arriveStoreDate: item.sign_date,
+							// 初始体重
+							originWeight: item.weight_init,
+							// 目前体重
+							currentWeight: item.weight,
+							// 已减斤数
+							lossedWeight: Math.abs(item.has_reduce),
+							// 未减斤数
+							unLossWeight: item.has_no_reduce,
+						})),
+						total: (res || []).length,
+					});
 				},
-				{
-					id: 0,
-					transfer: false, // 是否转店
-					expired: false, // 是否到期
-					name: "小龙", // 姓名
-					phone: "18500225772", // 手机号
-					gender: 1, // 性别 0 女 1 男
-					dealDate: "2013-05-15 8:12:10", // 成交日期
-					arriveStoreDate: "2013-05-15 8:12:10", // 到店日期
-					originWeight: 130, // 初始体重
-					currentWeight: 120, // 目前体重
-					lossedWeight: 10, // 已减斤数
-					unLossWeight: 5, // 未减斤数
-				},
-				{
-					id: 0,
-					transfer: false, // 是否转店
-					expired: false, // 是否到期
-					name: "小龙", // 姓名
-					phone: "18500225772", // 手机号
-					gender: 0, // 性别 0 女 1 男
-					dealDate: "2013-05-15 8:12:10", // 成交日期
-					arriveStoreDate: "2013-05-15 8:12:10", // 到店日期
-					originWeight: 130, // 初始体重
-					currentWeight: 120, // 目前体重
-					lossedWeight: 10, // 已减斤数
-					unLossWeight: 5, // 未减斤数
-				},
-				{
-					id: 0,
-					transfer: false, // 是否转店
-					expired: false, // 是否到期
-					name: "小龙", // 姓名
-					phone: "18500225772", // 手机号
-					gender: 1, // 性别 0 女 1 男
-					dealDate: "2013-05-15 8:12:10", // 成交日期
-					arriveStoreDate: "2013-05-15 8:12:10", // 到店日期
-					originWeight: 130, // 初始体重
-					currentWeight: 120, // 目前体重
-					lossedWeight: 10, // 已减斤数
-					unLossWeight: 5, // 未减斤数
-				},
-			],
-			total: 4,
-		});
-
-		this.data.isLoading = false;
+				isShowLoading: true,
+			},
+			true
+		);
 	},
-	handleGetMore: utils.throttle(function () {
-		const { isLoading, listData, total } = this.data;
-		if (isLoading) return;
-		if (listData.length >= total) {
-			wx.showToast({
-				icon: "none",
-				title: "没有更多数据了",
-			});
-			return;
-		}
-		this.data.page++;
+	handleSearch() {
 		this.getListData();
-	}, 1000),
-
-	inputNameOrPhone: function (e) {
+	},
+	inputNameOrPhone: function (ev) {
 		this.setData({
-			'formData.nameOrPhone': e.detail.value,
+			'nameOrPhone': ev.detail.value,
 		});
 	},
 	handleChangeSearchType() {
@@ -142,13 +132,9 @@ Page({
 	},
 	handleClearDate() {
 		this.setData({
-			"formData.dealStartDate": "",
-			"formData.dealEndDate": "",
+			dealStartDate: "",
+			dealEndDate: "",
 		});
-	},
-	handleSearch() {
-		this.data.searchParams = { ...this.data.formData };
-		this.getListData();
 	},
 
 	showScreen() {
@@ -161,7 +147,6 @@ Page({
 			isShowScreenPop: false,
 		});
 	},
-
 	showCalendar(e) {
 		const type = e.currentTarget.dataset.type;
 		this.setData({
@@ -175,76 +160,78 @@ Page({
 		});
 	},
 	handleConfirmCalendar(e) {
-		const value = e.detial;
+		const value = e.detail;
 		const { calendarType } = this.data;
 		switch (calendarType) {
 			case "arriveStore":
 				this.setData({
-					"formData.arriveStartStoreDate": value[0],
-					"formData.arriveEndStoreDate": value[1],
+					"formData.arriveStartStoreDate": utils.formatTime(new Date(value[0]), "YYYY-MM-DD"),
+					"formData.arriveEndStoreDate": utils.formatTime(new Date(value[1]), "YYYY-MM-DD"),
 				});
 				break;
 			default:
 				this.setData({
-					"formData.dealStartDate": value[0],
-					"formData.dealEndDate": value[1],
+					dealStartDate: utils.formatTime(new Date(value[0]), "YYYY-MM-DD"),
+					dealEndDate: utils.formatTime(new Date(value[1]), "YYYY-MM-DD"),
 				});
 				break;
 		}
+		this.hideCalendar()
 	},
+
 	// 修改formData
 	handleChangeFormData(e) {
-		const dataset = e.target.dataset;
-		const key = dataset.type;
-		const value = dataset.val;
-    console.log(key, value, e,dataset)
+		const { type, val } = e.target.dataset;
 		this.setData({
-			[`formData.${key}`]: value,
+			[`formData.${type}`]: String(val),
 		});
 	},
   handleInptuFormData(e) {
-		const dataset = e.currentTarget.dataset;
-		const key = dataset.type;
+		const { type } = e.currentTarget.dataset;
 		this.setData({
-			[`formData.${key}`]: e.detail.value,
+			[`formData.${type}`]: e.detail.value,
 		});
   },
 	handleReset() {
 		this.setData({
 			formData: {
-				nameOrPhone: "",
-				dealStartDate: "",
-				dealEndDate: "",
-
 				arriveStartStoreDate: "",
 				arriveEndStoreDate: "",
-				standarded: "", // 减重期
-				arriveStore: "", // 今日到店
-				unArriveDay: "", // 未到店天数,
-				havProduct: "", // 是否有产品
-				remain10Weight: "", // 剩余10斤以内顾客
-				soonExpired: "", // 快到期顾客（6个月
+				standarded: "",
+				arriveStore: "",
+				unArriveDay: "",
+				haveProduct: "",
+				remain10Weight: "",
+				soonExpired: "",
 			},
 		});
 	},
 	handleScreenConfirm() {
-		this.data.searchParams = { ...this.data.formData };
 		this.getListData();
     this.hideScreen()
 	},
-	// 查看详情
-	goDetail(e) {
-		const index = e.currentTarget.dataset.index;
-		wx.navigateTo({
-			url: `/subPackage/pages/customer/detail/index?id=${this.data.listData[index].id}`,
+
+	chageShowPhone() {
+		this.setData({
+			isShowPhone: !this.data.isShowPhone,
 		});
 	},
-	callPhone(e) {
-		const phone = e.currentTarget.dataset.phone;
+	// 查看详情
+	goDetail(ev) {
+		const { index } = ev.currentTarget.dataset;
+		const customerInfo = this.data.listData[index];
+		// 用于顾客详情页面的基础数据
+		wx.setStorageSync('customerInfo', customerInfo);
+		wx.navigateTo({
+			url: `/subPackage/pages/customer/detail/index?id=${customerInfo.id}`,
+		});
+	},
+	callPhone(ev) {
+		const { phone } = ev.currentTarget.dataset;
 		wx.showModal({
 			title: "提示",
 			content: `是否拨打电话-${phone}`,
-			success: function ({ confirm }) {
+			success: ({ confirm }) => {
 				if (confirm) {
 					wx.makePhoneCall({
 						phoneNumber: phone,
@@ -254,5 +241,10 @@ Page({
 		});
 	},
 	// 导出数据
-	handleExportData() {},
+	handleExportData() {
+		// TODO: 修改 url 和 params
+		utils.downLoadFile('customer/list/export', {
+			...this.getParams(),
+		}, `店铺顾客数据汇总`)
+	},
 });

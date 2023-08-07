@@ -2,15 +2,15 @@
     <view class="topView">
         <view class="inputCon">
             <image src="/assets/img/sousuo.png"></image>
-            <input wx:if="{{searchType=='name'}}" bindinput="inputNameOrPhone" class="search" confirmType="search" maxlength="20" placeholder="请输入姓名/电话" placeholderClass="input-placeholder" type="text"></input>
-            <view wx:if="{{searchType=='date'}}" bindtap="showCalendar" class="date" data-type="">
-                <block wx:if="{{ formData.delStartDate }}">
-                    <view style="margin-top: 4rpx;">{{formData.dealStartDate}}</view>
+            <input wx:if="{{ searchType == 'name' }}" bindinput="inputNameOrPhone" class="search" confirmType="search" maxlength="20" placeholder="请输入姓名/电话" value="{{ nameOrPhone }}" placeholderClass="input-placeholder" type="text"></input>
+            <view wx:if="{{ searchType == 'date' }}" bindtap="showCalendar" class="date" data-type="">
+                <block wx:if="{{ dealStartDate }}">
+                    <view style="margin-top: 4rpx;">{{dealStartDate}}</view>
                     <view style="margin: 0 8rpx;">至</view>
-                    <view style="margin-top: 4rpx;">{{formData.dealEndDate}}</view>
+                    <view style="margin-top: 4rpx;">{{dealEndDate}}</view>
                 </block>
                 <view wx:else style="color: #a9a9a9;font-size: 32rpx;">成交时间</view>
-                <view catchtap="clearDate" class="clearDate" wx:if="{{dealStartDate}}">X</view>
+                <view catchtap="handleClearDate" class="clearDate" wx:if="{{dealStartDate}}">X</view>
             </view>
             <image bindtap="handleChangeSearchType"  src="/assets/img/change.png"></image>
         </view>
@@ -22,13 +22,13 @@
         <van-icon wx:if="{{ isShowPhone }}" bindtap="chageShowPhone" color="#FD9E39" name="closed-eye" size="34rpx"></van-icon>
         <van-icon wx:else bindtap="chageShowPhone" color="#FD9E39" name="eye-o" size="34rpx"></van-icon>
     </view>
-    <scroll-view bindscrolltolower="handleGetMore" class="scroll" lowerThreshold="50" scrollTop="{{topNum}}" scrollY="true">
+    <scroll-view class="scroll" lowerThreshold="50" scrollTop="{{topNum}}" scrollY="true">
         <view class="wrap">
             <view bindtap="goDetail" class="listData" wx:for="{{listData}}" wx:key="index" data-index="{{ index }}">
                 <view class="transfer" wx:if="{{item.transfer}}">已转店</view>
                 <view class="customerInfo">
                     <view class="expired" wx:if="{{item.expired}}">已到期</view>
-                    <image src="{{item.gender==1?'/assets/img/man.png':'/assets/img/woman.png'}}"></image>
+                    <image src="{{item.gender == 1 ? '/assets/img/man.png' : '/assets/img/woman.png'}}"></image>
                     <text class="value">{{item.name}}</text>
                     <view catchtap="callPhone" class="customerPhone" data-phone="{{item.phone}}">
                         <van-icon name="phone" style="margin-top: 4rpx;"></van-icon>
@@ -42,7 +42,7 @@
                     </view>
                     <view>
                         <text class="label">到店日期：</text>
-                        <text class="value">{{item.arriveStoreDate?fn.split(item.arriveStoreDate,' ')[0]:''}}</text>
+                        <text class="value">{{item.arriveStoreDate ? fn.split(item.arriveStoreDate,' ')[0] : ''}}</text>
                     </view>
                     <view>
                         <text class="label">初始体重：</text>
@@ -62,6 +62,7 @@
                     </view>
                 </view>
             </view>
+            <van-empty image="search" description="暂无数据" wx:if="{{ listData.length === 0 }}" />
         </view>
         <view style="height: 100rpx;"></view>
     </scroll-view>
@@ -81,15 +82,15 @@
             </view>
             <view class="title">减重期：</view>
             <view bindtap="handleChangeFormData" class="screenInfo">
-                <view class="{{formData.standarded==3?'active':'noActive'}} screenInfoItem" data-val="3" data-type="standarded">速减期</view>
-                <view class="{{formData.standarded==1?'active':'noActive'}} screenInfoItem" data-val="1" data-type="standarded">匀减期</view>
-                <view class="{{formData.standarded==2?'active':'noActive'}} screenInfoItem" data-val="2" data-type="standarded">巩固期</view>
+                <view class="{{formData.standarded == '3' ? 'active' : 'noActive'}} screenInfoItem" data-val="3" data-type="standarded">速减期</view>
+                <view class="{{formData.standarded == '1' ? 'active' : 'noActive'}} screenInfoItem" data-val="1" data-type="standarded">匀减期</view>
+                <view class="{{formData.standarded == '2' ? 'active' : 'noActive'}} screenInfoItem" data-val="2" data-type="standarded">巩固期</view>
             </view>
             <view class="title">今日到店：</view>
             <view bindtap="handleChangeFormData" class="screenInfo">
-                <view class="{{formData.arriveStore==3?'active':'noActive'}} screenInfoItem" data-val="3" data-type="arriveStore">应到店</view>
-                <view class="{{formData.arriveStore==2?'active':'noActive'}} screenInfoItem" data-val="2" data-type="arriveStore">已到店</view>
-                <view class="{{formData.arriveStore==1?'active':'noActive'}} screenInfoItem" data-val="1" data-type="arriveStore">未到店</view>
+                <view class="{{formData.arriveStore == '0' ? 'active' : 'noActive'}} screenInfoItem" data-val="0" data-type="arriveStore">应到店</view>
+                <view class="{{formData.arriveStore == '1' ? 'active' : 'noActive'}} screenInfoItem" data-val="1" data-type="arriveStore">已到店</view>
+                <view class="{{formData.arriveStore == '2' ? 'active' : 'noActive'}} screenInfoItem" data-val="2" data-type="arriveStore">未到店</view>
             </view>
             <view class="title">未到店顾客：</view>
             <view class="toStoreTime">
@@ -100,13 +101,13 @@
             </view>
             <view class="title">产品情况：</view>
             <view bindtap="handleChangeFormData" class="screenInfo">
-                <view class="{{formData.haveProduct==1?'active':'noActive'}} screenInfoItem" data-val="1" data-type="haveProduct">有产品</view>
-                <view class="{{formData.haveProduct==2?'active':'noActive'}} screenInfoItem" data-val="2" data-type="haveProduct">无产品</view>
+                <view class="{{formData.haveProduct == '1' ? 'active' : 'noActive'}} screenInfoItem" data-val="1" data-type="haveProduct">有产品</view>
+                <view class="{{formData.haveProduct == '2' ? 'active' : 'noActive'}} screenInfoItem" data-val="2" data-type="haveProduct">无产品</view>
             </view>
             <view class="title">其他：</view>
             <view class="screenInfo">
-                <view bindtap="handleChangeFormData" class="{{formData.remain10Weight==1?'active':'noActive'}} screenInfoItem" data-val="1" data-type="remain10Weight" style="width: 45%;">剩余10斤以内顾客</view>
-                <view bindtap="handleChangeFormData" class="{{formData.soonExpired==1?'active':'noActive'}} screenInfoItem" data-val="1" data-type="soonExpired" style="width: 45%;">快到期顾客（6个月）</view>
+                <view bindtap="handleChangeFormData" class="{{formData.remain10Weight == '1' ? 'active' : 'noActive'}} screenInfoItem" data-val="1" data-type="remain10Weight" style="width: 45%;">剩余10斤以内顾客</view>
+                <view bindtap="handleChangeFormData" class="{{formData.soonExpired == '1' ? 'active' : 'noActive'}} screenInfoItem" data-val="1" data-type="soonExpired" style="width: 45%;">快到期顾客(6个月)</view>
             </view>
         </view>
         <view class="screenOptions">

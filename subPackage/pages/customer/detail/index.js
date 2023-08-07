@@ -1,46 +1,49 @@
-import * as echarts from "../../../components/ec-canvas/echarts";
+const WxCharts = require('../../../wxCharts.js');
 const app = getApp();
-const { utils, globalData, ROLES } = app;
+const { utils, globalData } = app;
 
 const curDateTxt = utils.formatTime(new Date(), "YYYY-MM-DD");
+let wxChart = null;
 
 Page({
-	/**
-	 * 页面的初始数据
-	 */
 	data: {
 		id: "",
-
 		offsetTop: globalData.marginTop,
-		userInfo: globalData.userInfo,
-		navColor: "", // 导航颜色
-		isShowCurrentWeight: false, // 是否展示当前体重输入框
-		currentWeight: "", // 输入的当前体重
+		// 导航颜色
+		navColor: "",
+		// 是否展示当前体重输入框
+		isShowCurrentWeight: false,
+		// 输入的当前体重
+		currentWeight: "",
 		isShowCalendar: false,
-		currentDate: curDateTxt, // 当前数据的时间
-		activeNames: [], // 折叠面板展开数据
-		detailData: null,
-		isShowPhone: true, // 是否显示完整手机号
-		weightHistory: null, // 历史体重
+		// 当前数据的时间
+		currentDate: curDateTxt,
+		// 折叠面板展开数据
+		activeNames: [],
+		detailData: {},
+		// 是否显示完整手机号
+		isShowPhone: true,
+		// 历史体重
+		weightHistory: [],
+		chartBar: {},
+
+		// 获取警告信息 TODO: 后续确认该字段
 		warnData: {
 			notArrivateStore: false,
 			notProjectof3Days: false,
 			notProjectof7Days: false,
 		},
-		chartBar: {},
 	},
 
-	/**
-	 * 生命周期函数--监听页面加载
-	 */
 	onLoad(opts) {
-		this.data.id = opts.id;
+		this.setData({
+			id: opts?.id,
+		});
 	},
 	onShow() {
 		this.getDetailData();
-		this.getWarnData();
+		this.getWeightHistory();
 	},
-
 	onPageScroll(e) {
 		this.setData({
 			navColor: utils.getNavColor(e),
@@ -48,58 +51,92 @@ Page({
 	},
 	// 获取用户详情
 	getDetailData() {
-		this.setData({
-			detailData: {
-				id: "",
-				name: "二凯",
-				gender: "1",
-				phone: "18155040067",
-				standarded: 2, // 减重期 1:匀减期 2：'已达标 3：速减期
-				isConsolidationPeriod: "", // 是否转入巩固期
-				currentWeight: "123", // 今日体重
-				todayLossedWeight: 131, // 今日减重
-				realLossedWeight: 11, // 实际减重
-				totalLossedWeight: 31, // 累计体重
-				regiseterCount: 11, // 累积到店
-				unLossWeight: 21, // 未减斤数
-				lowestWeight: 111, // 最低体重
-				originWeight: 161, // 初始体重
-				standardWeight: 17, // 标准体重
-				loseWeight: 39, // 应减斤数
+		const { currentDate, id } = this.data;
+		utils.request(
+			{
+				url: `member/tongji`,
+				data: {
+					// 店铺id
+					shop_id: globalData.storeInfo.id,
+					customer_id: id,
+					ymd: currentDate,
+				},
+				method: "GET",
+				success: res => {
+					const customerInfo = wx.getStorageSync('customerInfo');
+					this.setData({
+						currentWeight: res.current_weight,
+						detailData: {
+							id: customerInfo.id,
+							name: customerInfo.name,
+							gender: customerInfo.gender,
+							phone: customerInfo.phone,
+							// TODO: 后续确认该字段
+							standarded: 3, // 减重期  1: 匀减期 2： 已达标 3: 速减期
+							// 是否转入巩固期
+							isConsolidationPeriod: "",
+							// 今日体重
+							currentWeight: res.current_weight,
+							// 今日减重
+							todayLossedWeight: res.today_weight_reduce,
+							// 实际减重
+							realLossedWeight: res.real_weight_reduce,
+							// 累计体重
+							totalLossedWeight: res.total_weight_reduce,
+							// 累积到店
+							regiseterCount: res.arrive_count,
+							// 未减斤数
+							unLossWeight: res.no_weight_reduce,
+							// 最低体重
+							lowestWeight: res.min_weight_reduce,
+							// 初始体重
+							originWeight: res.weight_init,
+							// 标准体重
+							standardWeight: res.weight_normal,
+							// 应减斤数
+							loseWeight: res.weight_reduce,
+						},
+					});
+				},
+				isShowLoading: true,
 			},
-			weightHistory: [
-				{
-					id: 1,
-					name: "06-01",
-					value: 100,
-				},
-				{
-					id: 1,
-					name: "06-02",
-					value: 200,
-				},
-				{
-					id: 1,
-					name: "06-03",
-					value: 0,
-				},
-				{
-					id: 1,
-					name: "06-05",
-					value: 1000,
-				},
-			],
-		});
+			true
+		);
 	},
-	// 获取警告信息
-	getWarnData() {
-		this.setData({
-			warnData: {
-				notArrivateStore: true,
-				notProjectof3Days: false,
-				notProjectof7Days: false,
+	getWeightHistory() {
+		const { id } = this.data;
+		utils.request(
+			{
+				url: `member/weight-history`,
+				data: {
+					// 店铺id
+					shop_id: globalData.storeInfo.id,
+					customer_id: id,
+				},
+				method: "GET",
+				success: res => {
+					const x_data = [], y_data = [];
+					res.forEach(item => {
+						x_data.unshift(item.date.slice(5))
+						y_data.unshift(item.weight);
+					});
+					const min = Math.min.apply(Math, y_data), max = Math.max.apply(Math, y_data);
+					this.setData({
+						weightHistory: res || [],
+						chartsObj: {
+							chartTit: "历史体重",
+							x_data,
+							y_data,
+							min,
+							max,
+						},
+					}, () => {
+						this.OnWxChart(x_data, y_data, "历史体重", min, max)
+					});
+				},
 			},
-		});
+			true
+		);
 	},
 	// 显示今日体重弹窗
 	showCurrentWeight() {
@@ -112,90 +149,113 @@ Page({
 		this.setData({
 			isShowCurrentWeight: false,
 			currentWeight: "",
+		}, () => {
+			if (this.data.weightHistory.length) {
+				const { x_data, y_data, chartTit, min, max } = this.data.chartsObj
+				this.OnWxChart(x_data, y_data, chartTit, min, max);
+			}
 		});
 	},
 	// 保存今日体重
 	saveCurrentWeight() {
+		const { currentDate, id, currentWeight } = this.data;
+		utils.request(
+			{
+				url: "member/weight-update",
+				data: {
+					// 店铺id
+					shop_id: globalData.storeInfo.id,
+					customer_id: id,
+					ymd: currentDate,
+					weight: currentWeight,
+				},
+				method: "POST",
+				success: () => {
+					this.getDetailData();
+					this.getWeightHistory();
+					wx.showToast({
+						title: "保存成功",
+						icon: "none",
+					});
+				},
+				isShowLoading: true,
+			},
+			true
+		);
 		this.hideCurrentWeight();
 	},
 	// 跳转页面
 	jumpUrl(e) {
 		const url = e.currentTarget.dataset.url;
-		const detailData = this.data.detailData;
+		const	{ detailData } = this.data;
 		if (url.indexOf("?") > -1) {
 			wx.navigateTo({
 				url,
 			});
 		} else {
 			wx.navigateTo({
-				url: `${url}?registerId=${detailData.registerId}&customerId=${detailData.id}`,
+				url: `${url}?customerId=${detailData.id}`,
 			});
 		}
 	},
+
 	// 改变折叠面板状态
 	onChangeCollapse(e) {
 		const activeNames = e.detail;
-		this.setData(
-			{
-				activeNames,
-			},
-			() => {
-				if (activeNames.length && this.data.weightHistory.length) {
-					this.getChart();
-				}
-			}
-		);
-	},
-	getChart() {
-		console.log("初始化图表");
 		this.setData({
-			"chartBar.onInit": this.initChart,
+			activeNames,
+		}, () => {
+			if (activeNames.length && this.data.weightHistory.length) {
+				const { x_data, y_data, chartTit, min, max } = this.data.chartsObj
+				this.OnWxChart(x_data, y_data, chartTit, min, max);
+			}
 		});
 	},
-	initChart(canvas, width, height, dpr) {
-		const chart = echarts.init(canvas, null, {
-			width: width,
-			height: height,
-			dpr,
-		});
-		canvas.setChart(chart);
-		const weightHistory = this.data.weightHistory;
-		console.log(weightHistory, canvas, width, height)
-		var option = {
-			grid: {
-				containLabel: true,
-			},
-			tooltip: {
-				show: true,
-				trigger: "axis",
-			},
+	OnWxChart(x_data, y_data, chartTit, min, max) {
+		const systemInfo = wx.getSystemInfoSync();
+		const width = systemInfo.windowWidth / 750 * 690 - 20, height = systemInfo.windowWidth / 750 * 550 - 100;
+		wxChart = new WxCharts({
+			canvasId: "lineCanvas",
+			type: "line",
+			categories: x_data,
+			animation: !0,
+			legend: !1,
+			series: [{
+				name: "",
+				data: y_data,
+				format: (t, a) => {
+						return t + "斤";
+				}
+			}],
 			xAxis: {
-				type: "category",
-				boundaryGap: false,
-				data: weightHistory.map((item) => item.name),
-				// show: false
+				disableGrid: !0
 			},
 			yAxis: {
-				x: "center",
-				type: "value",
-				splitLine: {
-					lineStyle: {
-						type: "dashed",
-					},
+				title: "",
+				format: (t) => {
+					return t.toFixed(2);
 				},
-				// show: false
+				max: max + .8,
+				min: min - .5,
+				gridColor: "#D8D8D8"
 			},
-			series: [
-				{
-					type: "line",
-					smooth: true,
-					data: weightHistory.map((item) => item.value),
-				},
-			],
-		};
-		chart.setOption(option);
-		return chart;
+			width,
+			height,
+			dataLabel: !1,
+			dataPointShape: !0,
+			extra: {
+				lineStyle: "curve"
+			}
+		});
 	},
+	touchcanvas(t) {
+		wxChart.showToolTip(t, {
+			format: (t, a) => {
+				return a + " " + t.name + ":" + t.data;
+			}
+		});
+	},
+
 	// 删除顾客信息
 	handleDelUser() {
 		wx.showModal({
@@ -203,15 +263,32 @@ Page({
 			content: "是否确认删除该顾客信息？",
 			success: (a) => {
 				if (a.confirm) {
-					wx.showToast({
-						icon: "none",
-						title: "删除成功",
-					});
-					setTimeout(() => {
-						wx.navigateBack({
-							delta: 1,
-						});
-					}, 1000);
+					const { currentDate, id, currentWeight } = this.data;
+					utils.request(
+						{
+							// TODO: 修改 url
+							url: "member/delete",
+							data: {
+								// 店铺id
+								shop_id: globalData.storeInfo.id,
+								customer_id: id,
+							},
+							method: "POST",
+							success: () => {
+								wx.showToast({
+									icon: "none",
+									title: "删除成功",
+								});
+								setTimeout(() => {
+									wx.navigateBack({
+										delta: 1,
+									});
+								}, 1000);
+							},
+							isShowLoading: true,
+						},
+						true
+					);
 				}
 			},
 		});
@@ -224,21 +301,22 @@ Page({
 	hideCalendar() {
 		this.setData({
 			isShowCalendar: false,
+		}, () => {
+			if (this.data.weightHistory.length) {
+				const { x_data, y_data, chartTit, min, max } = this.data.chartsObj
+				this.OnWxChart(x_data, y_data, chartTit, min, max);
+			}
 		});
 	},
 	onConfirmCalendar(e) {
 		var value = e.detail.split(" ")[0];
-		this.setData(
-			{
-				currentDate: value,
-				isShowCalendar: false,
-			},
-			() => {
-				this.getDetailData();
-			}
-		);
+		this.setData({
+			currentDate: value,
+			isShowCalendar: false,
+		}, () => {
+			this.getDetailData();
+		});
 	},
-
 	chageShowPhone() {
 		this.setData({
 			isShowPhone: !this.data.isShowPhone,

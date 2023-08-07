@@ -12,7 +12,7 @@
           <van-cell customClass="label" title="姓名：" value="{{item.nickname}}"></van-cell>
           <van-cell customClass="label" title="手机：" value="{{item.phone}}"></van-cell>
           <van-cell customClass="label" title="账号：" value="{{item.phone}}"></van-cell>
-          <van-cell customClass="label" title="密码：" value="{{item.password}}"></van-cell>
+          <van-cell customClass="label" title="密码：" value="{{item.password_show}}"></van-cell>
           <van-cell wx:if="{{isManagerTab}}" customClass="label" title="店铺名称：" value="{{item.shop_name}}"></van-cell>
         </van-cell-group>
         <view class="options">

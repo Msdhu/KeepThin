@@ -91,9 +91,9 @@ Page({
 	},
 	getAccountList() {
 		const { isAdminTab, isMarketingTab, isManagerTab, cityId } = this.data;
-		const { userInfo: { phone, name } } = globalData;
+		const { userInfo: { phone, name, password } } = globalData;
 
-		this.setData({ accountList:[] });
+		this.setData({ accountList: [] });
 		
 		(isMarketingTab || isManagerTab) && utils.request(
 			{
@@ -121,8 +121,7 @@ Page({
 				nickname: name,
 				phone,
 				account: phone,
-				// FIXME: 密码暂时设置为 phone 的后4位
-				password: phone.slice(-4),
+				password_show: password,
 			}],
 		});
 	},
@@ -173,7 +172,7 @@ Page({
 						name: res.nickname,
 						phone: res.phone,
 						account: res.phone,
-						password: res.password,
+						password: res?.password_show || res.password,
 						shopName: res?.shops[0]?.shop_name || "",
 						shopList: (res?.all_shops || []).map(item => ({ ...item, shop_id: String(item.shop_id) })),
 						checkShops: (res?.shops || []).map(item => String(item.shop_id)),
@@ -302,20 +301,50 @@ Page({
 	},
 
 	handleAddBtnClick() {
-		let shopList = [];
 		if (this.data.isMarketingTab) {
-			// 添加市场部账号时，需要绑定相应的店铺，初始化时并没有办法拿到该城市下的所有店铺，通过 globalData.provinceList 来获取
-			for(let i = 0; i < globalData.provinceList.length; i++) {
-				const item = globalData.provinceList[i];
-				const [city = {}] = item.cityList.filter(city => String(city.regid) === String(this.data.cityId));
-				shopList = (city?.shopList || []).map(item => ({ shop_name: item.shop_name, shop_id: String(item.id) }));
+			// 通过调取 info 接口, 获取更新后的 provinceList 数据
+			utils.request(
+				{
+					url: `com/info`,
+					method: "GET",
+					success: res => {
+						const provinceInfo = Object.values(res.shops) || [];
+						const provinceList = provinceInfo.map(item => {
+							return {
+								regid: item.district_id,
+								regname: item.district,
+								cityList: (item.citys || []).map(city => {
+									return {
+										regid: city.district_id,
+										regname: city.district,
+										shopList: city.shops,
+									};
+								}),
+							};
+						});
+						// 更新 globalData.provinceList
+						app.globalData.provinceList = provinceList;
 
-				if (shopList.length > 0) break;
-			}
+						let shopList = [];
+						// 添加市场部账号时，需要绑定相应的店铺
+						for(let i = 0; i < provinceList.length; i++) {
+							const item = provinceList[i];
+							const [city = {}] = item.cityList.filter(city => String(city.regid) === String(this.data.cityId));
+							shopList = (city?.shopList || []).map(item => ({ shop_name: item.shop_name, shop_id: String(item.id) }));
+
+							if (shopList.length > 0) break;
+						}
+
+						this.setData({
+							shopList,
+						});
+					},
+					isShowLoading: true,
+				},
+				true
+			);
 		}
-
 		this.setData({
-			shopList,
 			isEdit: false,
 			isShowAddPop: true,
 		});
