@@ -1,107 +1,85 @@
 const app = getApp();
-const { utils, globalData, ROLES } = app;
-const throttle = utils.throttle;
+const { utils, globalData } = app;
+
 Page({
 	/**
 	 * 页面的初始数据
 	 */
 	data: {
-		showProduct: !1,
-		historyList: [], // 购买历史
-		productArray: [], // 产品列表，用于添加
-		productIndex: "0",
+		showProduct: false,
+		 // 购买历史
+		historyList: [],
+		// 产品列表，用于添加
+		productArray: [],
+		productIndex: 0,
 		selectProList: [],
 		isShowAddPop: false,
 	},
-
-	/**
-	 * 生命周期函数--监听页面加载
-	 */
 	onLoad(opts) {
-		this.data.customerId = opts.customerId;
-		this.getHistoryList();
-		this.getProList();
+		this.setData({
+			customerId: opts.customerId,
+		}, () => {
+			this.getHistoryList();
+			this.getProList();
+		});
 	},
 	getHistoryList() {
-		this.setData({
-			historyList: [
-				{
-					id: 1,
-					createTime: "2022-12-15 16:14:22",
-					useCount: 2,
-					proList: [
-						{
-							id: 1,
-							name: "马杀鸡",
-							price: "98",
-							num: 10,
-						},
-					],
+		const { customerId } = this.data;
+		utils.request(
+			{
+				url: `project/product-history`,
+				data: {
+					// 店铺id
+					shop_id: globalData.storeInfo.id,
+					customer_id: customerId,
 				},
-				{
-					id: 1,
-					createTime: "2022-12-15 16:14:22",
-					useCount: 2,
-					proList: [
-						{
-							id: 1,
-							name: "马杀鸡",
-							price: "98",
-							num: 10,
-						},
-					],
+				method: "GET",
+				success: res => {
+					this.setData({
+						historyList: (res || []).map(item => ({
+							id: item?.good_id,
+							createTime: item?.ymd,
+							useCount: item?.used_num || 0,
+							name: item?.good_name,
+							price: item?.price,
+							num: item?.good_num,
+						})),
+					});
 				},
-				{
-					id: 1,
-					createTime: "2022-12-15 16:14:22",
-					useCount: 2,
-					proList: [
-						{
-							id: 1,
-							name: "马杀鸡",
-							price: "98",
-							num: 10,
-						},
-					],
-				},
-				{
-					id: 1,
-					createTime: "2022-12-15 16:14:22",
-					useCount: 2,
-					proList: [
-						{
-							id: 1,
-							name: "马杀鸡",
-							price: "98",
-							num: 10,
-						},
-					],
-				},
-			],
-		});
+				isShowLoading: true,
+			},
+			true
+		);
 	},
 	getProList() {
-		this.setData({
-			productArray: [
-				{
-					id: 1,
-					name: "马杀鸡",
+		// 店铺id
+		const { id } = globalData.storeInfo;
+		utils.request(
+			{
+				url: `goods/skus`,
+				data: {
+					shop_id: id,
 				},
-				{
-					id: 2,
-					name: "跳舞",
+				method: "GET",
+				success: res => {
+					let list = res;
+					if (!Array.isArray(res)) {
+						list = Object.keys(res || {}).map(id => ({ ...res[id], id }));
+					}
+					this.setData({
+						// 过滤掉没库存的产品
+						productArray: list.filter(item => !!item.remain).map(item => ({
+							id: item.id,
+							name: item.good_name,
+							remain: item.remain,
+						})),
+					});
 				},
-				{
-					id: 3,
-					name: "动感单车",
-				},
-				{
-					id: 4,
-					name: "瑜伽",
-				},
-			],
-		});
+			},
+			true
+		);
 	},
+	// 撤销购买记录
 	handleRevokeHistory(e) {
 		const id = e.currentTarget.dataset.id;
 		wx.showModal({
@@ -109,7 +87,30 @@ Page({
 			content: "是否确认撤销该记录？",
 			success: ({ confirm }) => {
 				if (confirm) {
-					this.getHistoryList();
+					// 店铺id
+					const { id: shopId } = globalData.storeInfo;
+					const { customerId } = this.data;
+					utils.request(
+						{
+							// TODO: url 和 查询参数 需要修改
+							url: `project/product-remove`,
+							data: {
+								shop_id: shopId,
+								customer_id: customerId,
+								id,
+							},
+							method: "POST",
+							success: res => {
+								wx.showToast({
+									title: "撤销成功",
+									icon: "none",
+								});
+								this.getHistoryList();
+							},
+							isShowLoading: true,
+						},
+						true
+					);
 				}
 			},
 		});
@@ -127,27 +128,61 @@ Page({
 			isShowAddPop: false,
 		});
 	},
+	// 保存添加
+	handleSaveAdd() {
+		// 店铺id
+		const { id: shopId } = globalData.storeInfo;
+		const { customerId, selectProList } = this.data;
+		if (!selectProList.length)	return;
+
+		utils.request(
+			{
+				url: `project/product-add`,
+				data: {
+					shop_id: shopId,
+					customer_id: customerId,
+					// TODO: 查询参数 需要修改
+					good_list: selectProList.map(item => ({
+						good_id: item?.id,
+						good_num: item?.num,
+					})),
+				},
+				method: "POST",
+				success: res => {
+					wx.showToast({
+						title: "添加成功",
+						icon: "none",
+					});
+					this.hideAddPop();
+					this.getHistoryList();
+				},
+				isShowLoading: true,
+			},
+			true
+		);	
+	},
 	// 选中产品
 	handleSelectPro(e) {
 		const index = e.detail.value;
 		const { productArray, selectProList } = this.data;
 		const proItem = productArray[index];
-		const hasExit = selectProList.some((item) => item.productId === proItem.id);
+		const hasExit = selectProList.some(item => item.id === proItem.id);
 		if (hasExit) {
 			wx.showToast({
-				icon: "none",
 				title: "产品选择重复",
+				icon: "none",
 			});
 			return;
 		}
 		selectProList.push({
-			productId: proItem.id,
+			id: proItem.id,
 			num: 0,
 			name: proItem.name,
+			remain: proItem.remain,
 		});
 		this.setData({
 			selectProList,
-      productIndex: "0",
+      productIndex: 0,
 		});
 	},
 	handleChangeProNum(e) {
@@ -172,10 +207,5 @@ Page({
 				}
 			},
 		});
-	},
-	// 保存添加
-	handleSaveAdd() {
-		this.getHistoryList();
-		this.hideAddPop();
 	},
 });

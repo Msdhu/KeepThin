@@ -185,18 +185,10 @@ Page({
 		this.hideCurrentWeight();
 	},
 	// 跳转页面
-	jumpUrl(e) {
-		const url = e.currentTarget.dataset.url;
-		const	{ detailData } = this.data;
-		if (url.indexOf("?") > -1) {
-			wx.navigateTo({
-				url,
-			});
-		} else {
-			wx.navigateTo({
-				url: `${url}?customerId=${detailData.id}`,
-			});
-		}
+	jumpUrl(ev) {
+		wx.navigateTo({
+			url: ev.currentTarget.dataset.url,
+		});
 	},
 
 	// 改变折叠面板状态

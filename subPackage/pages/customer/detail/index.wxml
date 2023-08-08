@@ -140,19 +140,19 @@ module.exports = ({
         </van-collapse-item>
     </van-collapse>
     <view class="dailyList">
-        <view bindtap="jumpUrl" data-url="../service/index">
+        <view bindtap="jumpUrl" data-url="../service/index?customerId={{detailData.id}}">
             <image src="/assets/img/fuwuxiangmu.png"></image>
             <view style="color: #259953;">服务项目</view>
         </view>
-        <view bindtap="jumpUrl" data-url="../size/index">
+        <view bindtap="jumpUrl" data-url="../size/index?customerId={{detailData.id}}">
             <image src="/assets/img/chicun.png"></image>
             <view style="color: #A27954;">塑形尺寸</view>
         </view>
-        <view bindtap="jumpUrl" data-url="../sales/index">
+        <view bindtap="jumpUrl" data-url="../sales/index?customerId={{detailData.id}}">
             <image src="/assets/img/chanpinxiaoshou.png"></image>
             <view style="color: #2CABF5;">产品销售</view>
         </view>
-        <view bindtap="jumpUrl" data-url="../remarks/index">
+        <view bindtap="jumpUrl" data-url="../remarks/index?customerId={{detailData.id}}">
             <image src="/assets/img/beizhuxinxi.png"></image>
             <view style="color: #DA7A7C;">备注信息</view>
         </view>

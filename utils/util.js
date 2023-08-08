@@ -90,12 +90,9 @@ const utils = {
 			url: `${baseUrl}/${resParams.url}`,
 			header,
 			success: res => {
-        // FIXME: just for test, fix after all page work done
-        setTimeout(() => {
-          isShowLoading && wx.hideLoading();
-        }, 500);
 				const { data: realRes } = res;
 				const { data: resData, code, msg } = realRes;
+        isShowLoading && wx.hideLoading();
 				if (code === 100) {
 					success(resData);
 				} else if (code === 403) {

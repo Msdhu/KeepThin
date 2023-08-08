@@ -67,14 +67,6 @@
     justify-content: center;
 }
 
-.mask {
-    height: 90rpx;
-    position: absolute;
-    top: 0;
-    width: 130rpx;
-    z-index: 9;
-}
-
 .date {
     align-items: center;
     color: #333;

@@ -5,15 +5,15 @@
             <van-col span="8">塑形前</van-col>
             <van-col span="8">本次</van-col>
         </van-row>
-        <van-row wx:for="{{sizeList}}" wx:key="index" customClass="rowContent {{index==2||index==4?'marginBottom':''}} {{index==3||index==5?'marginTop':''}}">
+        <van-row wx:for="{{sizeList}}" wx:key="index" customClass="rowContent {{index == 2 || index == 4 ? 'marginBottom' : ''}} {{index == 3 || index == 5 ? 'marginTop' : ''}}">
             <van-col span="8">{{item.name}}</van-col>
             <van-col span="8">{{item.originSize}} cm</van-col>
             <van-col customClass="thisTime" span="8">
-                <input value="{{item.size ||''}}" bindinput="handleChangeSize" data-index="{{index}}" maxlength="6" style="width:100rpx;border-bottom: 1rpx solid #f6f6f6;" type="digit"></input>
+                <input value="{{item.size || ''}}" bindinput="handleChangeSize" data-index="{{index}}" maxlength="6" style="width:100rpx;border-bottom: 1rpx solid #f6f6f6;" type="digit"></input>
                 <view>cm</view>
                 <van-icon name="edit" size="36rpx" style="margin-left: 15rpx;"></van-icon>
             </van-col>
-            <view class="{{index==3||index==5?'borderBottom':''}}"></view>
+            <view class="{{index == 3 || index == 5 ? 'borderBottom' : ''}}"></view>
         </van-row>
     </view>
     <view class="btns">
@@ -21,7 +21,7 @@
             <van-button round bind:click="handleSave" color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;" icon="edit">保 存</van-button>
         </view>
         <view style="display: flex;justify-content: center;">
-            <van-button round bindtap="showHistorySize" color="#5AC67B" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;margin-left:40rpx;" icon="search">历史尺寸</van-button>
+            <van-button round bindtap="showHistorySize" color="#5AC67B" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;margin-left:40rpx;" icon="search" disabled="{{ historySizeList.length === 0 }}">历史尺寸</van-button>
         </view>
     </view>
 </view>
@@ -31,7 +31,7 @@
             <view class="historySizeList" wx:for="{{historySizeList}}" wx:key="index">
                 <view class="sizeDate">
                     <view>量尺日期：{{item.createTime}}</view>
-                    <van-icon bindtap="deleteHistorySize" data-item="{{item}}" name="delete-o" size="36rpx"></van-icon>
+                    <van-icon bindtap="deleteHistorySize" data-item="{{item}}" name="delete-o" size="36rpx" wx:if="{{ historySizeList.length > 1 }}" />
                 </view>
                 <van-row customClass="historySizeRowTitle">
                     <van-col span="6">部位</van-col>
@@ -42,7 +42,7 @@
                 <van-row customClass="historySizeRowContent" wx:for="{{item.list}}" wx:for-item="itemName" wx:key="index">
                     <van-col span="6">{{itemName.name}}</van-col>
                     <van-col span="6">{{itemName.originSize}} CM</van-col>
-                    <van-col span="6">{{itemName.size?itemName.size:''}} CM</van-col>
+                    <van-col span="6">{{itemName.size || ''}} CM</van-col>
                     <van-col span="6">{{itemName.diffSize}} CM</van-col>
                 </van-row>
             </view>

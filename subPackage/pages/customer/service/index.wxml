@@ -27,30 +27,14 @@
                 <van-icon name="add-o" size="36rpx" style="margin-right: 10rpx;"></van-icon>
                 <view>新建</view>
             </view>
-            <view bindtap="checkRemain" class="mask" wx:if="{{partList.length<=0||starffList.length<=0||proList.length<=0}}"></view>
         </view>
     </view>
-    <view style="margin-top: 30rpx;">
-        <view class="serviceRemind">
-            <image src="/assets/img/rectangle.png"></image>
-            <view>服务提醒</view>
-        </view>
-        <view class="content" style="padding-top: 16rpx;">
-            <van-radio-group bind:change="handleChangeWanTime" direction="horizontal" value="{{warnTime}}">
-                <van-radio checkedColor="#FFB629" iconSize="40rpx" labelClass="radios" name="1">3天</van-radio>
-                <van-radio checkedColor="#FFB629" iconSize="40rpx" labelClass="radios" name="2">7天</van-radio>
-            </van-radio-group>
-            <view style="text-align: right;">
-                <van-button round bindtap="handleCacelWarn" color="#FDB03F" customClass="cancelBtn" customStyle="width:216rpx;height:50rpx;border-radius:30rpx !important;font-size:30rpx;" size="small">取消服务提醒</van-button>
-            </view>
-        </view>
-    </view>
-    <van-button round bindtap="showHistoryPop" color="#5AC67B" customStyle="width:100%;height:80rpx;border-radius:8rpx !important;font-size:30rpx;margin-top:30rpx;" icon="search" wx:if="{{historyList.length>0}}">历史服务项目</van-button>
+    <van-button round bindtap="showHistoryPop" color="#5AC67B" customStyle="width:100%;height:80rpx;border-radius:8rpx !important;font-size:30rpx;margin-top:30rpx;" icon="search" wx:if="{{historyList.length > 0}}">历史服务项目</van-button>
 </view>
 <van-popup bind:close="handleHideAddPop" customStyle="height: 60%;" position="bottom" show="{{isShowAddPop}}">
     <view class="popupView">
         <van-steps active="{{active}}" activeColor="#FDAF45" bind:click-step="changeStep" steps="{{steps}}"></van-steps>
-        <view class="stepView" wx:if="{{active==0}}">
+        <view class="stepView" wx:if="{{active == 0}}">
             <van-radio-group bind:change="onChangeRadio" value="{{addStepsValMap[0]}}">
                 <van-cell-group>
                     <van-cell clickable bind:click="onClickRadio" data-index="{{index}}" title="{{item.name}}" wx:for="{{partList}}" wx:key="index">
@@ -59,7 +43,7 @@
                 </van-cell-group>
             </van-radio-group>
         </view>
-        <view class="stepView" wx:if="{{active==1}}">
+        <view class="stepView" wx:if="{{active == 1}}">
             <van-radio-group bind:change="onChangeRadio" value="{{addStepsValMap[1]}}">
                 <van-cell-group>
                     <van-cell clickable bind:click="onClickRadio" data-index="{{index}}" title="{{item.name}}" wx:for="{{starffList}}" wx:key="index">
@@ -68,7 +52,7 @@
                 </van-cell-group>
             </van-radio-group>
         </view>
-        <view class="stepView" wx:if="{{active==2}}">
+        <view class="stepView" wx:if="{{active == 2}}">
             <van-checkbox-group bind:change="onChangeRadio" value="{{addStepsValMap[2]}}">
                 <van-cell-group>
                     <van-cell clickable data-index="{{index}}" title="{{item.name}}" valueClass="value-class" wx:for="{{proList}}" wx:key="index">
@@ -79,7 +63,7 @@
         </view>
     </view>
     <view style="display: flex;justify-content: center;">
-        <van-button bindtap="handleSaveAdd" color="#FDAF45" customClass="saveBtn" size="small" wx:if="{{active==2}}">保存</van-button>
+        <van-button bindtap="handleSaveAdd" color="#FDAF45" customClass="saveBtn" size="small" wx:if="{{active == 2}}">保存</van-button>
     </view>
 </van-popup>
 <van-popup bind:close="closeHistoryPop" customStyle="height: 70vh;" position="bottom" show="{{isShowHistoryPop}}">
@@ -101,4 +85,5 @@
         </view>
     </scroll-view>
 </van-popup>
+<van-notify id="van-notify"></van-notify>
 <calendar bindonConfirmCalendar="handleDateChange" showCalendar="{{isShowCalendar}}" tabIndex="0"></calendar>
