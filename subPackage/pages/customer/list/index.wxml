@@ -28,7 +28,7 @@
                 <view class="transfer" wx:if="{{item.transfer}}">已转店</view>
                 <view class="customerInfo">
                     <view class="expired" wx:if="{{item.expired}}">已到期</view>
-                    <image src="{{item.gender == 1 ? '/assets/img/man.png' : '/assets/img/woman.png'}}"></image>
+                    <image src="{{item.gender == '男' ? '/assets/img/man.png' : '/assets/img/woman.png'}}"></image>
                     <text class="value">{{item.name}}</text>
                     <view catchtap="callPhone" class="customerPhone" data-phone="{{item.phone}}">
                         <van-icon name="phone" style="margin-top: 4rpx;"></van-icon>

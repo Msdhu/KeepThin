@@ -26,7 +26,7 @@
         <text class="line"></text>
         <view bindtap="jumpQuerySearch" data-type="month">
           <text>本月新客</text>
-          <text>{{todayData.monthNewCount}}</text>
+          <text>{{monthData.monthNewCount}}</text>
         </view>
       </view>
       <view class="entry">

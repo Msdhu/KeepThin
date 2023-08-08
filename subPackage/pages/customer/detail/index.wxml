@@ -24,7 +24,7 @@ module.exports = ({
         <view class="header_info" style="padding-top: {{offsetTop}}rpx;">
             <view class="userInfoCon">
                 <image class="smallLogo" mode="aspectFit" src="/assets/img/logo.png"></image>
-                <image class="headerImg" mode="aspectFill" src="{{detailData.gender=='1'?'/assets/img/man.png':'/assets/img/woman.png'}}"></image>
+                <image class="headerImg" mode="aspectFill" src="{{detailData.gender == '男' ? '/assets/img/man.png' : '/assets/img/woman.png'}}"></image>
                 <view class="userInfo">
                     <view>{{detailData.name}}</view>
                     <view>

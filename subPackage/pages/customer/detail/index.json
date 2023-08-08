@@ -1,8 +1,7 @@
 {
     "usingComponents": {
         "calendar": "/components/calendar/calendar",
-        "navigation-bar": "/components/navigationBar/navigationBar",
-        "ec-canvas": "../../../components/ec-canvas/ec-canvas"
+        "navigation-bar": "/components/navigationBar/navigationBar"
     },
     "navigationStyle": "custom",
     "navigationBarTitleText": "顾客信息"

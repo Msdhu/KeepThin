@@ -26,7 +26,6 @@ Page({
 	 */
 	onLoad(options) {
 		this.getShopData();
-		this.getMontData();
 	},
 	getShopData() {
 		// 店铺id
@@ -38,56 +37,52 @@ Page({
 					shop_id: id,
 				},
 				method: "GET",
-				success: res => {
+				success: (res = {}) => {
+					const { day = {}, month = {} } = res;
 					this.setData({
 						todayData: {
 							// 今日新客
-							dayNewCount: res.today_custmer_num || 0,
-							// 本月新客
-							monthNewCount: res.month_custmer_num || 0,
+							dayNewCount: day?.today_person_new || 0,
 							// 今日掉称 人数
-							lossWeightPersonCount: 80,
+							lossWeightPersonCount: day?.dchen_person_num || 0,
 							// 今日掉称 斤数
-							lossWeightTotal: 100,
+							lossWeightTotal: day?.dchen_weight_num || 0,
 							// 今日到店人数
-							registerCount: 100,
+							registerCount: day?.service_person_num || 0,
 							// 今日到店应到人数
-							realRegisterCount: 100,
+							realRegisterCount: 10,
 							// 今日涨称 人数
-							addWeightPersonCount: 10,
+							addWeightPersonCount: day?.zchen_person_num || 0,
 							// 今日涨称 斤数
-							addWeightTotal: 5,
+							addWeightTotal: day?.zchen_weight_num || 0,
 							// 精护人数
-							essensCarePersonCount: 1,
+							essensCarePersonCount: day?.jhu_person_num || 0,
 							// 实际减重
-							realLossWeightTotal: 2,
+							realLossWeightTotal: day?.dchen_weight_fact || 0,
 							// 平均减重
-							avgLossWeight: 1.1,
+							avgLossWeight: day?.jzhong_avg || 0,
+						},
+						monthData: {
+							// 本月新客
+							monthNewCount: month?.new_person_num || 0,
+							// 本月到店人数
+							registerCount: month?.service_person_num || 0,
+							// 精护人数
+							essensCarePersonCount: month?.jhu_person_num || 0,
+							// 实际减重
+							realLossWeightTotal: month?.dchen_weight_fact || 0,
+							// 平均减重
+							avgLossWeight: month?.jzhong_avg || 0,
+							//精护占比
+							essensCareWeightRate: month?.jhu_person_num_rate || 0,
+							//掉称占比
+							lossWeightRate: month?.dchen_person_num_rate || 0,
 						},
 					});
 				},
 			},
 			true
 		);
-	},
-	getMontData() {
-		const monthData = {
-			// 本月到店人数
-			registerCount: 100,
-			// 精护人数
-			essensCarePersonCount: 1,
-			// 实际减重
-			realLossWeightTotal: 2,
-			 // 平均减重
-			avgLossWeight: 1.1,
-			//精护占比
-			essensCareWeightRate: 10,
-			//掉称占比
-			lossWeightRate: 70,
-		};
-		this.setData({
-			monthData,
-		});
 	},
 	// 事件
 	handleChangePhoneShow() {
@@ -127,7 +122,7 @@ Page({
 		this.setData({
 			dateMonth: ev.detail.value,
 		}, () => {
-			this.getMontData();
+			this.getShopData();
 		});
 	},
 	// 详情数据导出

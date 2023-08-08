@@ -196,8 +196,8 @@ Page({
 			navigationColor: "#fff",
 		});
 	},
-	checkStore(e) {
-		const storeIndex = +e.currentTarget.dataset.index;
+	checkStore(ev) {
+		const storeIndex = Number(ev.currentTarget.dataset.index);
 		const storeInfo = this.data.storeList[storeIndex];
 		if (this.data.activeStoreIndex !== storeIndex) {
 			this.setData({
@@ -250,6 +250,7 @@ Page({
 				};
 			}),
 			activeStoreIndex: -1,
+			storeInfo: {},
 		});
 		this.hideCityPop();
 	},

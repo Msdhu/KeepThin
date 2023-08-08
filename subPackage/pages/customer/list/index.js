@@ -64,9 +64,8 @@ Page({
 		if (searchType === "name") {
 			nameOrPhone && (params.keyword = nameOrPhone);
 		} else if (dealStartDate && dealEndDate) {
-			// TODO: 成交日期 字段修改
-			params.sign_date = dealStartDate;
-			params.end_date = dealEndDate;
+			params.sign_date_start = dealStartDate;
+			params.sign_date_end = dealEndDate;
 		}
 		arriveStartStoreDate && (params.arrive_start = arriveStartStoreDate);
 		arriveEndStoreDate && (params.arrive_end = arriveEndStoreDate);
@@ -97,16 +96,16 @@ Page({
 							gender: item.sex || "女",
 							// 成交日期
 							dealDate: item.sign_date,
-							// 到店日期 TODO: 修改字段
-							arriveStoreDate: item.sign_date,
+							// 到店日期
+							arriveStoreDate: item.arrive_date,
 							// 初始体重
 							originWeight: item.weight_init,
 							// 目前体重
 							currentWeight: item.weight,
-							// 已减斤数
-							lossedWeight: Math.abs(item.has_reduce),
+							// 已减斤数     处理后端返回类似数据(3.8000000000000114)的问题
+							lossedWeight: (((item.has_reduce || 0) * 10000 + 1) / 10000).toFixed(1),
 							// 未减斤数
-							unLossWeight: item.has_no_reduce,
+							unLossWeight: (((item.has_no_reduce || 0) * 10000 + 1) / 10000).toFixed(1),
 						})),
 						total: (res || []).length,
 					});

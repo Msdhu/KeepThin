@@ -78,23 +78,23 @@ Page({
 							// 今日体重
 							currentWeight: res.current_weight,
 							// 今日减重
-							todayLossedWeight: res.today_weight_reduce,
+							todayLossedWeight: res.today_weight_reduce || 0,
 							// 实际减重
-							realLossedWeight: res.real_weight_reduce,
+							realLossedWeight: (((res.real_weight_reduce || 0) * 10000 + 1) / 10000).toFixed(1),
 							// 累计体重
-							totalLossedWeight: res.total_weight_reduce,
+							totalLossedWeight: res.total_weight_reduce || 0,
 							// 累积到店
-							regiseterCount: res.arrive_count,
+							regiseterCount: res.arrive_count || 0,
 							// 未减斤数
-							unLossWeight: res.no_weight_reduce,
+							unLossWeight: (((res.no_weight_reduce || 0) * 10000 + 1) / 10000).toFixed(1),
 							// 最低体重
-							lowestWeight: res.min_weight_reduce,
+							lowestWeight: res.min_weight_reduce || 0,
 							// 初始体重
-							originWeight: res.weight_init,
+							originWeight: res.weight_init || 0,
 							// 标准体重
-							standardWeight: res.weight_normal,
+							standardWeight: res.weight_normal || 0,
 							// 应减斤数
-							loseWeight: res.weight_reduce,
+							loseWeight: res.weight_reduce || 0,
 						},
 					});
 				},
