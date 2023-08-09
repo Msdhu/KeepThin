@@ -1,50 +1,46 @@
-const app = getApp();
-const { utils, globalData, ROLES } = app;
 import Notify from "@vant/weapp/notify/notify";
+const app = getApp();
+const { utils, globalData } = app;
+
 Page({
-	/**
-	 * 页面的初始数据
-	 */
 	data: {
 		customerId: "",
 		isShowHistoryRemarks: false,
-		scrollTop: 0,
-		remarks: "", // 备注
-		remarkList: [], // 历史记录
+		 // 备注
+		remarks: "",
+		// 历史记录
+		remarkList: [],
 	},
-
-	/**
-	 * 生命周期函数--监听页面加载
-	 */
 	onLoad(opts) {
-		this.data.customerId = opts.customerId;
-		this.getRemarkList();
+		this.setData({
+			customerId: opts.customerId,
+		}, () => {
+			this.getRemarkList();
+		});
 	},
 	getRemarkList() {
-		this.setData({
-			remarkList: [
-				{
-					id: "",
-					createTime: "2023-06-17 21:21:12",
-					remark: "666",
+		const { customerId } = this.data;
+		utils.request(
+			{
+				url: `member/remark-history`,
+				data: {
+					// 店铺id
+					shop_id: globalData.storeInfo.id,
+					customer_id: customerId,
 				},
-				{
-					id: "",
-					createTime: "2023-06-17 21:21:12",
-					remark: "666",
+				method: "GET",
+				success: res => {
+					this.setData({
+						remarkList: (res || []).map(item => ({
+							id: item?.id,
+							createTime: item?.ymd,
+							remark: item?.svalue || "",
+						})),
+					});
 				},
-				{
-					id: "",
-					createTime: "2023-06-17 21:21:12",
-					remark: "666",
-				},
-				{
-					id: "",
-					createTime: "2023-06-17 21:21:12",
-					remark: "666",
-				},
-			],
-		});
+			},
+			true
+		);
 	},
 	// 删除历史记录
 	deleteHistoryRemark(e) {
@@ -55,6 +51,7 @@ Page({
 			content: "是否确认删除该备注信息？",
 			success: ({ confirm }) => {
 				if (confirm) {
+					// TODO: 调用接口
 					wx.showToast({
 						icon: "none",
 						title: "删除成功",
@@ -74,7 +71,7 @@ Page({
 		});
 	},
 	handleSave() {
-		const remarks = this.data.remarks;
+		const { remarks, customerId } = this.data;
 		if (!remarks) {
 			Notify({
 				type: "danger",
@@ -82,5 +79,25 @@ Page({
 			});
 			return;
 		}
+		utils.request(
+			{
+				url: `member/remark-add`,
+				data: {
+					shop_id: globalData.storeInfo.id,
+					customer_id: customerId,
+					remark: remarks,
+				},
+				method: "POST",
+				success: res => {
+					wx.showToast({
+						title: "添加成功",
+						icon: "none",
+					});
+					this.getRemarkList();
+				},
+				isShowLoading: true,
+			},
+			true
+		);
 	},
 });

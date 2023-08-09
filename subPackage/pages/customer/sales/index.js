@@ -37,7 +37,7 @@ Page({
 				success: res => {
 					this.setData({
 						historyList: (res || []).map(item => ({
-							id: item?.good_id,
+							id: item?.history_id,
 							createTime: item?.ymd,
 							useCount: item?.used_num || 0,
 							name: item?.good_name,
@@ -92,12 +92,11 @@ Page({
 					const { customerId } = this.data;
 					utils.request(
 						{
-							// TODO: url 和 查询参数 需要修改
-							url: `project/product-remove`,
+							url: `project/product-del`,
 							data: {
 								shop_id: shopId,
 								customer_id: customerId,
-								id,
+								history_id: id,
 							},
 							method: "POST",
 							success: res => {
@@ -141,11 +140,8 @@ Page({
 				data: {
 					shop_id: shopId,
 					customer_id: customerId,
-					// TODO: 查询参数 需要修改
-					good_list: selectProList.map(item => ({
-						good_id: item?.id,
-						good_num: item?.num,
-					})),
+					good_id: selectProList[0]?.id,
+					good_num: selectProList[0]?.num,
 				},
 				method: "POST",
 				success: res => {

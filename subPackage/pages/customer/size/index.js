@@ -169,14 +169,12 @@ Page({
 			content: "是否确认删除该历史尺寸？",
 			success: ({ confirm }) => {
 				if (confirm) {
-					const { id } = this.data;
 					utils.request(
 						{
-							// TODO: 需要后端提供接口和参数
-							url: "member/size-delete",
+							url: "member/size-del",
 							data: {
 								shop_id: globalData.storeInfo.id,
-								customer_id: id,
+								customer_id: this.data.id,
 								id: item.id,
 							},
 							method: "POST",

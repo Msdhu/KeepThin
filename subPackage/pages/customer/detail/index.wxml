@@ -56,7 +56,7 @@ module.exports = ({
                     <van-icon name="arrow-down"></van-icon>
                 </view>
                 <view class="dailyWeight_all">
-                    <text bindtap="jumpUrl" data-url="../history/index">查看全部</text>
+                    <text bindtap="jumpUrl" data-url="../history/index?customerId={{detailData.id}}">查看全部</text>
                 </view>
             </view>
         </view>
@@ -160,10 +160,11 @@ module.exports = ({
             <image src="/assets/img/xiugaixinxi.png"></image>
             <view style="color: #FCBF56;">修改信息</view>
         </view>
-        <view bindtap="jumpUrl" data-url="../transfer/index?consumerId={{detailData.id}}">
+        <!-- 转店功能暂时不开发 -->
+        <!-- <view bindtap="jumpUrl" data-url="../transfer/index?consumerId={{detailData.id}}">
             <image src="/assets/img/gukezhuandian.png"></image>
             <view style="color: #2CABF5;">顾客转店</view>
-        </view>
+        </view> -->
         <view bindtap="jumpUrl" data-url="/subPackage/pages/store/bindqrcode/index?consumerId={{detailData.id}}">
             <image src="/assets/img/bangdingdianpu.png"></image>
             <view style="color: #259953;">绑定店铺</view>

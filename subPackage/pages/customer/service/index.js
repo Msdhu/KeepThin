@@ -63,7 +63,6 @@ Page({
 						name: item?.body,
 						// TODO: products 格式需要调整
 						products: [{
-							id: item?.good_id,
 							productName: item?.good_name,
 						}],
 					}));
@@ -118,8 +117,7 @@ Page({
 				if (confirm) {
 					utils.request(
 						{
-							// TODO: 需要后端提供接口
-							url: `project/remove`,
+							url: `project/del`,
 							data: {
 								shop_id: globalData.storeInfo.id,
 								customer_id: this.data.id,
@@ -141,7 +139,6 @@ Page({
 			},
 		});
 	},
-
 	// 改变添加服务的步骤
 	changeStep(t) {
 		this.setData({
@@ -169,22 +166,17 @@ Page({
 		this.changeAddStepVal(t.currentTarget.dataset.index);
 	},
 	handleSaveAdd() {
-		const { partList, starffList, proList, addStepsValMap, id } = this.data;
+		const { partList, starffList, proList, addStepsValMap, id, date } = this.data;
 		const body = partList[addStepsValMap[0]]?.name;
 		const member = starffList[addStepsValMap[1]]?.name;
-		const goodList = (addStepsValMap[2] || []).map(index => ({
-			good_id: proList[index].id,
-			good_name: proList[index].name,
-		}));
-
-		if (addStepsValMap.length !== 3 || !(body && member && goodList.length)) {
+		const goodId = proList[addStepsValMap[2]]?.id;
+		if (addStepsValMap.length !== 3 || !(body && member && goodId)) {
 			Notify({
 				type: "danger",
 				message: "请完善所有步骤！",
 			});
 			return;
 		}
-
 		utils.request(
 			{
 				url: `project/add`,
@@ -193,8 +185,8 @@ Page({
 					customer_id: id,
 					body,
 					member,
-					// TODO: 调整
-					good_list: goodList,
+					good_id: goodId,
+					ymd: date,
 				},
 				method: "POST",
 				success: res => {

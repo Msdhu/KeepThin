@@ -5,7 +5,7 @@
                 <view></view>
                 <view>备注</view>
             </view>
-            <van-field autosize border="{{false}}" label="" maxlength="300" value="{{remarks}}" placeholder="请输入备注留言" type="textarea"></van-field>
+            <van-field autosize border="{{false}}" label="" maxlength="300" model:value="{{remarks}}" placeholder="请输入备注留言" type="textarea"></van-field>
         </van-cell-group>
     </view>
     <view class="slectDate">

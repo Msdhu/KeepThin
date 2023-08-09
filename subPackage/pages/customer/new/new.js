@@ -205,7 +205,7 @@ Page({
 		);
 	},
 	getConsumerInfo() {
-		const { consumerId, sizeDTOList } = this.data;
+		const { consumerId, sizeDTOList, sourceActions } = this.data;
 		utils.request(
 			{
 				url: `member/detail`,
@@ -235,7 +235,7 @@ Page({
 						expireDate: getDateTxt(res.end_date),
 						consolidationPeriod: res.consoli_date,
 						isConsolidationPeriod: Number(res.into_consoli_if || 0),
-						source: res.source,
+						source: sourceActions[res.source || 0]?.name,
 						// TODO: 字段待填充
 						remainCost: res?.period_money_ext || "",
 						reset: res?.second_if == 1,

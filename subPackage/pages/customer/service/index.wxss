@@ -130,10 +130,6 @@
     padding: 10rpx 28rpx;
 }
 
-.value-class {
-    flex: none!important;
-}
-
 .saveBtn {
     border-radius: 20rpx!important;
     height: 60rpx;
