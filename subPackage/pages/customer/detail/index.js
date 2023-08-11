@@ -71,8 +71,7 @@ Page({
 							name: customerInfo.name,
 							gender: customerInfo.gender,
 							phone: customerInfo.phone,
-							// TODO: 后续确认该字段
-							standarded: 3, // 减重期  1: 匀减期 2： 已达标 3: 速减期
+							standarded: this.getStandarded(res), // 减重期  1: 巩固期 2: 匀减期 3: 速减期
 							// 是否转入巩固期
 							isConsolidationPeriod: "",
 							// 今日体重
@@ -137,6 +136,18 @@ Page({
 			},
 			true
 		);
+	},
+	getStandarded({ weight_init, weight_normal, current_weight }) {
+		const weightNormal = Number(weight_normal);
+		const weightCurrent = Number(current_weight);
+		const weightFlagOne = (Number(weight_init) + weightNormal) / 2;
+		const weightFlagTwo = weightNormal + 5;
+
+		if (weightFlagOne < weightFlagTwo) return 1;
+		if (weightCurrent > weightFlagOne) return 3;
+		else if (weightCurrent < weightFlagTwo) return 1;
+
+		return 2;
 	},
 	// 显示今日体重弹窗
 	showCurrentWeight() {
@@ -255,21 +266,19 @@ Page({
 			content: "是否确认删除该顾客信息？",
 			success: (a) => {
 				if (a.confirm) {
-					const { currentDate, id, currentWeight } = this.data;
 					utils.request(
 						{
-							// TODO: 修改 url
-							url: "member/delete",
+							url: "member/del",
 							data: {
 								// 店铺id
 								shop_id: globalData.storeInfo.id,
-								customer_id: id,
+								customer_id: this.data.id,
 							},
 							method: "POST",
 							success: () => {
 								wx.showToast({
-									icon: "none",
 									title: "删除成功",
+									icon: "none",
 								});
 								setTimeout(() => {
 									wx.navigateBack({

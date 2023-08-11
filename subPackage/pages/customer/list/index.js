@@ -26,8 +26,8 @@ Page({
 			// 到店日期
 			arriveStartStoreDate: "",
 			arriveEndStoreDate: "",
-			// 减重期
-			standarded: "",
+			// 减重期 (1-巩固期 2-匀减期 3-速减期)
+			periodType: "",
 			// 今日到店(0-全部 1-已到店 2-未到店)
 			arriveStore: "",
 			// 未到店天数,
@@ -51,12 +51,13 @@ Page({
 			dealEndDate,
 			formData,
 			searchType: dealStartDate ? "date" : "name",
-		}, () => {
-			this.getListData();
 		});
 	},
+	onShow() {
+		this.getListData();
+	},
 	getParams() {
-		const { formData: { arriveStartStoreDate, arriveEndStoreDate, arriveStore, haveProduct }, nameOrPhone, searchType, dealStartDate, dealEndDate } = this.data;
+		const { formData: { arriveStartStoreDate, arriveEndStoreDate, arriveStore, haveProduct, periodType }, nameOrPhone, searchType, dealStartDate, dealEndDate } = this.data;
 		const params = {
 			// 店铺id
 			shop_id: globalData.storeInfo.id,
@@ -71,6 +72,7 @@ Page({
 		arriveEndStoreDate && (params.arrive_end = arriveEndStoreDate);
 		arriveStore && (params.today_arrive = arriveStore);
 		haveProduct && (params.product_solution = haveProduct);
+		periodType && (params.period_type = periodType);
 
 		return params;
 	},
@@ -196,7 +198,7 @@ Page({
 			formData: {
 				arriveStartStoreDate: "",
 				arriveEndStoreDate: "",
-				standarded: "",
+				periodType: "",
 				arriveStore: "",
 				unArriveDay: "",
 				haveProduct: "",
@@ -242,7 +244,7 @@ Page({
 	// 导出数据
 	handleExportData() {
 		// TODO: 修改 url 和 params
-		utils.downLoadFile('customer/list/export', {
+		utils.downLoadFile('customer/list-export', {
 			...this.getParams(),
 		}, `店铺顾客数据汇总`)
 	},

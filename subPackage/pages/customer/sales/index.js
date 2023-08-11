@@ -140,8 +140,10 @@ Page({
 				data: {
 					shop_id: shopId,
 					customer_id: customerId,
-					good_id: selectProList[0]?.id,
-					good_num: selectProList[0]?.num,
+					good_list: selectProList.map(item => ({
+						good_id: item?.id,
+						good_num: item?.num,
+					})),
 				},
 				method: "POST",
 				success: res => {

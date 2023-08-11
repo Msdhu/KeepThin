@@ -36,9 +36,7 @@ module.exports = ({
                     </view>
                 </view>
             </view>
-            <view bindtap="{{detailData.standarded == 2 && !detailData.isConsolidationPeriod ? 'jumpUrl' : '' }}" class="periodTag" data-url="../standard/index">
-                {{detailData.standarded == 1 ? '匀减期' : detailData.standarded == 2 ? '已达标' : '速减期'}}
-            </view>
+            <view>{{detailData.standarded == 2 ? '匀减期' : detailData.standarded == 3 ? '速减期' : '巩固期'}}</view>
         </view>
         <view class="dailyWeight">
             <image src="/assets/img/yuanquan.png"></image>

@@ -61,7 +61,6 @@ Page({
 						time: item?.ymd,
 						userName: item?.member,
 						name: item?.body,
-						// TODO: products 格式需要调整
 						products: [{
 							productName: item?.good_name,
 						}],
@@ -109,7 +108,6 @@ Page({
 	},
 	deleteItem(ev) {
 		const { item } = ev.currentTarget.dataset;
-		console.log('item', item);
 		wx.showModal({
 			title: "提示",
 			content: "是否确认删除该项目？",

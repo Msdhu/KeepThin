@@ -36,6 +36,7 @@ Page({
 							createTime: item?.ymd,
 							remark: item?.svalue || "",
 						})),
+						remarks: "",
 					});
 				},
 			},
@@ -43,19 +44,34 @@ Page({
 		);
 	},
 	// 删除历史记录
-	deleteHistoryRemark(e) {
-		const index = e.currentTarget.dataset.index;
-		const item = this.data.remarkList[index];
+	deleteHistoryRemark(ev) {
+		const { remarkList, customerId } = this.data;
+		const item = remarkList[ev.currentTarget.dataset.index];
 		wx.showModal({
 			title: "提示",
 			content: "是否确认删除该备注信息？",
 			success: ({ confirm }) => {
 				if (confirm) {
-					// TODO: 调用接口
-					wx.showToast({
-						icon: "none",
-						title: "删除成功",
-					});
+					utils.request(
+						{
+							url: `member/remark-del`,
+							data: {
+								shop_id: globalData.storeInfo.id,
+								customer_id: customerId,
+								remark_id: item?.id,
+							},
+							method: "POST",
+							success: res => {
+								wx.showToast({
+									icon: "none",
+									title: "删除成功",
+								});
+								this.getRemarkList();
+							},
+							isShowLoading: true,
+						},
+						true
+					);
 				}
 			},
 		});

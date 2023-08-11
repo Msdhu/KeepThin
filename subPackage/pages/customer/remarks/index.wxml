@@ -23,6 +23,7 @@
                 </view>
                 <view class="remarksContent"> {{item.remark}} </view>
             </view>
+            <van-empty image="search" description="暂无历史备注信息" wx:if="{{ remarkList.length === 0 }}" />
         </view>
     </scroll-view>
 </van-popup>

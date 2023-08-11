@@ -82,9 +82,9 @@
             </view>
             <view class="title">减重期：</view>
             <view bindtap="handleChangeFormData" class="screenInfo">
-                <view class="{{formData.standarded == '3' ? 'active' : 'noActive'}} screenInfoItem" data-val="3" data-type="standarded">速减期</view>
-                <view class="{{formData.standarded == '1' ? 'active' : 'noActive'}} screenInfoItem" data-val="1" data-type="standarded">匀减期</view>
-                <view class="{{formData.standarded == '2' ? 'active' : 'noActive'}} screenInfoItem" data-val="2" data-type="standarded">巩固期</view>
+                <view class="{{formData.periodType == '3' ? 'active' : 'noActive'}} screenInfoItem" data-val="3" data-type="periodType">速减期</view>
+                <view class="{{formData.periodType == '2' ? 'active' : 'noActive'}} screenInfoItem" data-val="2" data-type="periodType">匀减期</view>
+                <view class="{{formData.periodType == '1' ? 'active' : 'noActive'}} screenInfoItem" data-val="1" data-type="periodType">巩固期</view>
             </view>
             <view class="title">今日到店：</view>
             <view bindtap="handleChangeFormData" class="screenInfo">

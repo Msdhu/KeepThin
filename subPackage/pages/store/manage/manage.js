@@ -4,9 +4,6 @@ const { utils, globalData, ROLES } = app;
 const curMonthTxt = utils.formatTime(new Date(), "YYYY-MM");
 
 Page({
-	/**
-	 * 页面的初始数据
-	 */
 	data: {
 		userName: globalData.userInfo.name,
 		storeName: globalData.storeInfo.name,
@@ -35,6 +32,7 @@ Page({
 				url: `shop/index`,
 				data: {
 					shop_id: id,
+					month: this.data.dateMonth,
 				},
 				method: "GET",
 				success: (res = {}) => {
@@ -142,7 +140,7 @@ Page({
 			success: (res) => {
 				console.log(res.tempFiles[0], res);
 				const { path, size, name } = res.tempFiles[0]
-				var e = t.tempFiles[0].path, o = (t.tempFiles[0].size, t.tempFiles[0].name);
+				// var e = t.tempFiles[0].path, o = (t.tempFiles[0].size, t.tempFiles[0].name);
 				if (name.indexOf(".xlsx") === -1 || name.indexOf(".xls") === -1) {
 					wx.showModal({
 						title: "提示",
