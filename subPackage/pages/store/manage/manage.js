@@ -32,6 +32,7 @@ Page({
 				url: `shop/index`,
 				data: {
 					shop_id: id,
+					// TODO:
 					month: this.data.dateMonth,
 				},
 				method: "GET",

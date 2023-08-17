@@ -236,7 +236,6 @@ Page({
 						consolidationPeriod: res.consoli_date,
 						isConsolidationPeriod: Number(res.into_consoli_if || 0),
 						source: sourceActions[res.source || 0]?.name,
-						// TODO: 字段待填充
 						remainCost: res?.period_money_ext || "",
 						reset: res?.second_if == 1,
 						sizeDTOList: sizeList,
