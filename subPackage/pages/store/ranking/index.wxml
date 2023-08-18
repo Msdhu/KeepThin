@@ -2,29 +2,24 @@
 <view class="wraper">
     <view class="header">
         <image class="smallLogo" mode="aspectFit" src="/assets/img/logo.png"></image>
-        <image class="backImg" src="/assets/img/guanjunbei.png" style="top:{{offsetTop}}rpx;"></image>
+        <image class="backImg" src="/assets/img/guanjunbei.png" style="top: {{offsetTop}}rpx;"></image>
         <view class="title">
-            <view>{{isLoseWeight?'减重明星榜':'富婆排行榜'}}</view>
+            <view>{{isLoseWeight ? '减重明星榜' : '富婆排行榜'}}</view>
             <view>{{storeInfo.name}}</view>
         </view>
-        <block wx:if="{{ isMonthTab }}">
-            <view wx:if="{{startDate}}" class="date" bindtap="showCalendar">{{startDate}} 至 {{endDate}}</view>
-            <view wx:else class="date" bindtap="showCalendar">{{nowDate}}</view>
-        </block>
     </view>
     <view class="wrap">
         <view class="tabs">
-            <view bindtap="selectTab" class="tab {{!isMonthTab?'active':''}}" data-type="day">{{isLoseWeight?'今日减重':'今日涨称'}}</view>
-            <view bindtap="selectTab" class="tab {{isMonthTab?'active':''}}" data-type="month">{{isLoseWeight?'本月减重':'本月涨称'}}</view>
+            <view bindtap="selectTab" class="tab {{!isMonthTab ? 'active' : ''}}" data-type="day">{{ isLoseWeight ? '今日减重' : '今日涨称'}}</view>
+            <view bindtap="selectTab" class="tab {{isMonthTab ? 'active' : ''}}" data-type="month">{{isLoseWeight ? '本月减重' : '本月涨称'}}</view>
         </view>
-        <view style="text-align: center;margin:100rpx 0;" wx:if="{{dataList.length<=0}}">暂无</view>
         <view class="dataList" wx:for="{{dataList}}" wx:key="index">
-            <view bindtap="viewCustomerInfo" class="info" data-id="{{item.customerId}}">
-                <view class="headBackImg" wx:if="{{index>2}}">{{index+1}}</view>
-                <image wx:if="{{index==0}}" class="headBackImg" mode="aspectFit" src="/assets/img/pai1.png"></image>
-                <image wx:if="{{index==1}}" class="headBackImg" mode="aspectFit" src="/assets/img/pai2.png"></image>
-                <image wx:if="{{index==2}}" class="headBackImg" mode="aspectFit" src="/assets/img/pai3.png"></image>
-                <image class="headImg" src="{{item.gender=='男'?'/assets/img/man.png':'/assets/img/woman.png'}}"></image>
+            <view bindtap="viewCustomerInfo" class="info" data-id="{{item.id}}">
+                <view class="headBackImg" wx:if="{{index > 2}}">{{index + 1}}</view>
+                <image wx:if="{{index == 0}}" class="headBackImg" mode="aspectFit" src="/assets/img/pai1.png"></image>
+                <image wx:if="{{index == 1}}" class="headBackImg" mode="aspectFit" src="/assets/img/pai2.png"></image>
+                <image wx:if="{{index == 2}}" class="headBackImg" mode="aspectFit" src="/assets/img/pai3.png"></image>
+                <image class="headImg" src="{{item.gender == '男' ? '/assets/img/man.png' : '/assets/img/woman.png'}}"></image>
                 <view class="name">{{item.name}}</view>
             </view>
             <view class="jianInfo">
@@ -34,7 +29,7 @@
                 </view>
             </view>
         </view>
+        <van-empty image="search" description="暂无数据" wx:if="{{ dataList.length === 0 }}" />
     </view>
     <view class="tip">本数据图片未经授权禁止转载使用</view>
 </view>
-<calendar bindonConfirmCalendar="handleConfirmCalendar" showCalendar="{{isShowCalendar}}" tabIndex="1"></calendar>

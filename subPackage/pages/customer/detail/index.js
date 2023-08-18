@@ -25,7 +25,7 @@ Page({
 		isShowPhone: true,
 		// 历史体重
 		weightHistory: [],
-		chartBar: {},
+		chartsObj: {},
 
 		// 获取警告信息 TODO: 后续确认该字段
 		warnData: {
@@ -216,7 +216,7 @@ Page({
 	},
 	OnWxChart(x_data, y_data, chartTit, min, max) {
 		const systemInfo = wx.getSystemInfoSync();
-		const width = systemInfo.windowWidth / 750 * 690 - 20, height = systemInfo.windowWidth / 750 * 550 - 100;
+		const width = systemInfo.windowWidth / 750 * 690 - 20, height = systemInfo.windowWidth / 750 * 700 - 100;
 		wxChart = new WxCharts({
 			canvasId: "lineCanvas",
 			type: "line",

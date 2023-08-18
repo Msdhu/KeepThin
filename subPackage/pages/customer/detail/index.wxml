@@ -130,7 +130,7 @@ module.exports = ({
     </view>
     <van-collapse bind:change="onChangeCollapse" customClass="collapse" value="{{activeNames}}" wx:if="{{!isShowCurrentWeight && !isShowCalendar}}">
         <van-collapse-item name="1" title="历史体重">
-            <view class="canvasCon"  wx:if="{{activeNames.length > 0}}" style="height: {{weightHistory.length ? '550rpx;' : '100%'}}">
+            <view class="canvasCon"  wx:if="{{activeNames.length > 0}}">
                 <view>历史体重</view>
                 <view style="text-align: center;" wx:if="{{!weightHistory.length}}">暂无历史体重</view>
                 <canvas wx:else bindtouchstart="touchcanvas" canvasId="lineCanvas" class="canvas" disableScroll="true"></canvas>

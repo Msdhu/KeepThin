@@ -1,33 +1,24 @@
 const app = getApp();
-const { utils, globalData, ROLES } = app;
+const { utils, globalData } = app;
 
 Page({
-	/**
-	 * 页面的初始数据
-	 */
 	data: {
-		isMonthTab: false, // 是否是月份tab
+		// 是否是月份tab
+		isMonthTab: false,
 		storeInfo: globalData.storeInfo,
 		offsetTop: globalData.marginTop,
-		type: 0, // 1: 减重 2： 富婆
-		isLoseWeight: false,
+		isLoseWeight: true,
 		dataList: [],
-		nowDate: utils.formatTime(new Date(), "YYYY-MM"),
-		startDate: null,
-		endDate: null,
-		isShowCalendar: false,
 	},
 
-	/**
-	 * 生命周期函数--监听页面加载
-	 */
 	onLoad(opts) {
-		const type = opts.type;
+		// 1: 减重 2： 富婆
+		const type = Number(opts.type || 1);
 		this.setData({
-			type,
 			isLoseWeight: type === 1,
+		}, () => {
+			this.getListData();
 		});
-    this.getListData();
 	},
 	onPageScroll(e) {
 		this.setData({
@@ -35,66 +26,48 @@ Page({
 		});
 	},
 	getListData() {
-		this.setData({
-			dataList: [
-				{
-					id: 0,
-					name: "二凯",
-					gender: "女",
-					customerId: 1,
-					registerCount: 1,
-					lossedWeight: 100,
+		// 店铺id
+		const { id } = globalData.storeInfo;
+		const { isMonthTab, isLoseWeight } = this.data;
+		utils.request(
+			{
+				url: `shop/rank`,
+				data: {
+					shop_id: id,
+					type: isMonthTab ? 'month' : 'day',
 				},
-				{
-					id: 0,
-					name: "二凯",
-					gender: "男",
-					customerId: 1,
-					registerCount: 1,
-					lossedWeight: 100,
+				method: "GET",
+				success: (res = {}) => {
+					const data = (res || []).map(item => ({
+						id: item.customer_id,
+						name: item.customer_name,
+						gender: item.sex,
+						registerCount: item.count,
+						lossedWeight: item.weight_reduce,
+					}));
+					this.setData({
+						// data 列表是减重的降序，涨称数据则直接倒过来即可
+						dataList: isLoseWeight ? data : data.reverse(),
+					});
 				},
-			],
-		});
+			},
+			true
+		);
 	},
-
 	// 切换 今日、本月 tab
 	selectTab(e) {
 		const type = e.currentTarget.dataset.type;
 		this.setData({
 			isMonthTab: type === "month",
+		}, () => {
+			this.getListData();
 		});
-    this.getListData();
 	},
 	// 查看用户信息
-	viewCustomerInfo(e) {
-		const customerId = e.currentTarget.dataset.id;
+	viewCustomerInfo(ev) {
+		const customerId = ev.currentTarget.dataset.id;
 		wx.navigateTo({
 			url: `/subPackage/pages/customer/detail/index?id=${customerId}`,
 		});
-	},
-	// 展示时间选择
-	showCalendar() {
-		this.setData({
-			isShowCalendar: true,
-		});
-	},
-	// 关闭时间选择
-	hideCalendar() {
-		this.setData({
-			isShowCalendar: false,
-		});
-	},
-	// 确认时间选择
-	handleConfirmCalendar(e) {
-		const value = e.detail;
-
-		this.setData({
-			startDate: value[0].replace(/\s.*/, ""),
-			endDate: value[1].replace(/\s.*/, ""),
-		});
-    
-    this.hideCalendar();
-    this.getListData();
-		console.log(e);
 	},
 });
