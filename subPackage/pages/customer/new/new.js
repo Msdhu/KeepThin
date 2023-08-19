@@ -235,7 +235,7 @@ Page({
 						expireDate: getDateTxt(res.end_date),
 						consolidationPeriod: res.consoli_date,
 						isConsolidationPeriod: Number(res.into_consoli_if || 0),
-						source: sourceActions[res.source || 0]?.name,
+						source: res?.source || sourceActions[0].name,
 						remainCost: res?.period_money_ext || "",
 						reset: res?.second_if == 1,
 						sizeDTOList: sizeList,

@@ -47,7 +47,7 @@
               ￥
             </van-button>
           </van-field>
-          <van-field isLink useButtonSlot inputAlign="right" label="补缴疗程金额" maxlength="7" model:value="{{remainCost}}" placeholder="请填写疗程金额" type="digit" wx:if="{{isEdit}}">
+          <van-field useButtonSlot inputAlign="right" label="补缴疗程金额" maxlength="7" model:value="{{remainCost}}" placeholder="请填写疗程金额" type="digit" wx:if="{{isEdit}}">
             <van-button customStyle="width:30rpx;height:30rpx;line-height:30rpx;border:none;text-align:center;font-size:30rpx" size="normal" slot="button">
               ￥
             </van-button>
@@ -55,7 +55,7 @@
           <picker bindchange="handleSelectDealDate" end="{{currentDate}}" mode="date" value="{{dealDate}}">
             <van-cell isLink required title="签约日期" value="{{dealDate}}"></van-cell>
           </picker>
-          <van-cell isLink required title="巩固期" value="{{consolidationPeriod}} 年"></van-cell>
+          <van-cell required title="巩固期" value="{{consolidationPeriod}} 年"></van-cell>
           <picker bindchange="selectExpireDate" mode="date" value="{{expireDate}}">
             <van-cell isLink required data-type="expire" title="到期日期" value="{{expireDate}}"></van-cell>
           </picker>
