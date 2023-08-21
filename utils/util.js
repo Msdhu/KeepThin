@@ -92,22 +92,22 @@ const utils = {
 			success: res => {
 				const { data: realRes } = res;
 				const { data: resData, code, msg } = realRes;
-        isShowLoading && wx.hideLoading();
+				isShowLoading && wx.hideLoading();
 				if (code === 100) {
 					success(resData);
 				} else if (code === 403) {
-          // 后端返回 token 过期
-          wx.showToast({
+					// 后端返回 token 过期
+					wx.showToast({
 						title: msg || "请求失败，请稍后重试",
 						icon: "none",
 					});
-          // 1 秒后 redirectTo login page
-          setTimeout(() => {
-            wx.redirectTo({
-              url: "/pages/login/login",
-            });
-          }, 1000);
-        } else {
+					// 1 秒后 redirectTo login page
+					setTimeout(() => {
+						wx.redirectTo({
+							url: "/pages/login/login",
+						});
+					}, 1000);
+				} else {
 					wx.showToast({
 						title: msg || "请求失败，请稍后重试",
 						icon: "none",
@@ -115,7 +115,7 @@ const utils = {
 				}
 			},
 			fail: () => {
-        isShowLoading && wx.hideLoading();
+				isShowLoading && wx.hideLoading();
 				wx.showToast({
 					title: "请求失败，请稍后重试",
 					icon: "none",
@@ -123,7 +123,6 @@ const utils = {
 			},
 		});
 	},
-  // TODO: 待调试，打开文件报错
 	downLoadFile: (url, params, fileName) => {
 		const { token } = checkLoginToken(true);
 		let header = {
@@ -137,56 +136,39 @@ const utils = {
 		}
 
 		wx.showLoading();
-  
+
 		wx.request({
 			url: `${baseUrl}/${url}`,
 			data: {
 				...params,
 			},
-      method: "GET",
-			// responseType: "arraybuffer",
+			method: "GET",
 			header,
 			success: res => {
 				wx.hideLoading();
-				const { data: downloadUrl } = res;
-        const filePath = `${wx.env.USER_DATA_PATH}/${fileName}.xlsx`;
-        
-        // const fs = wx.getFileSystemManager();
-        // fs.writeFile({
-        //   data: realRes,
-        //   filePath,
-        //   encoding: "utf8",
-        //   success: () => {
-        //     wx.openDocument({
-        //       filePath,
-        //       showMenu: true,
-        //       fileType: "xlsx",
-        //       success: () => {
-        //         console.log("打开文档成功");
-        //       },
-        //       fail: e => {
-        //         console.log("打开文档失败", e);
-        //       },
-        //     });
-        //   },
-        // });
-        wx.downloadFile({
-          url: downloadUrl,
-          filePath,
-          success: (res) => {
-            wx.openDocument({
-              filePath,
-              showMenu: true,
-              fileType: "xlsx",
-              success: () => {
-                console.log("打开文档成功");
-              },
-              fail: e => {
-                console.log("打开文档失败", e);
-              },
-            });
-          },
-        });
+
+				const { data: realRes } = res;
+				const { data: downloadUrl, code } = realRes;
+				const filePath = `${wx.env.USER_DATA_PATH}/${fileName}.xlsx`;
+
+				code === 100
+					? wx.downloadFile({
+							url: downloadUrl,
+							filePath,
+							success: res => {
+								wx.openDocument({
+									filePath,
+									showMenu: true,
+									fileType: "xlsx",
+									success: () => {},
+									fail: e => {},
+								});
+							},
+					  })
+					: wx.showToast({
+							title: "请求失败，请稍后重试",
+							icon: "none",
+					  });
 			},
 			fail: () => {
 				wx.showToast({

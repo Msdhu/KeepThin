@@ -125,12 +125,11 @@ Page({
 		});
 	},
 	// 详情数据导出
-	handleExportData(ev) {
+	handleExportData() {
 		const { dateMonth } = this.data;
-		// TODO: 修改 url 和 params
-		utils.downLoadFile('store/export', {
-			id: globalData.storeInfo.id, // 店铺id
-			date: dateMonth,
+		utils.downLoadFile('shop/export', {
+			shop_id: globalData.storeInfo.id, // 店铺id
+			month: dateMonth,
 		}, `店铺${dateMonth}详细数据`)
 	},
 	// 导入历史数据
