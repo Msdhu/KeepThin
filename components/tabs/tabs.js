@@ -18,7 +18,7 @@ Component({
 		tabIndex: 0,
 	},
 	methods: {
-		tabChange: (e) => {
+		tabChange(e) {
 			this.setData(
 				{
 					tabIndex: e.currentTarget.dataset.index,
