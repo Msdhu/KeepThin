@@ -14,6 +14,7 @@
         "pages/customer/detail/index",
         "pages/customer/transfer/index",
         "pages/customer/service/index",
+        "pages/customer/bind/index",
         "pages/customer/size/index",
         "pages/customer/remarks/index",
         "pages/customer/history/index",

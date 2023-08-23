@@ -163,7 +163,7 @@ module.exports = ({
             <image src="/assets/img/gukezhuandian.png"></image>
             <view style="color: #2CABF5;">顾客转店</view>
         </view> -->
-        <view bindtap="jumpUrl" data-url="/subPackage/pages/store/bindqrcode/index?consumerId={{detailData.id}}">
+        <view bindtap="jumpUrl" data-url="/subPackage/pages/customer/bind/index?consumerId={{detailData.id}}">
             <image src="/assets/img/bangdingdianpu.png"></image>
             <view style="color: #259953;">绑定店铺</view>
         </view>

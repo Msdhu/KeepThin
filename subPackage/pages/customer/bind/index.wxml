@@ -1,0 +1,5 @@
+<view class="wrap">
+	<view class="qrCodeImg">
+		<image mode="widthFix" src="{{qrCodeImg}}"></image>
+	</view>
+</view>

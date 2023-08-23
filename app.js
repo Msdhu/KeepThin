@@ -28,5 +28,6 @@ App({
     userInfo: {},
     storeInfo: {},
     marginTop: 0,
+    qrCodeImgs: {},
   },
 });

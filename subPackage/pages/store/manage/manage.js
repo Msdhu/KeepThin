@@ -49,7 +49,7 @@ Page({
 							// 今日到店人数
 							registerCount: day?.service_person_num || 0,
 							// 今日到店应到人数
-							realRegisterCount: 10,
+							realRegisterCount: day?.should_arrive_num || 0,
 							// 今日涨称 人数
 							addWeightPersonCount: day?.zchen_person_num || 0,
 							// 今日涨称 斤数
