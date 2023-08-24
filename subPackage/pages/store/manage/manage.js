@@ -59,7 +59,7 @@ Page({
 							// 实际减重
 							realLossWeightTotal: day?.dchen_weight_fact || 0,
 							// 平均减重
-							avgLossWeight: day?.jzhong_avg || 0,
+							avgLossWeight: (day?.jzhong_avg || 0).toFixed(1),
 						},
 						monthData: {
 							// 本月新客
@@ -71,7 +71,7 @@ Page({
 							// 实际减重
 							realLossWeightTotal: month?.dchen_weight_fact || 0,
 							// 平均减重
-							avgLossWeight: month?.jzhong_avg || 0,
+							avgLossWeight: (month?.jzhong_avg || 0).toFixed(1),
 							//精护占比
 							essensCareWeightRate: month?.jhu_person_num_rate || 0,
 							//掉称占比

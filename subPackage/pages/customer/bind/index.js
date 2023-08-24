@@ -7,9 +7,10 @@ Page({
 	},
 	onLoad(e) {
 		const { qrCodeImgs } = globalData;
-		if (qrCodeImgs[e.consumerId]) {
+		const key = `consumerId-${e.consumerId}`
+		if (qrCodeImgs[key]) {
 			this.setData({
-				qrCodeImg: qrCodeImgs[e.consumerId],
+				qrCodeImg: qrCodeImgs[key],
 			})
 		} else {
 			this.getSmallQrcode(e.consumerId);
@@ -26,7 +27,7 @@ Page({
 				},
 				method: "GET",
 				success: res => {
-					globalData.qrCodeImgs[consumerId] = res?.url;
+					globalData.qrCodeImgs[`consumerId-${consumerId}`] = res?.url;
 
 					this.setData({
 						qrCodeImg: res?.url,

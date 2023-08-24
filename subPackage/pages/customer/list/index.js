@@ -243,9 +243,13 @@ Page({
 	},
 	// 导出数据
 	handleExportData() {
-		// TODO: 修改 url 和 params
-		utils.downLoadFile('customer/list-export', {
-			...this.getParams(),
-		}, `店铺顾客数据汇总`)
+		const { listData } = this.data;
+		if (listData.length > 0) {
+			utils.downLoadFile('member/export', {
+				// 店铺id
+				shop_id: globalData.storeInfo.id,
+				customer_ids: listData.map(item => item.id).join(","),
+			}, `店铺顾客数据汇总`)
+		}
 	},
 });

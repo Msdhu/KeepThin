@@ -1,5 +1,0 @@
-<view class="wrap">
-    <view class="qrCodeImg">
-        <image bindtap="onPreviewImage" mode="widthFix" src="{{qrCodeImg}}"></image>
-    </view>
-</view>

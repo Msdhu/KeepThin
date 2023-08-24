@@ -69,7 +69,7 @@
     
     <image bindtap="showScreen" class="selectBtn" src="/assets/img/shaixuan.png"></image>
 </view>
-<view class="downLoad">
+<view class="downLoad" wx:if="{{ listData.length > 0 }}">
     <van-button round bind:click="handleExportData" customStyle="width:280rpx; height:68rpx; line-height:68rpx; font-size:34rpx; border-radius: 66rpx !important; background-image: linear-gradient(180deg, #FDAA41 0%, #F87F33 99%); color: #fff;" icon="orders-o">导出信息</van-button>
 </view>
 <van-popup  show="{{isShowScreenPop}}" bind:close="hideScreen" customStyle="height: 86%;width:100%;" position="top">

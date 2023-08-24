@@ -27,7 +27,6 @@
         "pages/store/manage/manage",
         "pages/store/setting/setting",
         "pages/store/qrcode/index",
-        "pages/store/bindqrcode/index",
         "pages/store/ranking/index",
         "pages/store/logs/index",
         "pages/store/macconnect/macconnect"

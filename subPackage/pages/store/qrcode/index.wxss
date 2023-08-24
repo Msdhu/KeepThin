@@ -1,18 +1,18 @@
 .wrap {
-    box-sizing: border-box;
-    height: 100%;
-    overflow: hidden;
-    padding: 28rpx;
-    width: 100%;
+	box-sizing: border-box;
+	height: 100%;
+	overflow: hidden;
+	padding: 28rpx;
+	width: 100%;
 }
 
 .qrCodeImg {
-    border: 1rpx solid #ccc;
-    height: auto;
-    margin: 0 auto;
-    width: 98%;
+	border: 1rpx solid #ccc;
+	height: auto;
+	margin: 0 auto;
+	width: 98%;
 }
 
-.qrCodeImg>image {
-    width: 100%;
+.qrCodeImg > image {
+	width: 100%;
 }

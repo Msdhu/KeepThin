@@ -1,31 +1,41 @@
 const app = getApp();
-const { utils, globalData, ROLES } = app;
+const { utils, globalData } = app;
+
 Page({
-	/**
-	 * 页面的初始数据
-	 */
 	data: {
 		qrCodeImg: "",
 	},
+	onLoad() {
+		const { qrCodeImgs, storeInfo } = globalData;
+		const key = `shopId-${storeInfo.id}`;
+		if (qrCodeImgs[key]) {
+			this.setData({
+				qrCodeImg: qrCodeImgs[key],
+			})
+		} else {
+			this.getSmallQrcode();
+		}
+	},
+	getSmallQrcode() {
+		utils.request(
+			{
+				url: `shop/code`,
+				method: "GET",
+				success: res => {
+					globalData.qrCodeImgs[`shopId-${globalData.storeInfo.id}`] = res?.url;
 
-	/**
-	 * 生命周期函数--监听页面加载
-	 */
-	onLoad(options) {},
-
-	/**
-	 * 生命周期函数--监听页面初次渲染完成
-	 */
-	onReady() {},
-
-	/**
-	 * 生命周期函数--监听页面显示
-	 */
-	onShow() {},
-	onPreviewImage: function () {
+					this.setData({
+						qrCodeImg: res?.url,
+					});
+				},
+				isShowLoading: true,
+			},
+			true
+		);
+	},
+	onPreviewImage() {
 		wx.previewImage({
-			urls: [this.qrCodeImg],
+			urls: [this.data.qrCodeImg],
 		});
 	},
-	generate() {},
 });
