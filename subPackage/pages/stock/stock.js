@@ -242,10 +242,15 @@ Page({
 		);
 	},
 	handleExport() {
-		const { startDate, endDate } = this.data;
-		utils.downLoadFile('goods/export', {
-			customer_id_list: this.data.exportIds || '6,7,8',
-		}, `${startDate}至${endDate}库存记录`)
+		// TODO:
+		const { startDate, endDate, exportIds } = this.data;
+		utils.downLoadFile({
+			url: 'goods/export',
+			data: {
+				customer_id_list: exportIds,
+			},
+			method: "GET",
+		}, `${startDate}至${endDate}库存记录`);
 	},
 
 	handleShowCalendar() {

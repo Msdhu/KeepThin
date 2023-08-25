@@ -123,8 +123,9 @@ const utils = {
 			},
 		});
 	},
-	downLoadFile: (url, params, fileName) => {
+	downLoadFile: (params, fileName) => {
 		const { token } = checkLoginToken(true);
+		const { url, ...resParams } = params;
 		let header = {
 			"content-type": "application/json",
 		};
@@ -138,11 +139,8 @@ const utils = {
 		wx.showLoading();
 
 		wx.request({
+			...resParams,
 			url: `${baseUrl}/${url}`,
-			data: {
-				...params,
-			},
-			method: "GET",
 			header,
 			success: res => {
 				wx.hideLoading();

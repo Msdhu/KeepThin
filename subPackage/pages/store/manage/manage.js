@@ -127,10 +127,14 @@ Page({
 	// 详情数据导出
 	handleExportData() {
 		const { dateMonth } = this.data;
-		utils.downLoadFile('shop/export', {
-			shop_id: globalData.storeInfo.id, // 店铺id
-			month: dateMonth,
-		}, `店铺${dateMonth}详细数据`)
+		utils.downLoadFile({
+			url: 'shop/export',
+			data: {
+				shop_id: globalData.storeInfo.id, // 店铺id
+				month: dateMonth,
+			},
+			method: "GET",
+		}, `店铺${dateMonth}详细数据`);
 	},
 	// 导入历史数据
 	handleInputHistory() {
