@@ -242,12 +242,14 @@ Page({
 		);
 	},
 	handleExport() {
-		// TODO:
 		const { startDate, endDate, exportIds } = this.data;
 		utils.downLoadFile({
 			url: 'goods/export',
 			data: {
 				customer_id_list: exportIds,
+				date_start: startDate,
+				date_end: endDate,
+				shop_id: globalData.storeInfo.id,
 			},
 			method: "GET",
 		}, `${startDate}至${endDate}库存记录`);

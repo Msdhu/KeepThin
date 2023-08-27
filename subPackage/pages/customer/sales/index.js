@@ -68,7 +68,7 @@ Page({
 					}
 					this.setData({
 						// 过滤掉没库存的产品
-						productArray: list.filter(item => !!item.remain).map(item => ({
+						productArray: list.filter(item => Number(item.remain) > 0).map(item => ({
 							id: item.id,
 							name: item.good_name,
 							remain: item.remain,

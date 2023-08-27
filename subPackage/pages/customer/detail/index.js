@@ -33,6 +33,8 @@ Page({
 			notProjectof3Days: false,
 			notProjectof7Days: false,
 		},
+		// 预加载绑定店铺小程序码图片
+		qrCodePreViewImg: "",
 	},
 
 	onLoad(opts) {
@@ -43,6 +45,7 @@ Page({
 	onShow() {
 		this.getDetailData();
 		this.getWeightHistory();
+		this.getSmallQrcode();
 	},
 	onPageScroll(e) {
 		this.setData({
@@ -131,6 +134,32 @@ Page({
 						},
 					}, () => {
 						this.OnWxChart(x_data, y_data, "历史体重", min, max)
+					});
+				},
+			},
+			true
+		);
+	},
+	getSmallQrcode() {
+		const { id } = this.data;
+		const key = `consumerId-${id}`;
+
+		if (globalData.qrCodeImgs[key]) return;
+
+		utils.request(
+			{
+				url: `account/bind-shop`,
+				data: {
+					// 店铺id
+					shop_id: globalData.storeInfo.id,
+					customer_id: id,
+				},
+				method: "GET",
+				success: res => {
+					globalData.qrCodeImgs[key] = res?.url;
+
+					this.setData({
+						qrCodePreViewImg: res?.url,
 					});
 				},
 			},

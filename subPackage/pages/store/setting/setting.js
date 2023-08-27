@@ -18,6 +18,9 @@ Page({
 		isEdit: false,
 		formValue: "",
 		isShowAddPop: false,
+
+		// 预加载店铺设置小程序码图片
+		qrCodePreViewImg: "",
 	},
 	onLoad() {
 		this.getShopSettingInfo();
@@ -44,11 +47,35 @@ Page({
 			true
 		);
 	},
+	getSmallQrcode() {
+		const { qrCodeImgs, storeInfo } = globalData;
+		const key = `shopId-${storeInfo.id}`;
+
+		if (qrCodeImgs[key]) return;
+
+		utils.request(
+			{
+				url: `shop/code`,
+				method: "GET",
+				success: res => {
+					globalData.qrCodeImgs[key] = res?.url;
+
+					this.setData({
+						qrCodePreViewImg: res?.url,
+					});
+				},
+			},
+			true
+		);
+	},
 	tabChangeListener(e) {
 		this.setData({
 			tabIndex: e.detail,
 			isEdit: false,
 		});
+		if (Number(e.detail) === 2) {
+			this.getSmallQrcode();
+		}
 	},
 	handleEdit() {
 		this.setData({

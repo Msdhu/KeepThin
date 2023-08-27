@@ -17,7 +17,7 @@
     <view class="serviceModule" hidden="{{tabIndex !== 0}}">
       <view class="content">
         <block wx:for="{{serviceList}}">
-          <view bindtap="handleTopService" class="serviceItem" data-index="{{index}}" wx:key="{{index}}">
+          <view bindtap="handleTopService" class="serviceItem" data-index="{{index}}">
             <image wx:if="{{isEdit}}" class="topping" src="/assets/img/xiangshang.png" />
             {{item.name}}
             <image wx:if="{{isEdit}}" class="close" data-index="{{index}}" src="/assets/img/guanbi.png" catchtap="handleDelete" />
@@ -62,6 +62,7 @@
       </view> -->
     </view>
   </view>
+  <image src="{{qrCodePreViewImg}}" hidden="{{true}}"></image>
   <van-popup round bind:close="handleCloseAddPop" customStyle="height:25%;" position="bottom" show="{{isShowAddPop}}">
     <view class="addForm">
       <van-cell-group>

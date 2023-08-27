@@ -6,7 +6,7 @@ const curMonthTxt = utils.formatTime(new Date(), "YYYY-MM");
 Page({
 	data: {
 		userName: globalData.userInfo.name,
-		storeName: globalData.storeInfo.name,
+		storeName: "",
 		// 展示的手机
 		showPhone: globalData.userInfo.phone,
 		// 是否显示全手机
@@ -22,6 +22,9 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad(options) {
+		this.setData({
+			storeName: globalData.storeInfo.name,
+		});
 		this.getShopData();
 	},
 	getShopData() {
@@ -32,7 +35,6 @@ Page({
 				url: `shop/index`,
 				data: {
 					shop_id: id,
-					// TODO:
 					month: this.data.dateMonth,
 				},
 				method: "GET",

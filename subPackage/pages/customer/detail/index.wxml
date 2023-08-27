@@ -173,6 +173,7 @@ module.exports = ({
         </view>
     </view>
 </view>
+<image src="{{qrCodePreViewImg}}" hidden="{{true}}"></image>
 <van-popup round bind:close="hideCurrentWeight" customStyle="height:50%;" position="bottom" show="{{isShowCurrentWeight}}">
     <view class="currentWeightForm">
         <van-cell-group>
