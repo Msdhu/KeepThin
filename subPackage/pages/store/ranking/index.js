@@ -5,7 +5,7 @@ Page({
 	data: {
 		// 是否是月份tab
 		isMonthTab: false,
-		storeInfo: globalData.storeInfo,
+		storeInfo: {},
 		offsetTop: globalData.marginTop,
 		isLoseWeight: true,
 		dataList: [],
@@ -16,6 +16,7 @@ Page({
 		const type = Number(opts.type || 1);
 		this.setData({
 			isLoseWeight: type === 1,
+			storeInfo: globalData.storeInfo,
 		}, () => {
 			this.getListData();
 		});

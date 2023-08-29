@@ -92,23 +92,23 @@
                 <view class="{{formData.arriveStore == '1' ? 'active' : 'noActive'}} screenInfoItem" data-val="1" data-type="arriveStore">已到店</view>
                 <view class="{{formData.arriveStore == '2' ? 'active' : 'noActive'}} screenInfoItem" data-val="2" data-type="arriveStore">未到店</view>
             </view>
-            <view class="title">未到店顾客：</view>
+            <!-- <view class="title">未到店顾客：</view>
             <view class="toStoreTime">
                 <view>(</view>
                 <input bindinput="handleInptuFormData" data-type="unArriveDay" maxlength="3" type="text" value="{{formData.unArriveDay}}"></input>
                 <view>)</view>
                 <text>天以上未到店</text>
-            </view>
+            </view> -->
             <view class="title">产品情况：</view>
             <view bindtap="handleChangeFormData" class="screenInfo">
                 <view class="{{formData.haveProduct == '1' ? 'active' : 'noActive'}} screenInfoItem" data-val="1" data-type="haveProduct">有产品</view>
                 <view class="{{formData.haveProduct == '2' ? 'active' : 'noActive'}} screenInfoItem" data-val="2" data-type="haveProduct">无产品</view>
             </view>
-            <view class="title">其他：</view>
+            <!-- <view class="title">其他：</view>
             <view class="screenInfo">
                 <view bindtap="handleChangeFormData" class="{{formData.remain10Weight == '1' ? 'active' : 'noActive'}} screenInfoItem" data-val="1" data-type="remain10Weight" style="width: 45%;">剩余10斤以内顾客</view>
                 <view bindtap="handleChangeFormData" class="{{formData.soonExpired == '1' ? 'active' : 'noActive'}} screenInfoItem" data-val="1" data-type="soonExpired" style="width: 45%;">快到期顾客(6个月)</view>
-            </view>
+            </view> -->
         </view>
         <view class="screenOptions">
             <view bindtap="handleReset" class="determine" style="background: #ccc;">重置</view>

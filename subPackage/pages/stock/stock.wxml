@@ -71,7 +71,7 @@
           <van-empty image="search" description="暂无数据" wx:if="{{ stockLogList.length === 0 }}" />
         </scroll-view>
       </view>
-      <view class="options">
+      <view class="options" wx:if="{{ stockLogList.length > 0 && exportIds }}">
         <van-button round color="#FDB03F" customStyle="width:235rpx;height:80rpx;border-radius:8rpx !important;font-size:30rpx;" data-type="export" bind:click="handleExport">
           导出数据
         </van-button>

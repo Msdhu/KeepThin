@@ -27,7 +27,7 @@ Page({
 		weightHistory: [],
 		chartsObj: {},
 
-		// 获取警告信息 TODO: 后续确认该字段
+		// 获取警告信息 TODO: 未实现该功能，字段保留
 		warnData: {
 			notArrivateStore: false,
 			notProjectof3Days: false,

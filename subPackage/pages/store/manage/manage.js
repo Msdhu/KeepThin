@@ -138,7 +138,7 @@ Page({
 			method: "GET",
 		}, `店铺${dateMonth}详细数据`);
 	},
-	// 导入历史数据
+	// TODO: 导入历史数据功能暂未实现，方法保留
 	handleInputHistory() {
 		wx.chooseMessageFile({
 			count: 1,
@@ -166,7 +166,6 @@ Page({
 									title: "上传中"
 								});
 								wx.uploadFile({
-									// TODO: 修改url 和 formData 参数
 									url: ``,
 									filePath: path,
 									name: "file",

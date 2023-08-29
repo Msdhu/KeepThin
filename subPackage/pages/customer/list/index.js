@@ -86,9 +86,9 @@ Page({
 					this.setData({
 						listData: (res || []).map(item => ({
 							id: item?.customer_id,
-							// 是否转店 TODO: 修改字段
+							// 是否转店 TODO: 暂时未实现该功能，字段保留
 							transfer: false,
-							// 是否到期 TODO: 修改字段
+							// 是否到期 TODO: 暂时未实现该功能，字段保留
 							expired: false,
 							// 姓名
 							name: item.username,

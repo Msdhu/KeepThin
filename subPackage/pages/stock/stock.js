@@ -251,7 +251,7 @@ Page({
 				date_end: endDate,
 				shop_id: globalData.storeInfo.id,
 			},
-			method: "GET",
+			method: "POST",
 		}, `${startDate}至${endDate}库存记录`);
 	},
 
