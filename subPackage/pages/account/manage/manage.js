@@ -34,7 +34,7 @@ Page({
 		multiIndex: [0, 0],
 		multiArray: [
 			cityData,
-			cityData[0].citys,
+			cityData[0].cityList,
 		],
 		// 新建店长账号(即新建店铺)时，用于店铺绑定城市
 		selectCity: {},
@@ -409,7 +409,7 @@ Page({
 		switch (column) {
 			case 0:
 				this.setData({
-					"multiArray[1]": cityData[value].citys,
+					"multiArray[1]": cityData[value].cityList,
 					multiIndex: [value, 0],
 				});
 		}

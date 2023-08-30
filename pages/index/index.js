@@ -46,7 +46,7 @@ const menuList = [
 		title: "账号管理",
 		img: "/assets/img/zhanghaoguanli.png",
 		url: "/subPackage/pages/account/manage/manage",
-		needStore: true,
+		needStore: false,
 		roles: [ROLES.manager, ROLES.admin, ROLES.marketing],
 	},
 ];

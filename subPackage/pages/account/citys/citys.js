@@ -1,7 +1,5 @@
-import Notify from "@vant/weapp/notify/notify";
-
 const app = getApp();
-const { globalData, utils } = app;
+const { globalData, utils, cityData } = app;
 
 Page({
 	data: {
@@ -10,12 +8,20 @@ Page({
 		cityList: [],
 	},
 	onShow() {
-		const provinceList = (globalData.provinceList || []).map(item => {
-			const count = (item.cityList || []).reduce((sum, city) => {
-				return sum + (city.shopList || []).length;
+		const provinceList = cityData.map(item => {
+			const findProvince = (globalData.provinceList || []).find(x => x.regid == item.regid);
+			const count = (findProvince?.cityList || []).reduce((sum, city) => {
+				return sum + (city?.shopList || []).length;
 			}, 0);
+			const cityList = item.cityList.map(city => {
+				if (findProvince) {
+					return (findProvince.cityList).find(x => x.regid == city.regid) || city;
+				}
+				return city;
+			});
 			return {
 				...item,
+				cityList,
 				count,
 			};
 		});
@@ -34,7 +40,7 @@ Page({
 	getCityList(list, index) {
 		return list[index].cityList.map(city => ({
 			...city,
-			count: (city.shopList || []).length,
+			count: (city?.shopList || []).length,
 		}));
 	},
 

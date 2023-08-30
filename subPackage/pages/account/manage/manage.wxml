@@ -37,7 +37,7 @@
         <view slot="title">
           <view class="van-cell-text">
             <picker bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" mode="multiSelector" range="{{multiArray}}" rangeKey="regname" value="{{multiIndex}}">
-              <van-button color="#FDB03F" size="mini">绑定城市</van-button>
+              <van-button color="#FDB03F" size="mini">店铺绑定城市</van-button>
             </picker>
           </view>
         </view>

@@ -1,9 +1,9 @@
 module.exports = [
-	{ regid: "2", regname: "北京市", citys: [{ regid: "52", regname: "北京" }] },
+	{ regid: "2", regname: "北京市", cityList: [{ regid: "52", regname: "北京" }] },
 	{
 		regid: "3",
 		regname: "安徽省",
-		citys: [
+		cityList: [
 			{ regid: "36", regname: "安庆" },
 			{ regid: "37", regname: "蚌埠" },
 			{ regid: "38", regname: "巢湖" },
@@ -26,7 +26,7 @@ module.exports = [
 	{
 		regid: "4",
 		regname: "福建省",
-		citys: [
+		cityList: [
 			{ regid: "53", regname: "福州" },
 			{ regid: "54", regname: "龙岩" },
 			{ regid: "55", regname: "南平" },
@@ -41,7 +41,7 @@ module.exports = [
 	{
 		regid: "5",
 		regname: "甘肃省",
-		citys: [
+		cityList: [
 			{ regid: "62", regname: "兰州" },
 			{ regid: "63", regname: "白银" },
 			{ regid: "64", regname: "定西" },
@@ -61,7 +61,7 @@ module.exports = [
 	{
 		regid: "6",
 		regname: "广东省",
-		citys: [
+		cityList: [
 			{ regid: "76", regname: "广州" },
 			{ regid: "77", regname: "深圳" },
 			{ regid: "78", regname: "潮州" },
@@ -88,7 +88,7 @@ module.exports = [
 	{
 		regid: "7",
 		regname: "广西壮族自治区",
-		citys: [
+		cityList: [
 			{ regid: "97", regname: "南宁" },
 			{ regid: "98", regname: "桂林" },
 			{ regid: "99", regname: "百色" },
@@ -108,7 +108,7 @@ module.exports = [
 	{
 		regid: "8",
 		regname: "贵州省",
-		citys: [
+		cityList: [
 			{ regid: "111", regname: "贵阳" },
 			{ regid: "112", regname: "安顺" },
 			{ regid: "113", regname: "毕节" },
@@ -123,7 +123,7 @@ module.exports = [
 	{
 		regid: "9",
 		regname: "海南省",
-		citys: [
+		cityList: [
 			{ regid: "120", regname: "海口" },
 			{ regid: "121", regname: "三亚" },
 			{ regid: "122", regname: "白沙" },
@@ -147,7 +147,7 @@ module.exports = [
 	{
 		regid: "10",
 		regname: "河北省",
-		citys: [
+		cityList: [
 			{ regid: "138", regname: "石家庄" },
 			{ regid: "139", regname: "保定" },
 			{ regid: "140", regname: "沧州" },
@@ -164,7 +164,7 @@ module.exports = [
 	{
 		regid: "11",
 		regname: "河南省",
-		citys: [
+		cityList: [
 			{ regid: "149", regname: "郑州" },
 			{ regid: "150", regname: "洛阳" },
 			{ regid: "151", regname: "开封" },
@@ -188,7 +188,7 @@ module.exports = [
 	{
 		regid: "12",
 		regname: "黑龙江省",
-		citys: [
+		cityList: [
 			{ regid: "167", regname: "哈尔滨" },
 			{ regid: "168", regname: "大庆" },
 			{ regid: "169", regname: "大兴安岭" },
@@ -207,7 +207,7 @@ module.exports = [
 	{
 		regid: "13",
 		regname: "湖北省",
-		citys: [
+		cityList: [
 			{ regid: "180", regname: "武汉" },
 			{ regid: "181", regname: "仙桃" },
 			{ regid: "182", regname: "鄂州" },
@@ -230,7 +230,7 @@ module.exports = [
 	{
 		regid: "14",
 		regname: "湖南省",
-		citys: [
+		cityList: [
 			{ regid: "197", regname: "长沙" },
 			{ regid: "198", regname: "张家界" },
 			{ regid: "199", regname: "常德" },
@@ -250,7 +250,7 @@ module.exports = [
 	{
 		regid: "15",
 		regname: "吉林省",
-		citys: [
+		cityList: [
 			{ regid: "211", regname: "长春" },
 			{ regid: "212", regname: "吉林" },
 			{ regid: "213", regname: "白城" },
@@ -265,7 +265,7 @@ module.exports = [
 	{
 		regid: "16",
 		regname: "江苏省",
-		citys: [
+		cityList: [
 			{ regid: "220", regname: "南京" },
 			{ regid: "221", regname: "苏州" },
 			{ regid: "222", regname: "无锡" },
@@ -284,7 +284,7 @@ module.exports = [
 	{
 		regid: "17",
 		regname: "江西省",
-		citys: [
+		cityList: [
 			{ regid: "233", regname: "南昌" },
 			{ regid: "234", regname: "抚州" },
 			{ regid: "235", regname: "赣州" },
@@ -301,7 +301,7 @@ module.exports = [
 	{
 		regid: "18",
 		regname: "辽宁省",
-		citys: [
+		cityList: [
 			{ regid: "244", regname: "沈阳" },
 			{ regid: "245", regname: "大连" },
 			{ regid: "246", regname: "鞍山" },
@@ -321,7 +321,7 @@ module.exports = [
 	{
 		regid: "19",
 		regname: "内蒙古自治区",
-		citys: [
+		cityList: [
 			{ regid: "258", regname: "呼和浩特" },
 			{ regid: "259", regname: "阿拉善盟" },
 			{ regid: "260", regname: "巴彦淖尔盟" },
@@ -339,7 +339,7 @@ module.exports = [
 	{
 		regid: "20",
 		regname: "宁夏回族自治区",
-		citys: [
+		cityList: [
 			{ regid: "270", regname: "银川" },
 			{ regid: "271", regname: "固原" },
 			{ regid: "272", regname: "石嘴山" },
@@ -350,7 +350,7 @@ module.exports = [
 	{
 		regid: "21",
 		regname: "青海省",
-		citys: [
+		cityList: [
 			{ regid: "275", regname: "西宁" },
 			{ regid: "276", regname: "果洛" },
 			{ regid: "277", regname: "海北" },
@@ -364,7 +364,7 @@ module.exports = [
 	{
 		regid: "22",
 		regname: "山东省",
-		citys: [
+		cityList: [
 			{ regid: "283", regname: "济南" },
 			{ regid: "284", regname: "青岛" },
 			{ regid: "285", regname: "滨州" },
@@ -387,7 +387,7 @@ module.exports = [
 	{
 		regid: "23",
 		regname: "山西省",
-		citys: [
+		cityList: [
 			{ regid: "300", regname: "太原" },
 			{ regid: "301", regname: "长治" },
 			{ regid: "302", regname: "大同" },
@@ -404,7 +404,7 @@ module.exports = [
 	{
 		regid: "24",
 		regname: "陕西省",
-		citys: [
+		cityList: [
 			{ regid: "311", regname: "西安" },
 			{ regid: "312", regname: "安康" },
 			{ regid: "313", regname: "宝鸡" },
@@ -417,11 +417,11 @@ module.exports = [
 			{ regid: "320", regname: "榆林" },
 		],
 	},
-	{ regid: "25", regname: "上海市", citys: [{ regid: "321", regname: "上海" }] },
+	{ regid: "25", regname: "上海市", cityList: [{ regid: "321", regname: "上海" }] },
 	{
 		regid: "26",
 		regname: "四川省",
-		citys: [
+		cityList: [
 			{ regid: "322", regname: "成都" },
 			{ regid: "323", regname: "绵阳" },
 			{ regid: "324", regname: "阿坝" },
@@ -445,11 +445,11 @@ module.exports = [
 			{ regid: "342", regname: "泸州" },
 		],
 	},
-	{ regid: "27", regname: "天津市", citys: [{ regid: "343", regname: "天津" }] },
+	{ regid: "27", regname: "天津市", cityList: [{ regid: "343", regname: "天津" }] },
 	{
 		regid: "28",
 		regname: "西藏自治区",
-		citys: [
+		cityList: [
 			{ regid: "344", regname: "拉萨" },
 			{ regid: "345", regname: "阿里" },
 			{ regid: "346", regname: "昌都" },
@@ -462,7 +462,7 @@ module.exports = [
 	{
 		regid: "29",
 		regname: "新疆维吾尔自治区",
-		citys: [
+		cityList: [
 			{ regid: "351", regname: "乌鲁木齐" },
 			{ regid: "352", regname: "阿克苏" },
 			{ regid: "353", regname: "阿拉尔" },
@@ -484,7 +484,7 @@ module.exports = [
 	{
 		regid: "30",
 		regname: "云南省",
-		citys: [
+		cityList: [
 			{ regid: "367", regname: "昆明" },
 			{ regid: "368", regname: "怒江" },
 			{ regid: "369", regname: "普洱" },
@@ -506,7 +506,7 @@ module.exports = [
 	{
 		regid: "31",
 		regname: "浙江省",
-		citys: [
+		cityList: [
 			{ regid: "383", regname: "杭州" },
 			{ regid: "384", regname: "湖州" },
 			{ regid: "385", regname: "嘉兴" },
@@ -520,8 +520,8 @@ module.exports = [
 			{ regid: "393", regname: "衢州" },
 		],
 	},
-	{ regid: "32", regname: "重庆市", citys: [{ regid: "394", regname: "重庆" }] },
-	{ regid: "33", regname: "香港特别行政区", citys: [{ regid: "395", regname: "香港" }] },
-	{ regid: "34", regname: "澳门特别行政区", citys: [{ regid: "396", regname: "澳门" }] },
-	{ regid: "35", regname: "台湾省", citys: [{ regid: "397", regname: "台湾" }] },
+	{ regid: "32", regname: "重庆市", cityList: [{ regid: "394", regname: "重庆" }] },
+	{ regid: "33", regname: "香港特别行政区", cityList: [{ regid: "395", regname: "香港" }] },
+	{ regid: "34", regname: "澳门特别行政区", cityList: [{ regid: "396", regname: "澳门" }] },
+	{ regid: "35", regname: "台湾省", cityList: [{ regid: "397", regname: "台湾" }] },
 ];
