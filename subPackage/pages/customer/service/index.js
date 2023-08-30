@@ -96,9 +96,9 @@ Page({
 				success: res => {
 					const { shop_bodys = [], shop_members = [], goods = {} } = res;
 					this.setData({
-						partList: shop_bodys.map(item => ({ name: item.name })),
-						starffList: shop_members.map(item => ({ name: item.name })),
-						proList: Object.keys(goods).map(key => ({ id: key, name: goods[key] }))
+						partList: (shop_bodys || []).map(item => ({ name: item.name })),
+						starffList: (shop_members || []).map(item => ({ name: item.name })),
+						proList: Object.keys(goods || {}).map(key => ({ id: key, name: goods[key] }))
 					});
 				},
 				isShowLoading: true,
@@ -208,7 +208,15 @@ Page({
 		});
 	},
 	handleShowAddPop() {
-		if (!this.data.proList.length) {
+		const { partList, starffList, proList } = this.data;
+		if (!(partList.length && starffList.length)) {
+			wx.showToast({
+				title: "请先完善店铺设置!",
+				icon: "none",
+			});
+			return;
+		}
+		if (!proList.length) {
 			wx.showToast({
 				title: "该顾客还未购买产品!",
 				icon: "none",

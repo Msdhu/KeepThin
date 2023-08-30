@@ -1,3 +1,5 @@
+import Notify from "@vant/weapp/notify/notify";
+
 const app = getApp();
 const { utils, globalData } = app;
 
@@ -127,16 +129,25 @@ Page({
 	// 保存修改
 	handleSave() {
 		const { id, sizeList } = this.data;
+		const data = sizeList.reduce((size, item) => {
+			size[item.flag] = item.size;
+			return size;
+		}, {});
+		const hasEdit = Object.keys(data).some(key => data[key]);
+		if (!hasEdit) {
+			Notify({
+				type: "danger",
+				message: "请至少修改一个部位！",
+			});
+			return;
+		}
 		utils.request(
 			{
 				url: "member/size",
 				data: {
 					shop_id: globalData.storeInfo.id,
 					customer_id: id,
-					data: sizeList.reduce((size, item) => {
-						size[item.flag] = item.size;
-						return size;
-					}, {}),
+					data,
 				},
 				method: "POST",
 				success: () => {

@@ -49,3 +49,4 @@
         </view>
     </scroll-view>
 </van-popup>
+<van-notify id="van-notify"></van-notify>
