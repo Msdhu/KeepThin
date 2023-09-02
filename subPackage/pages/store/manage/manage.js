@@ -25,6 +25,8 @@ Page({
 		this.setData({
 			storeName: globalData.storeInfo.name,
 		});
+	},
+	onShow() {
 		this.getShopData();
 	},
 	getShopData() {
@@ -59,9 +61,9 @@ Page({
 							// 精护人数
 							essensCarePersonCount: day?.jhu_person_num || 0,
 							// 实际减重
-							realLossWeightTotal: day?.dchen_weight_fact || 0,
+							realLossWeightTotal: Number(day?.dchen_weight_fact || 0).toFixed(1),
 							// 平均减重
-							avgLossWeight: (day?.jzhong_avg || 0).toFixed(1),
+							avgLossWeight: Number(day?.jzhong_avg || 0).toFixed(1),
 						},
 						monthData: {
 							// 本月新客
@@ -71,13 +73,13 @@ Page({
 							// 精护人数
 							essensCarePersonCount: month?.jhu_person_num || 0,
 							// 实际减重
-							realLossWeightTotal: month?.dchen_weight_fact || 0,
+							realLossWeightTotal: Number(month?.dchen_weight_fact || 0).toFixed(1),
 							// 平均减重
-							avgLossWeight: (month?.jzhong_avg || 0).toFixed(1),
+							avgLossWeight: Number(month?.jzhong_avg || 0).toFixed(1),
 							//精护占比
-							essensCareWeightRate: month?.jhu_person_num_rate || 0,
+							essensCareWeightRate: (month?.jhu_person_num_rate || 0) * 100,
 							//掉称占比
-							lossWeightRate: month?.dchen_person_num_rate || 0,
+							lossWeightRate: (month?.dchen_person_num_rate || 0) * 100,
 						},
 					});
 				},

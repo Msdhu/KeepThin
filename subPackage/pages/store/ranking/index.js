@@ -44,7 +44,7 @@ Page({
 						name: item.customer_name,
 						gender: item.sex,
 						registerCount: item.count,
-						lossedWeight: item.weight_reduce,
+						lossedWeight: isLoseWeight ? item.weight_reduce : -item.weight_reduce,
 					}));
 					this.setData({
 						// data 列表是减重的降序，涨称数据则直接倒过来即可
