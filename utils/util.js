@@ -21,7 +21,7 @@ const checkLoginToken = (needRedirectToLoginPage = false) => {
 	return { token, needLogin };
 };
 
-const baseUrl = "https://api.xiatianwang.cn";
+const baseUrl = "https://tzzd.zhongguoyangfa.com";
 
 const utils = {
 	formatTime(dt, format = "YYYY-MM-DD hh:mm:ss") {
