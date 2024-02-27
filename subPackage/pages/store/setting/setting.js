@@ -73,9 +73,9 @@ Page({
 			tabIndex: e.detail,
 			isEdit: false,
 		});
-		if (Number(e.detail) === 2) {
-			this.getSmallQrcode();
-		}
+		// if (Number(e.detail) === 2) {
+		// 	this.getSmallQrcode();
+		// }
 	},
 	handleEdit() {
 		this.setData({
