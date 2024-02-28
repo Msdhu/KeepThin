@@ -135,7 +135,7 @@
       <view>
         五、隐私政策
         <view>
-          5.1保护用户隐私是的本平台一项基本政策，本平台保证不对外公开或向第三方提供您的注册资料及您在使用网络服务时存储在本平台的非公开内容，但下列情况除外：（1）事先获得用户的明确授权；（2）根据有关的法律法规要求；（2）按照相关政府主管部门的要求；（3）为维护社会公众的利益；（4）为维护本平台的合法权益。 5.2当本平台与第三方合作向用户提供相关的网络服务，在此情况下，如该第三方允诺严格承担与本平台同等的保护用户隐私的责任，则视为您授权本平台将包含个人注册资料在内的相关信息仅提供给该等第三方。
+          5.1保护用户隐私是的本平台一项基本政策，本平台保证不对外公开或向第三方提供您的注册资料及您在使用网络服务时存储在本平台的非公开内容，但下列情况除外：（1）事先获得用户的明确授权；（2）根据有关的法律法规要求；（2）按照相关政府主管部门的要求；（3）为维护社会公众的利益；（4）为维护本平台的合法权益。 5.2本平台通过录入数据的方式收集用户基本信息，通过这些基本信息得到用户的标准体重等数据，从而进一步的规划用户的减重计划！
         </view>
       </view>
       <view>
@@ -145,7 +145,7 @@
         </view>
       </view>
       <view>
-        七、违约责任如
+        七、违约责任
         <view>如您因为使用本服务给本平台造成损失的或者给第三方造成损失的，该损失（包括为维权而产生的合理支出）由您来承担。</view>
       </view>
       <view>
@@ -155,8 +155,11 @@
         </view>
       </view>
       <view class="success">
-        <van-button round bind:click="onCloseAgreement" color="#FDB03F" customStyle="width:280rpx;height:60rpx;margin:20rpx auto;font-size:30rpx;border-radius:8rpx !important;" data-type="btn">
-          我同意本协议
+        <van-button round bind:click="closeAggrement" color="#FDB03F" customStyle="height:60rpx;font-size:30rpx;border-radius:8rpx !important;" data-type="Ybtn">
+          同意
+        </van-button>
+        <van-button round bind:click="closeAggrement" color="#FDB03F" customStyle="height:60rpx;margin-left:40rpx;font-size:30rpx;border-radius:8rpx !important;" data-type="Nbtn">
+          不同意
         </van-button>
       </view>
     </view>

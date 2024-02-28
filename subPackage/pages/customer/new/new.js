@@ -123,11 +123,10 @@ Page({
 		currentDate: utils.formatTime(new Date(), "YYYY-MM-DD"),
 	},
 	onLoad(opts) {
-		!wx.getStorageSync(READ_STORAGE_KEY) && this.setData({
-			isShowAggrement: true,
-		});
-
 		const isEdit = !!opts.type;
+		this.setData({
+			isShowAggrement: !isEdit,
+		});
 		wx.setNavigationBarTitle({
 			title: isEdit ? "修改顾客资料" : "新客录入",
 		});
@@ -381,13 +380,17 @@ Page({
 			isShowAggrement: true,
 		});
 	},
-	onCloseAgreement(e) {
+	closeAggrement(e) {
 		const closeType = e.currentTarget.dataset.type;
-		if (closeType === "btn") {
+		if (closeType === "Ybtn") {
 			wx.setStorageSync(READ_STORAGE_KEY, true);
 			this.setData({
 				isShowAggrement: false,
 			});
+		} else if (closeType === "Nbtn") {
+			wx.navigateBack({
+				delta: 1,
+			})
 		} else {
 			wx.showToast({
 				title: "请完整阅读并同意协议",
