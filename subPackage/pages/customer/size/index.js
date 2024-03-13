@@ -95,6 +95,7 @@ Page({
 									sizeList[index] = {
 										...sizeList[index],
 										originSize: init,
+										size: init,
 									};
 								}
 								return {
@@ -106,10 +107,39 @@ Page({
 							}),
 						};
 					});
+					const histoeyLen = historySizeList.length;
+					if (!histoeyLen) {
+						this.getConsumerInfo();
+					} else {
+						this.setData({
+							historySizeList,
+							hasSizeInit: true,
+							sizeList,
+						});
+					}
+				},
+				isShowLoading: true,
+			},
+			true
+		);
+	},
+	getConsumerInfo() {
+		const { id, sizeList } = this.data;
+		utils.request(
+			{
+				url: `member/detail`,
+				data: {
+					customer_id: id,
+				},
+				method: "GET",
+				success: res => {
 					this.setData({
-						historySizeList,
 						hasSizeInit: true,
-						sizeList,
+						sizeList: sizeList.map(item => ({
+							...item,
+							originSize: res[item.flag],
+							size: res[item.flag],
+						})),
 					});
 				},
 				isShowLoading: true,
@@ -118,7 +148,7 @@ Page({
 		);
 	},
 	handleChangeSize(t) {
-		const value = t.detail.value;
+		const value = Number(t.detail.value);
 		const index = t.currentTarget.dataset.index;
 		const sizeList = this.data.sizeList;
 		sizeList[index].size = value;
@@ -130,17 +160,9 @@ Page({
 	handleSave() {
 		const { id, sizeList } = this.data;
 		const data = sizeList.reduce((size, item) => {
-			size[item.flag] = item.size;
+			size[item.flag] = Number(item.size);
 			return size;
 		}, {});
-		const hasEdit = Object.keys(data).some(key => data[key]);
-		if (!hasEdit) {
-			Notify({
-				type: "danger",
-				message: "请至少修改一个部位！",
-			});
-			return;
-		}
 		utils.request(
 			{
 				url: "member/size",
